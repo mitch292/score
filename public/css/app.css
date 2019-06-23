@@ -11151,7 +11151,7 @@ a.text-dark:focus {
 }
 
 .card__content {
-  min-height: 15rem;
+  min-height: 14rem;
   background-image: url(/images/papyrus.png?57fa854e33d73bdf6d142841b75b5b43);
 }
 
@@ -11164,7 +11164,7 @@ a.text-dark:focus {
 .card__bottom {
   border-top: 1px solid #e0e1e2;
   background-color: #e0e1e2;
-  min-height: 4.5rem;
+  min-height: 5.5rem;
 }
 
 body {
