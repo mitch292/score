@@ -1,0 +1,21 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Layout
+@import './layout/header.scss';
+@import './layout/content.scss';
+@import './layout/footer.scss';
+
+// Components
+@import './components/card.scss';
+
+body {
+  font: 100% $font-family;
+}
+
