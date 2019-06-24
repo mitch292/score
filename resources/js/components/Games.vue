@@ -12,7 +12,7 @@
 						<div class="team-name">{{`${game.teams[0].name}`}}</div>
 					</div>
 					<div class="game-vs d-inline-block p-4 text-red">
-						VS
+						vs
 					</div>
 					<div class="game-team align-middle col-sm-4 d-inline-block">
 						<font-awesome-icon icon="user-secret" size="4x"></font-awesome-icon>
@@ -26,7 +26,7 @@
 				<div class="text-center">
 				<span class="info-box col-sm-3 d-inline-block">
 					<div class="info-title">
-						Viewing Type:
+						viewing type:
 					</div>
 					<div class="info-data">
 						{{game.viewType || 'N/A'}}
@@ -34,7 +34,7 @@
 				</span>
 				<span class="info-box col-sm-3 d-inline-block">
 					<div class="info-title">
-						Date:
+						date:
 					</div>
 					<div class="info-data">
 						{{game.date}}
@@ -42,7 +42,7 @@
 				</span>
 				<span class="info-box col-sm-3 d-inline-block">
 					<div class="info-title">
-						Scoring Type:
+						scoring type:
 					</div>
 					<div class="info-data">
 						{{game.scoringType}}
@@ -84,7 +84,9 @@ export default {
 .game-matchup {
 	padding: 4rem;
 }
-
+.game-team {
+	margin: 1rem 0;
+}
 .team-name {
 	margin-top: 1rem;
 	font-weight: 900;
@@ -98,7 +100,9 @@ export default {
 	width: 5rem;
 	height: 5rem;
 	font-weight: 900;
-	font-size: 1.25rem;
+	font-size: 1.75rem;
+	box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+
 }
 
 .info-box {

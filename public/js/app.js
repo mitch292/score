@@ -16194,7 +16194,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.25rem;\n}\n.info-box {\n\tpadding: 1rem;\n}\n.info-title {\n\tmargin-bottom: 1rem;\n\tfont-weight: 900;\n\tfont-size: 110%;\n}\n\n", ""]);
+exports.push([module.i, "\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.game-team {\n\tmargin: 1rem 0;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.75rem;\n\tbox-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);\n}\n.info-box {\n\tpadding: 1rem;\n}\n.info-title {\n\tmargin-bottom: 1rem;\n\tfont-weight: 900;\n\tfont-size: 110%;\n}\n\n", ""]);
 
 // exports
 
@@ -47734,7 +47734,7 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "game-vs d-inline-block p-4 text-red" },
-                [_vm._v("\n\t\t\t\t\tVS\n\t\t\t\t")]
+                [_vm._v("\n\t\t\t\t\tvs\n\t\t\t\t")]
               ),
               _vm._v(" "),
               _c(
@@ -47760,7 +47760,7 @@ var render = function() {
             _c("div", { staticClass: "text-center" }, [
               _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
                 _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tViewing Type:\n\t\t\t\t")
+                  _vm._v("\n\t\t\t\t\tviewing type:\n\t\t\t\t")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "info-data" }, [
@@ -47774,7 +47774,7 @@ var render = function() {
               _vm._v(" "),
               _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
                 _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tDate:\n\t\t\t\t")
+                  _vm._v("\n\t\t\t\t\tdate:\n\t\t\t\t")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "info-data" }, [
@@ -47784,7 +47784,7 @@ var render = function() {
               _vm._v(" "),
               _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
                 _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tScoring Type:\n\t\t\t\t")
+                  _vm._v("\n\t\t\t\t\tscoring type:\n\t\t\t\t")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "info-data" }, [
