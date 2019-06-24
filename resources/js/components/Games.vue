@@ -1,22 +1,60 @@
 <template>
 
-  <div>
+	<div>
 
-    <utility-card v-for="game in games" :key="game.id">
+		<utility-card v-for="game in games" class="game-card" :key="game.id">
 
-      <template slot="content">
-        {{`${game.teams[0].name} vs ${game.teams[1].name}`}}
-      </template>
+			<template slot="content">
 
-      <template slot="bottom">
-        viewType: {{game.viewType}}
-        Date: {{game.date}}
-        scoringType: {{game.scoringType}}
-      </template>
+				<div class="game-matchup text-center">
+					<div class="game-team align-middle col-sm-4 d-inline-block">
+						<font-awesome-icon icon="bath" size="4x"></font-awesome-icon>
+						<div class="team-name">{{`${game.teams[0].name}`}}</div>
+					</div>
+					<div class="game-vs d-inline-block p-4 text-red">
+						VS
+					</div>
+					<div class="game-team align-middle col-sm-4 d-inline-block">
+						<font-awesome-icon icon="user-secret" size="4x"></font-awesome-icon>
+						<div class="team-name">{{`${game.teams[1].name}`}}</div>
+					</div>
+				</div>
 
-    </utility-card>
+			</template>
 
-  </div>
+			<template slot="bottom">
+				<div class="text-center">
+				<span class="info-box col-sm-3 d-inline-block">
+					<div class="info-title">
+						Viewing Type:
+					</div>
+					<div class="info-data">
+						{{game.viewType || 'N/A'}}
+					</div>
+				</span>
+				<span class="info-box col-sm-3 d-inline-block">
+					<div class="info-title">
+						Date:
+					</div>
+					<div class="info-data">
+						{{game.date}}
+					</div>
+				</span>
+				<span class="info-box col-sm-3 d-inline-block">
+					<div class="info-title">
+						Scoring Type:
+					</div>
+					<div class="info-data">
+						{{game.scoringType}}
+					</div>
+				</span>
+				</div>
+			
+			</template>
+
+		</utility-card>
+
+	</div>
 
 </template>
 
@@ -24,80 +62,53 @@
 import utilityCard from './utility/Card.vue';
 
 export default {
-  // currently dummy data that will come from a call to the server
-  data() {
-    return {
-      games: [
-        {
-          id: 0,
-          teams: [
-            {
-              id: 1,
-              name: 'Yankees',
-              logo: 'tbd path'
-            },
-            {
-              id: 2,
-              name: 'Nationals',
-              logo: 'tbd path',
-            }
-          ],
-          winnerId: 1,
-          viewType: 'in-person', // this will eventually become an enum/int
-          date: Date.now(),
-          scoringType: 'personal', // this will eventually become an enum/int
-
-        },
-        {
-          id: 1,
-          teams: [
-            {
-              id: 2,
-              name: 'Nationals',
-              logo: 'tbd path'
-            },
-            {
-              id: 3,
-              name: 'Mets',
-              logo: 'tbd path',
-            }
-          ],
-          winnerId: 2,
-          viewType: 'television', // this will eventually become an enum/int
-          date: Date.now(),
-          scoringType: 'official', // this will eventually become an enum/int
-
-        },
-        {
-          id: 2,
-          teams: [
-            {
-              id: 4,
-              name: 'Rays',
-              logo: 'tbd path'
-            },
-            {
-              id: 5,
-              name: 'Blue Jays',
-              logo: 'tbd path',
-            }
-          ],
-          winnerId: 5,
-          viewType: null, // this will eventually become an enum/int
-          date: Date.now(),
-          scoringType: 'personal', // this will eventually become an enum/int
-
-        }
-      ]
-    }
-  },
-  mounted() {
-    console.log('the games are mounted');
-  },
-  components: {utilityCard}
+	// currently dummy data that will come from a call to the server
+	data() {
+		return {
+			games: require('../../../exampleGameData.js').data
+		}
+	},
+	mounted() {
+		console.log('the games are mounted');
+	},
+	components: {utilityCard}
 }
 </script>
 
 <style>
+
+.game-card {
+	cursor: pointer;
+}
+
+.game-matchup {
+	padding: 4rem;
+}
+
+.team-name {
+	margin-top: 1rem;
+	font-weight: 900;
+	font-size: 1rem;
+}
+
+.game-vs {
+	border-radius: 50%;
+	background-color: #e0e1e2;
+	border: 1px solid #e0e1e2;
+	width: 5rem;
+	height: 5rem;
+	font-weight: 900;
+	font-size: 1.25rem;
+}
+
+.info-box {
+	padding: 1rem;
+}
+
+.info-title {
+	margin-bottom: 1rem;
+	font-weight: 900;
+	font-size: 110%;
+}
 
 </style>

@@ -12,10 +12,10 @@ Vue.use(VueRouter);
 
 // Font awesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserSecret, faBaseballBall } from '@fortawesome/free-solid-svg-icons';
+import { faUserSecret, faBaseballBall, faBath } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faBaseballBall);
+library.add(faBaseballBall, faBath, faUserSecret);
 
 // Axios
 import axios from 'axios';
