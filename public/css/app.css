@@ -11100,6 +11100,10 @@ a.text-dark:focus {
   }
 }
 
+.text-red {
+  color: #a81e03;
+}
+
 .header {
   position: fixed;
   width: 100%;
@@ -11120,6 +11124,7 @@ a.text-dark:focus {
 
 .header__icon {
   padding: 0.5rem;
+  color: #a81e03;
 }
 
 .header__text {
@@ -11143,11 +11148,27 @@ a.text-dark:focus {
   align-content: flex-start;
 }
 
+@media screen and (max-width: 650px) {
+  .content {
+    padding: 0;
+  }
+}
+
 .card {
+  -webkit-box-flex: 1;
+          flex: 1 1 auto;
   margin: 4rem;
-  width: 40rem;
+  width: 50rem;
   min-height: 20rem;
   border: 1px solid #e0e1e2;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 650px) {
+  .card {
+    width: 90%;
+    margin: 1rem;
+  }
 }
 
 .card__content {
@@ -11158,7 +11179,7 @@ a.text-dark:focus {
 .card__stripe {
   width: 100%;
   height: 0.5rem;
-  background-color: lightblue;
+  background-color: #a81e03;
 }
 
 .card__bottom {

@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Utility 
+@import './utilities.scss';
+
 // Layout
 @import './layout/header.scss';
 @import './layout/content.scss';

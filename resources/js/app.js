@@ -3,16 +3,29 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+// Vue
 import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+window.Vue = Vue;
+Vue.use(VueRouter);
+
+// Font awesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserSecret, faBaseballBall } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-require('./bootstrap');
-
-window.Vue = Vue;
-
 library.add(faBaseballBall);
+
+// Axios
+import axios from 'axios';
+window.axios = axios;
+
+// Internal
+import './bootstrap';
+import router from './routes.js';
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,5 +48,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router
 });
