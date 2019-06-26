@@ -90,13 +90,16 @@
 /*!****************************!*\
   !*** ./exampleGameData.js ***!
   \****************************/
-/*! exports provided: data */
+/*! exports provided: games, viewingTypes, teams, scoringTypes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
-var data = [{
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "games", function() { return games; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewingTypes", function() { return viewingTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "teams", function() { return teams; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scoringTypes", function() { return scoringTypes; });
+var games = [{
   id: 0,
   teams: [{
     id: 1,
@@ -105,13 +108,19 @@ var data = [{
   }, {
     id: 2,
     name: 'Nationals',
-    logo: "path tbd"
+    logo: 'path tbd'
   }],
   winnerId: 1,
-  viewType: 'in-person',
+  viewType: {
+    id: 1,
+    type: 'in-person'
+  },
   // this will eventually become an enum/int
   date: Date.now(),
-  scoringType: 'personal' // this will eventually become an enum/int
+  scoringType: {
+    id: 2,
+    type: 'personal'
+  } // this will eventually become an enum/int
 
 }, {
   id: 1,
@@ -125,10 +134,16 @@ var data = [{
     logo: 'tbd path'
   }],
   winnerId: 2,
-  viewType: 'television',
+  viewType: {
+    id: 3,
+    type: 'radio'
+  },
   // this will eventually become an enum/int
   date: Date.now(),
-  scoringType: 'official' // this will eventually become an enum/int
+  scoringType: {
+    id: 1,
+    type: 'official'
+  } // this will eventually become an enum/int
 
 }, {
   id: 2,
@@ -142,11 +157,58 @@ var data = [{
     logo: 'tbd path'
   }],
   winnerId: 5,
-  viewType: null,
+  viewType: {
+    id: 4,
+    type: 'other'
+  },
   // this will eventually become an enum/int
   date: Date.now(),
-  scoringType: 'personal' // this will eventually become an enum/int
+  scoringType: {
+    id: 2,
+    type: 'personal'
+  } // this will eventually become an enum/int
 
+}];
+var viewingTypes = [{
+  id: 1,
+  type: 'in-person'
+}, {
+  id: 2,
+  type: 'television'
+}, {
+  id: 3,
+  type: 'radio'
+}, {
+  id: 4,
+  type: 'other'
+}];
+var teams = [{
+  id: 1,
+  name: 'Yankees',
+  logo: 'tbd path'
+}, {
+  id: 2,
+  name: 'Nationals',
+  logo: "path tbd"
+}, {
+  id: 3,
+  name: 'Mets',
+  logo: 'tbd path'
+}, {
+  id: 4,
+  name: 'Rays',
+  logo: 'tbd path'
+}, {
+  id: 5,
+  name: 'Blue Jays',
+  logo: 'tbd path'
+}];
+var scoringTypes = [{
+  id: 1,
+  type: 'official'
+}, {
+  id: 2,
+  type: 'personal'
 }];
 
 /***/ }),
@@ -11539,9 +11601,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
   components: {
     scoreHeader: _Header_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -11559,6 +11618,51 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility/Card.vue */ "./resources/js/components/utility/Card.vue");
+/* harmony import */ var _utility_TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utility/TopMenu.vue */ "./resources/js/components/utility/TopMenu.vue");
+/* harmony import */ var _utility_DropDown_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utility/DropDown.vue */ "./resources/js/components/utility/DropDown.vue");
+/* harmony import */ var _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../exampleGameData.js */ "./exampleGameData.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11620,18 +11724,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+ // DUMMY DATA
+
+ // TO DELETE EVENTUALL
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // currently dummy data that will come from a call to the server
+  // currently dummy data that will come from a call to the server, event the types below
+  methods: {
+    toggleFilterDisplay: function toggleFilterDisplay(event) {
+      this.filterToggles[event.target.name] = !this.filterToggles[event.target.name];
+    },
+    applyFilter: function applyFilter(filterName, id, value) {
+      this.appliedFilters[filterName][id] = value;
+    }
+  },
   data: function data() {
     return {
-      games: __webpack_require__(/*! ../../../exampleGameData.js */ "./exampleGameData.js").data
+      games: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["games"],
+      viewingTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["viewingTypes"],
+      // this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams
+      teams: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["teams"],
+      scoringTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["scoringTypes"],
+      filterToggles: {
+        teams: false,
+        viewingTypes: false,
+        scoringTypes: false
+      },
+      appliedFilters: {
+        teams: {},
+        viewingTypes: {},
+        scoringTypes: {}
+      }
     };
   },
-  mounted: function mounted() {
-    console.log('the games are mounted');
-  },
   components: {
-    utilityCard: _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    UtilityCard: _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    UtilityTopMenu: _utility_TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    UtilityDropDown: _utility_DropDown_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 
@@ -11683,11 +11813,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('header mounted.');
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -11729,11 +11855,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('hello, card');
+  props: {
+    items: Array,
+    keyName: String,
+    filter: String
+  },
+  methods: {
+    reportClick: function reportClick(id) {
+      this.$emit('applyFilter', this.filter, id, event.target.checked);
+    }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -16194,7 +16375,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.game-team {\n\tmargin: 1rem 0;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.75rem;\n\tbox-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);\n}\n.info-box {\n\tpadding: 1rem;\n}\n.info-title {\n\tmargin-bottom: 1rem;\n\tfont-weight: 900;\n\tfont-size: 110%;\n}\n\n", ""]);
+exports.push([module.i, "\n.game-filter__btn {\n\tpadding: .5rem;\n\tcolor: white;\n\tborder-radius: 4px;\n\tmargin: 1rem;\n\tmin-width: 8rem;\n}\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.game-team {\n\tmargin: 1rem 0;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.75rem;\n\tbox-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);\n}\n.info-box {\n\tpadding: 1rem;\n}\n.info-title {\n\tmargin-bottom: 1rem;\n\tfont-weight: 900;\n\tfont-size: 110%;\n}\n\n", ""]);
 
 // exports
 
@@ -47707,99 +47888,183 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.games, function(game) {
-      return _c(
-        "utility-card",
-        { key: game.id, staticClass: "game-card" },
-        [
-          _c("template", { slot: "content" }, [
-            _c("div", { staticClass: "game-matchup text-center" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "game-team align-middle col-sm-4 d-inline-block"
-                },
-                [
-                  _c("font-awesome-icon", {
-                    attrs: { icon: "bath", size: "4x" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "team-name" }, [
-                    _vm._v(_vm._s("" + game.teams[0].name))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "game-vs d-inline-block p-4 text-red" },
-                [_vm._v("\n\t\t\t\t\tvs\n\t\t\t\t")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "game-team align-middle col-sm-4 d-inline-block"
-                },
-                [
-                  _c("font-awesome-icon", {
-                    attrs: { icon: "user-secret", size: "4x" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "team-name" }, [
-                    _vm._v(_vm._s("" + game.teams[1].name))
-                  ])
-                ],
-                1
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("template", { slot: "bottom" }, [
-            _c("div", { staticClass: "text-center" }, [
-              _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
-                _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tviewing type:\n\t\t\t\t")
-                ]),
+    [
+      _c("utility-top-menu", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-secondary m-4",
+            attrs: { name: "viewingTypes" },
+            on: { click: _vm.toggleFilterDisplay }
+          },
+          [_vm._v("\n\t\t\tviewing type\n\t\t")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn m-4",
+            class: Object.values(this.appliedFilters.teams).filter(function(
+              team
+            ) {
+              return team
+            }).length
+              ? "btn-primary"
+              : "btn-secondary",
+            attrs: { name: "teams" },
+            on: { click: _vm.toggleFilterDisplay }
+          },
+          [_vm._v("\n\t\t\tteam\n\t\t")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-secondary m-4",
+            attrs: { name: "scoringTypes" },
+            on: { click: _vm.toggleFilterDisplay }
+          },
+          [_vm._v("\n\t\t\tscoring type\n\t\t")]
+        )
+      ]),
+      _vm._v(" "),
+      this.filterToggles.viewingTypes
+        ? _c("utility-drop-down", {
+            attrs: {
+              keyName: "type",
+              items: this.viewingTypes,
+              filter: "viewingTypes"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      this.filterToggles.teams
+        ? _c("utility-drop-down", {
+            attrs: { keyName: "name", items: this.teams, filter: "teams" },
+            on: { applyFilter: _vm.applyFilter }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      this.filterToggles.scoringTypes
+        ? _c("utility-drop-down", {
+            attrs: {
+              keyName: "type",
+              items: this.scoringTypes,
+              filter: "scoringTypes"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.games, function(game) {
+        return _c(
+          "utility-card",
+          { key: game.id, staticClass: "game-card" },
+          [
+            _c("template", { slot: "content" }, [
+              _c("div", { staticClass: "game-matchup text-center" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "game-team align-middle col-sm-4 d-inline-block"
+                  },
+                  [
+                    _c("font-awesome-icon", {
+                      attrs: { icon: "bath", size: "4x" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "team-name" }, [
+                      _vm._v(_vm._s("" + game.teams[0].name))
+                    ])
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "info-data" }, [
-                  _vm._v(
-                    "\n\t\t\t\t\t" +
-                      _vm._s(game.viewType || "N/A") +
-                      "\n\t\t\t\t"
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
-                _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tdate:\n\t\t\t\t")
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "game-vs d-inline-block p-4 text-red" },
+                  [_vm._v("\n\t\t\t\t\tvs\n\t\t\t\t")]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "info-data" }, [
-                  _vm._v("\n\t\t\t\t\t" + _vm._s(game.date) + "\n\t\t\t\t")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box col-sm-3 d-inline-block" }, [
-                _c("div", { staticClass: "info-title" }, [
-                  _vm._v("\n\t\t\t\t\tscoring type:\n\t\t\t\t")
-                ]),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "game-team align-middle col-sm-4 d-inline-block"
+                  },
+                  [
+                    _c("font-awesome-icon", {
+                      attrs: { icon: "user-secret", size: "4x" }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "team-name" }, [
+                      _vm._v(_vm._s("" + game.teams[1].name))
+                    ])
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("template", { slot: "bottom" }, [
+              _c("div", { staticClass: "text-center" }, [
+                _c(
+                  "span",
+                  { staticClass: "info-box col-sm-3 d-inline-block" },
+                  [
+                    _c("div", { staticClass: "info-title" }, [
+                      _vm._v("\n\t\t\t\t\tviewing type:\n\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info-data" }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t" +
+                          _vm._s(game.viewType.type || "N/A") +
+                          "\n\t\t\t\t"
+                      )
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "info-data" }, [
-                  _vm._v(
-                    "\n\t\t\t\t\t" + _vm._s(game.scoringType) + "\n\t\t\t\t"
-                  )
-                ])
+                _c(
+                  "span",
+                  { staticClass: "info-box col-sm-3 d-inline-block" },
+                  [
+                    _c("div", { staticClass: "info-title" }, [
+                      _vm._v("\n\t\t\t\t\tdate:\n\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info-data" }, [
+                      _vm._v("\n\t\t\t\t\t" + _vm._s(game.date) + "\n\t\t\t\t")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "info-box col-sm-3 d-inline-block" },
+                  [
+                    _c("div", { staticClass: "info-title" }, [
+                      _vm._v("\n\t\t\t\t\tscoring type:\n\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info-data" }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t" +
+                          _vm._s(game.scoringType.type) +
+                          "\n\t\t\t\t"
+                      )
+                    ])
+                  ]
+                )
               ])
             ])
-          ])
-        ],
-        2
-      )
-    }),
-    1
+          ],
+          2
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -47825,85 +48090,83 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "header" }, [
-    _c(
-      "nav",
-      { staticClass: "navbar w-100 navbar-expand-lg navbar-light bg-light" },
-      [
-        _c(
-          "a",
-          { staticClass: "navbar-brand", attrs: { href: "#" } },
-          [
-            _c("router-link", { attrs: { to: "/", tag: "div", exact: "" } }, [
-              _c(
-                "span",
-                { staticClass: "header__icon" },
-                [
-                  _c("font-awesome-icon", {
-                    attrs: { icon: "baseball-ball", size: "3x" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "header__text" }, [_vm._v("score")])
-                ],
-                1
-              )
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "collapse navbar-collapse pt-3",
-            attrs: { id: "navbarNav" }
-          },
-          [
-            _c("ul", { staticClass: "navbar-nav" }, [
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c("router-link", { attrs: { to: "/games" } }, [
-                    _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                      _vm._v("games")
-                    ])
+    _c("nav", { staticClass: "navbar w-100 navbar-expand-lg navbar-light" }, [
+      _c(
+        "a",
+        { staticClass: "navbar-brand", attrs: { href: "#" } },
+        [
+          _c("router-link", { attrs: { to: "/", tag: "div", exact: "" } }, [
+            _c(
+              "span",
+              { staticClass: "header__icon" },
+              [
+                _c("font-awesome-icon", {
+                  attrs: { icon: "baseball-ball", size: "3x" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "header__text" }, [_vm._v("score")])
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "collapse navbar-collapse pt-3",
+          attrs: { id: "navbarNav" }
+        },
+        [
+          _c("ul", { staticClass: "navbar-nav" }, [
+            _c(
+              "li",
+              { staticClass: "nav-item" },
+              [
+                _c("router-link", { attrs: { to: "/games" } }, [
+                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+                    _vm._v("games")
                   ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c("router-link", { attrs: { to: "/stats" } }, [
-                    _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                      _vm._v("stats")
-                    ])
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "nav-item" },
+              [
+                _c("router-link", { attrs: { to: "/stats" } }, [
+                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+                    _vm._v("stats")
                   ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c("router-link", { attrs: { to: "/new" } }, [
-                    _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                      _vm._v("new score card")
-                    ])
-                  ])
-                ],
-                1
-              )
-            ])
-          ]
-        )
-      ]
-    )
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "nav-item" },
+              [
+                _c("router-link", { attrs: { to: "/new" } }, [
+                  _c(
+                    "a",
+                    { staticClass: "nav-link text-red", attrs: { href: "#" } },
+                    [_vm._v("new score card")]
+                  )
+                ])
+              ],
+              1
+            )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -47980,6 +48243,72 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "card__bottom" }, [_vm._t("bottom")], 2)
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "top-menu" },
+    _vm._l(_vm.items, function(item) {
+      return _c("span", { key: item.id, staticClass: "score-dropdown__item" }, [
+        _c("input", {
+          staticClass: "mr-1",
+          attrs: { type: "checkbox", name: "item[keyName]" },
+          on: {
+            change: function($event) {
+              return _vm.reportClick(item.id)
+            }
+          }
+        }),
+        _vm._v("\n      " + _vm._s(item[_vm.keyName]) + "\n  ")
+      ])
+    }),
+    0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "top-menu" }, [_vm._t("default")], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63290,6 +63619,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_017db03e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_017db03e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/DropDown.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/utility/DropDown.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropDown.vue?vue&type=template&id=2ed739df& */ "./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df&");
+/* harmony import */ var _DropDown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropDown.vue?vue&type=script&lang=js& */ "./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DropDown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/utility/DropDown.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DropDown.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/DropDown.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DropDown.vue?vue&type=template&id=2ed739df& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/DropDown.vue?vue&type=template&id=2ed739df&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/TopMenu.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/utility/TopMenu.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TopMenu.vue?vue&type=template&id=daad32d4& */ "./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4&");
+/* harmony import */ var _TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TopMenu.vue?vue&type=script&lang=js& */ "./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/utility/TopMenu.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TopMenu.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TopMenu.vue?vue&type=template&id=daad32d4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/TopMenu.vue?vue&type=template&id=daad32d4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopMenu_vue_vue_type_template_id_daad32d4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

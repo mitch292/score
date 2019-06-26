@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <nav class="navbar w-100 navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar w-100 navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#">
         <router-link to='/' tag="div" exact>
           <span class="header__icon">
@@ -26,7 +26,7 @@
           </li>
           <li class="nav-item">
             <router-link to='/new'>
-              <a class="nav-link" href="#">new score card</a>
+              <a class="nav-link text-red" href="#">new score card</a>
             </router-link>
           </li>
         </ul>
@@ -37,9 +37,6 @@
 
 <script>
     export default {
-        mounted() {
-          console.log('header mounted.')
-        }
     }
 </script>
 

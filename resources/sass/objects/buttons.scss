@@ -1,0 +1,18 @@
+// overwrite default bootstrap buttons to meet our design
+.btn-primary {
+  @include button-variant(white, $deep-red, $deep-red);
+  background-color: $deep-red;
+  border-color: $deep-red;
+  color: white;
+}
+
+.btn-secondary {
+  @include button-variant(black, $light-grey, $light-grey);
+  background-color: $light-grey;
+  border-color: $light-grey;
+  color: black;
+}
+
+.btn {
+  min-width: 140px;
+}

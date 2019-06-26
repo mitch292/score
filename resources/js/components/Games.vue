@@ -1,6 +1,48 @@
 <template>
 
 	<div>
+		<utility-top-menu>
+			<button 
+				@click="toggleFilterDisplay" 
+				name="viewingTypes" 
+				class="btn btn-secondary m-4">
+				viewing type
+			</button>
+			<button
+				@click="toggleFilterDisplay" 
+				name="teams" 
+				class="btn m-4"
+				:class="Object.values(this.appliedFilters.teams).filter(team => team).length ? 'btn-primary' : 'btn-secondary'">
+				team
+			</button>
+			<button 
+				@click="toggleFilterDisplay" 
+				name="scoringTypes" 
+				class="btn btn-secondary m-4">
+				scoring type
+			</button>
+		</utility-top-menu>
+		<!-- TODO: THIS SHOULD BE ABSTRACTED OUT INTO A FILTER COMPONENT -->
+		<utility-drop-down 
+			v-if="this.filterToggles.viewingTypes" 
+			keyName="type" 
+			:items="this.viewingTypes"
+			filter="viewingTypes">
+		</utility-drop-down>
+		<utility-drop-down 
+			v-if="this.filterToggles.teams" 
+			keyName="name" 
+			:items="this.teams"
+			@applyFilter="applyFilter"
+			filter="teams">
+		</utility-drop-down>
+		<utility-drop-down 
+			v-if="this.filterToggles.scoringTypes" 
+			keyName="type" 
+			:items="this.scoringTypes"
+			filter="scoringTypes">
+		</utility-drop-down>
+		<!------------------- END OF COMPONENT ABSTRACTION ------------------------>
 
 		<utility-card v-for="game in games" class="game-card" :key="game.id">
 
@@ -29,7 +71,7 @@
 						viewing type:
 					</div>
 					<div class="info-data">
-						{{game.viewType || 'N/A'}}
+						{{game.viewType.type || 'N/A'}}
 					</div>
 				</span>
 				<span class="info-box col-sm-3 d-inline-block">
@@ -45,7 +87,7 @@
 						scoring type:
 					</div>
 					<div class="info-data">
-						{{game.scoringType}}
+						{{game.scoringType.type}}
 					</div>
 				</span>
 				</div>
@@ -59,23 +101,56 @@
 </template>
 
 <script>
-import utilityCard from './utility/Card.vue';
+import UtilityCard from './utility/Card.vue';
+import UtilityTopMenu from './utility/TopMenu.vue';
+import UtilityDropDown from './utility/DropDown.vue';
+
+// DUMMY DATA
+import { games, viewingTypes, scoringTypes, teams } from '../../../exampleGameData.js';
+// TO DELETE EVENTUALL
 
 export default {
-	// currently dummy data that will come from a call to the server
-	data() {
-		return {
-			games: require('../../../exampleGameData.js').data
+	// currently dummy data that will come from a call to the server, event the types below
+	methods: {
+		toggleFilterDisplay(event) {
+			this.filterToggles[event.target.name] = !this.filterToggles[event.target.name];
+		},
+		applyFilter(filterName, id, value) {
+			this.appliedFilters[filterName][id] = value;
 		}
 	},
-	mounted() {
-		console.log('the games are mounted');
+	data() {
+		return {
+			games: games,
+			viewingTypes: viewingTypes,
+			// this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams
+			teams: teams, 
+			scoringTypes: scoringTypes,
+			filterToggles: {
+				teams: false,
+				viewingTypes: false,
+				scoringTypes: false,
+			},
+			appliedFilters: {
+				teams: {},
+				viewingTypes: {},
+				scoringTypes: {}
+			}
+		}
 	},
-	components: {utilityCard}
+	components: { UtilityCard, UtilityTopMenu, UtilityDropDown }
 }
 </script>
 
 <style>
+
+.game-filter__btn {
+	padding: .5rem;
+	color: white;
+	border-radius: 4px;
+	margin: 1rem;
+	min-width: 8rem;
+}
 
 .game-card {
 	cursor: pointer;

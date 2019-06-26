@@ -1,0 +1,7 @@
+.score-dropdown {
+  @extend .top-menu;
+
+  &__item {
+    margin: 1rem;
+  }
+}

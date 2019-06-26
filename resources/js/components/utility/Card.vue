@@ -12,9 +12,6 @@
 
 <script>
   export default {
-    mounted() {
-      console.log('hello, card');
-    }
   }
 </script>
 
