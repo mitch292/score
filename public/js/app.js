@@ -11619,21 +11619,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility/Card.vue */ "./resources/js/components/utility/Card.vue");
 /* harmony import */ var _utility_TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utility/TopMenu.vue */ "./resources/js/components/utility/TopMenu.vue");
-/* harmony import */ var _utility_DropDown_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utility/DropDown.vue */ "./resources/js/components/utility/DropDown.vue");
+/* harmony import */ var _utility_Filter_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utility/Filter.vue */ "./resources/js/components/utility/Filter.vue");
 /* harmony import */ var _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../exampleGameData.js */ "./exampleGameData.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -11733,7 +11720,7 @@ __webpack_require__.r(__webpack_exports__);
   // currently dummy data that will come from a call to the server, event the types below
   methods: {
     toggleFilterDisplay: function toggleFilterDisplay(event) {
-      this.filterToggles[event.target.name] = !this.filterToggles[event.target.name];
+      this.filterToShow = this.filterToShow === event.target.name ? null : event.target.name;
     },
     applyFilter: function applyFilter(filterName, id, value) {
       this.appliedFilters[filterName][id] = value;
@@ -11743,14 +11730,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       games: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["games"],
       viewingTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["viewingTypes"],
-      // this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams
+      // this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams or a computed propery
       teams: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["teams"],
       scoringTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["scoringTypes"],
-      filterToggles: {
-        teams: false,
-        viewingTypes: false,
-        scoringTypes: false
-      },
+      filterToShow: null,
       appliedFilters: {
         teams: {},
         viewingTypes: {},
@@ -11758,10 +11741,27 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  computed: {
+    toFilter: function toFilter() {
+      return [{
+        keyName: 'type',
+        list: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["viewingTypes"],
+        listName: 'viewingTypes'
+      }, {
+        keyName: 'type',
+        list: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["scoringTypes"],
+        listName: 'scoringTypes'
+      }, {
+        keyName: 'name',
+        list: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_3__["teams"],
+        listName: 'teams'
+      }];
+    }
+  },
   components: {
     UtilityCard: _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     UtilityTopMenu: _utility_TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    UtilityDropDown: _utility_DropDown_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    UtilityFilter: _utility_Filter_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 
@@ -11899,6 +11899,50 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/Filter.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/Filter.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropDown.vue */ "./resources/js/components/utility/DropDown.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    UtilityDropdown: _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    items: Array,
+    filterToShow: String
+  },
+  computed: {
+    displayedItems: function displayedItems() {
+      var _this = this;
+
+      return this.items.filter(function (item) {
+        return item.listName === _this.filterToShow;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/TopMenu.vue?vue&type=script&lang=js& ***!
@@ -11908,6 +11952,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -47928,32 +47973,9 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      this.filterToggles.viewingTypes
-        ? _c("utility-drop-down", {
-            attrs: {
-              keyName: "type",
-              items: this.viewingTypes,
-              filter: "viewingTypes"
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      this.filterToggles.teams
-        ? _c("utility-drop-down", {
-            attrs: { keyName: "name", items: this.teams, filter: "teams" },
-            on: { applyFilter: _vm.applyFilter }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      this.filterToggles.scoringTypes
-        ? _c("utility-drop-down", {
-            attrs: {
-              keyName: "type",
-              items: this.scoringTypes,
-              filter: "scoringTypes"
-            }
-          })
-        : _vm._e(),
+      _c("utility-filter", {
+        attrs: { filterToShow: this.filterToShow, items: this.toFilter }
+      }),
       _vm._v(" "),
       _vm._l(_vm.games, function(game) {
         return _c(
@@ -48284,6 +48306,39 @@ var render = function() {
       ])
     }),
     0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(this.displayedItems, function(item, index) {
+      return _c("utility-dropdown", {
+        key: index,
+        attrs: { items: item.list, keyName: item.keyName }
+      })
+    }),
+    1
   )
 }
 var staticRenderFns = []
@@ -63688,6 +63743,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropDown_vue_vue_type_template_id_2ed739df___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/Filter.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/utility/Filter.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Filter.vue?vue&type=template&id=54713f26& */ "./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26&");
+/* harmony import */ var _Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Filter.vue?vue&type=script&lang=js& */ "./resources/js/components/utility/Filter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/utility/Filter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/Filter.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/utility/Filter.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Filter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/Filter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Filter.vue?vue&type=template&id=54713f26& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utility/Filter.vue?vue&type=template&id=54713f26&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_54713f26___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
