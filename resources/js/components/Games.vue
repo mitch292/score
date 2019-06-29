@@ -2,7 +2,6 @@
 	<div>
 
 		<utility-filter 
-			:filterToShow="this.filterToShow" 
 			:items="this.toFilter"
 		></utility-filter>
 
@@ -63,7 +62,6 @@
 
 <script>
 import UtilityCard from './utility/Card.vue';
-import UtilityTopMenu from './utility/TopMenu.vue';
 import UtilityFilter from './utility/Filter.vue';
 
 // DUMMY DATA
@@ -72,11 +70,6 @@ import { games, viewingTypes, scoringTypes, teams } from '../../../exampleGameDa
 
 export default {
 	// currently dummy data that will come from a call to the server, event the types below
-	methods: {
-		applyFilter(filterName, id, value) {
-			this.appliedFilters[filterName][id] = value;
-		}
-	},
 	data() {
 		return {
 			games: games,
@@ -84,12 +77,6 @@ export default {
 			// this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams or a computed propery
 			teams: teams, 
 			scoringTypes: scoringTypes,
-			filterToShow: null,
-			appliedFilters: {
-				teams: {},
-				viewingTypes: {},
-				scoringTypes: {}
-			}
 		}
 	},
 	computed: {
@@ -113,7 +100,7 @@ export default {
 			];
 		}
 	},
-	components: { UtilityCard, UtilityTopMenu, UtilityFilter }
+	components: { UtilityCard, UtilityFilter }
 }
 </script>
 

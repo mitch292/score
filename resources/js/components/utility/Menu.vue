@@ -1,6 +1,6 @@
   // TODO: this should just be a menu component
 <template>
-  <div class="top-menu">
+  <div class="score-menu">
     <slot></slot>
   </div>
 </template>

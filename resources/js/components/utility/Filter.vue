@@ -1,7 +1,7 @@
 <template>
   <div>
 
-	<utility-top-menu>
+	<utility-menu>
 		<button
 			v-for="(item, index) in this.items"
 			@click="toggleFilterDisplay" 
@@ -10,7 +10,7 @@
 			class="btn btn-secondary m-4">
 			{{item.list.displayName}}
 		</button>
-	</utility-top-menu>
+	</utility-menu>
 
 
 	<utility-dropdown
@@ -18,20 +18,31 @@
 	  :key="index"
 	  :items="item.list.content"
 	  :keyName="item.keyName"
+	  :filter="item.listName"
+	  @applyFilter="applyFilter"
 	>
 	</utility-dropdown>
-	
+
   </div>
 </template>
 
 <script>
 import UtilityDropdown from './DropDown.vue'
-import UtilityTopMenu from './TopMenu.vue';
+import UtilityMenu from './Menu.vue';
 export default {
-	components: {UtilityDropdown, UtilityTopMenu},
+	components: {UtilityDropdown, UtilityMenu},
+	data() {
+		return {
+			filterToShow: null,
+			appliedFilters: {
+				teams: {},
+				viewingTypes: {},
+				scoringTypes: {}
+			}
+		}
+	},
 	props: {
 		items: Array,
-		filterToShow: String,
 	},
 	computed: {
 		displayedItems: function() {
@@ -43,6 +54,10 @@ export default {
 			this.filterToShow = this.filterToShow === event.target.name 
 				? null 
 				: event.target.name;
+		},
+		applyFilter(filterName, id, value) {
+			console.log('hello', filterName, id, value)
+			this.appliedFilters[filterName][id] = value;
 		}
 	}
 }

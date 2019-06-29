@@ -1,6 +1,6 @@
 <template>
 
-  <div class="top-menu">
+  <div class="score-menu">
     <span v-for="item in items" :key="item.id" class="score-dropdown__item">
       <input 
         type="checkbox"
