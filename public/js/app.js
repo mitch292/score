@@ -169,47 +169,56 @@ var games = [{
   } // this will eventually become an enum/int
 
 }];
-var viewingTypes = [{
-  id: 1,
-  type: 'in-person'
-}, {
-  id: 2,
-  type: 'television'
-}, {
-  id: 3,
-  type: 'radio'
-}, {
-  id: 4,
-  type: 'other'
-}];
-var teams = [{
-  id: 1,
-  name: 'Yankees',
-  logo: 'tbd path'
-}, {
-  id: 2,
-  name: 'Nationals',
-  logo: "path tbd"
-}, {
-  id: 3,
-  name: 'Mets',
-  logo: 'tbd path'
-}, {
-  id: 4,
-  name: 'Rays',
-  logo: 'tbd path'
-}, {
-  id: 5,
-  name: 'Blue Jays',
-  logo: 'tbd path'
-}];
-var scoringTypes = [{
-  id: 1,
-  type: 'official'
-}, {
-  id: 2,
-  type: 'personal'
-}];
+var viewingTypes = {
+  displayName: 'viewing type',
+  content: [{
+    id: 1,
+    type: 'in-person'
+  }, {
+    id: 2,
+    type: 'television'
+  }, {
+    id: 3,
+    type: 'radio'
+  }, {
+    id: 4,
+    type: 'other'
+  }]
+};
+var teams = {
+  displayName: 'teams',
+  content: [{
+    id: 1,
+    name: 'Yankees',
+    logo: 'tbd path'
+  }, {
+    id: 2,
+    name: 'Nationals',
+    logo: "path tbd"
+  }, {
+    id: 3,
+    name: 'Mets',
+    logo: 'tbd path'
+  }, {
+    id: 4,
+    name: 'Rays',
+    logo: 'tbd path'
+  }, {
+    id: 5,
+    name: 'Blue Jays',
+    logo: 'tbd path'
+  }]
+};
+var scoringTypes = {
+  displayName: 'scoring types',
+  content: [{
+    id: 1,
+    type: 'official'
+  }, {
+    id: 2,
+    type: 'personal'
+  }]
+};
 
 /***/ }),
 
@@ -11684,32 +11693,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
  // DUMMY DATA
@@ -11719,9 +11702,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   // currently dummy data that will come from a call to the server, event the types below
   methods: {
-    toggleFilterDisplay: function toggleFilterDisplay(event) {
-      this.filterToShow = this.filterToShow === event.target.name ? null : event.target.name;
-    },
     applyFilter: function applyFilter(filterName, id, value) {
       this.appliedFilters[filterName][id] = value;
     }
@@ -11909,6 +11889,21 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropDown.vue */ "./resources/js/components/utility/DropDown.vue");
+/* harmony import */ var _TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TopMenu.vue */ "./resources/js/components/utility/TopMenu.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11922,9 +11917,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    UtilityDropdown: _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    UtilityDropdown: _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    UtilityTopMenu: _TopMenu_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
     items: Array,
@@ -11937,6 +11934,11 @@ __webpack_require__.r(__webpack_exports__);
       return this.items.filter(function (item) {
         return item.listName === _this.filterToShow;
       });
+    }
+  },
+  methods: {
+    toggleFilterDisplay: function toggleFilterDisplay(event) {
+      this.filterToShow = this.filterToShow === event.target.name ? null : event.target.name;
     }
   }
 });
@@ -47934,45 +47936,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("utility-top-menu", [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-secondary m-4",
-            attrs: { name: "viewingTypes" },
-            on: { click: _vm.toggleFilterDisplay }
-          },
-          [_vm._v("\n\t\t\tviewing type\n\t\t")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn m-4",
-            class: Object.values(this.appliedFilters.teams).filter(function(
-              team
-            ) {
-              return team
-            }).length
-              ? "btn-primary"
-              : "btn-secondary",
-            attrs: { name: "teams" },
-            on: { click: _vm.toggleFilterDisplay }
-          },
-          [_vm._v("\n\t\t\tteam\n\t\t")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-secondary m-4",
-            attrs: { name: "scoringTypes" },
-            on: { click: _vm.toggleFilterDisplay }
-          },
-          [_vm._v("\n\t\t\tscoring type\n\t\t")]
-        )
-      ]),
-      _vm._v(" "),
       _c("utility-filter", {
         attrs: { filterToShow: this.filterToShow, items: this.toFilter }
       }),
@@ -48332,13 +48295,32 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(this.displayedItems, function(item, index) {
-      return _c("utility-dropdown", {
-        key: index,
-        attrs: { items: item.list, keyName: item.keyName }
+    [
+      _c(
+        "utility-top-menu",
+        _vm._l(this.items, function(item, index) {
+          return _c(
+            "button",
+            {
+              key: index,
+              staticClass: "btn btn-secondary m-4",
+              attrs: { name: item.listName },
+              on: { click: _vm.toggleFilterDisplay }
+            },
+            [_vm._v("\n\t\t\t" + _vm._s(item.list.displayName) + "\n\t\t")]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm._l(this.displayedItems, function(item, index) {
+        return _c("utility-dropdown", {
+          key: index,
+          attrs: { items: item.list.content, keyName: item.keyName }
+        })
       })
-    }),
-    1
+    ],
+    2
   )
 }
 var staticRenderFns = []

@@ -78,61 +78,70 @@ export const games = [
   }
 ];
 
-export const viewingTypes = [
-  {
-    id: 1, 
-    type: 'in-person'
-  },
-  {
-    id: 2, 
-    type: 'television'
-  },
-  {
-    id: 3, 
-    type: 'radio'
-  },
-  {
-    id: 4, 
-    type: 'other'
-  },
-
-]
-
-export const teams = [
-  {
-    id: 1,
-    name: 'Yankees',
-    logo: 'tbd path'
-  },
-  {
-    id: 2,
-    name: 'Nationals',
-    logo: `path tbd`,
-  },
-  {
-    id: 3,
-    name: 'Mets',
-    logo: 'tbd path'
-  },
+export const viewingTypes = {
+  displayName: 'viewing type',
+  content: [
     {
-    id: 4,
-    name: 'Rays',
-    logo: 'tbd path'
-  },
-  {
-    id: 5,
-    name: 'Blue Jays',
-    logo: 'tbd path',
-  }
-]
+      id: 1, 
+      type: 'in-person'
+    },
+    {
+      id: 2, 
+      type: 'television'
+    },
+    {
+      id: 3, 
+      type: 'radio'
+    },
+    {
+      id: 4, 
+      type: 'other'
+    },
 
-export const scoringTypes = [
-  {
-    id: 1,
-    type: 'official'
-  },
-  {
-    id: 2,
-    type: 'personal'
-  }
-]
+  ]
+};
+
+export const teams = {
+  displayName: 'teams',
+  content: [
+    {
+      id: 1,
+      name: 'Yankees',
+      logo: 'tbd path'
+    },
+    {
+      id: 2,
+      name: 'Nationals',
+      logo: `path tbd`,
+    },
+    {
+      id: 3,
+      name: 'Mets',
+      logo: 'tbd path'
+    },
+      {
+      id: 4,
+      name: 'Rays',
+      logo: 'tbd path'
+    },
+    {
+      id: 5,
+      name: 'Blue Jays',
+      logo: 'tbd path',
+    }
+  ]
+};
+
+export const scoringTypes = {
+    displayName: 'scoring types',
+    content: [
+    {
+      id: 1,
+      type: 'official'
+    },
+    {
+      id: 2,
+      type: 'personal'
+    }
+  ]
+}

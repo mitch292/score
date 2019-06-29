@@ -1,31 +1,6 @@
 <template>
-
 	<div>
-		<!-- THIS NEEDS TO BECOME PART OF THE FILTER COMPONENT -->
-		<utility-top-menu>
-			<button 
-				@click="toggleFilterDisplay" 
-				name="viewingTypes" 
-				class="btn btn-secondary m-4">
-				viewing type
-			</button>
-			<button
-				@click="toggleFilterDisplay" 
-				name="teams" 
-				class="btn m-4"
-				:class="Object.values(this.appliedFilters.teams).filter(team => team).length ? 'btn-primary' : 'btn-secondary'">
-				team
-			</button>
-			<button 
-				@click="toggleFilterDisplay" 
-				name="scoringTypes" 
-				class="btn btn-secondary m-4">
-				scoring type
-			</button>
-		</utility-top-menu>
 
-		<!-- END THIS NEEDS TO BECOME PART OF THE FILTER COMPONENT -->
-		
 		<utility-filter 
 			:filterToShow="this.filterToShow" 
 			:items="this.toFilter"
@@ -84,7 +59,6 @@
 		</utility-card>
 
 	</div>
-
 </template>
 
 <script>
@@ -99,11 +73,6 @@ import { games, viewingTypes, scoringTypes, teams } from '../../../exampleGameDa
 export default {
 	// currently dummy data that will come from a call to the server, event the types below
 	methods: {
-		toggleFilterDisplay(event) {
-			this.filterToShow = this.filterToShow === event.target.name 
-				? null 
-				: event.target.name;
-		},
 		applyFilter(filterName, id, value) {
 			this.appliedFilters[filterName][id] = value;
 		}
