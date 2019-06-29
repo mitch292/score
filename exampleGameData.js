@@ -14,7 +14,7 @@ export const games = [
       }
     ],
     winnerId: 1,
-    viewType: {
+    viewingType: {
       id: 1,
       type: 'in-person'
     }, // this will eventually become an enum/int
@@ -39,7 +39,7 @@ export const games = [
       }
     ],
     winnerId: 2,
-    viewType: {
+    viewingType: {
       id: 3,
       type: 'radio'
     },  // this will eventually become an enum/int
@@ -65,7 +65,7 @@ export const games = [
       }
     ],
     winnerId: 5,
-    viewType: {
+    viewingType: {
       id: 4,
       type: 'other'
     }, // this will eventually become an enum/int

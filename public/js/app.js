@@ -111,7 +111,7 @@ var games = [{
     logo: 'path tbd'
   }],
   winnerId: 1,
-  viewType: {
+  viewingType: {
     id: 1,
     type: 'in-person'
   },
@@ -134,7 +134,7 @@ var games = [{
     logo: 'tbd path'
   }],
   winnerId: 2,
-  viewType: {
+  viewingType: {
     id: 3,
     type: 'radio'
   },
@@ -157,7 +157,7 @@ var games = [{
     logo: 'tbd path'
   }],
   winnerId: 5,
-  viewType: {
+  viewingType: {
     id: 4,
     type: 'other'
   },
@@ -11691,6 +11691,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
  // DUMMY DATA
 
@@ -11698,13 +11699,49 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // currently dummy data that will come from a call to the server, event the types below
+  methods: {
+    newFilter: function newFilter(newData) {
+      this.appliedFilters = newData;
+      this.filterGames();
+    },
+    filterGames: function filterGames() {
+      var _this = this;
+
+      this.filteredGames = this.games.filter(function (game) {
+        return _this.teamsFilter(game) && _this.viewingTypesFilter(game) && _this.scoringTypesFilter(game);
+      });
+    },
+    teamsFilter: function teamsFilter(game) {
+      if (!_.isEmpty(this.appliedFilters.teams)) {
+        return _.includes(this.appliedFilters.teams, game.teams[0].id) || _.includes(this.appliedFilters.teams, game.teams[1].id);
+      }
+
+      return true;
+    },
+    viewingTypesFilter: function viewingTypesFilter(game) {
+      if (!_.isEmpty(this.appliedFilters.viewingTypes)) {
+        return _.includes(this.appliedFilters.viewingTypes, game.viewingType.id);
+      }
+
+      return true;
+    },
+    scoringTypesFilter: function scoringTypesFilter(game) {
+      if (!_.isEmpty(this.appliedFilters.scoringTypes)) {
+        return _.includes(this.appliedFilters.scoringTypes, game.scoringType.id);
+      }
+
+      return true;
+    }
+  },
   data: function data() {
     return {
       games: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["games"],
       viewingTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["viewingTypes"],
       // this should be dynamic based on the teams in games data, maybe a function called when component mounts to get teams or a computed propery
       teams: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["teams"],
-      scoringTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["scoringTypes"]
+      scoringTypes: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["scoringTypes"],
+      appliedFilters: {},
+      filteredGames: _exampleGameData_js__WEBPACK_IMPORTED_MODULE_2__["games"]
     };
   },
   computed: {
@@ -11849,15 +11886,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     items: Array,
     keyName: String,
     filter: String
   },
-  methods: {
-    reportClick: function reportClick(id) {
-      this.$emit('applyFilter', this.filter, id, event.target.checked);
+  data: function data() {
+    return {
+      selectedIds: []
+    };
+  },
+  watch: {
+    selectedIds: function selectedIds() {
+      this.$emit('applyFilter', this.filter, this.selectedIds);
     }
   }
 });
@@ -11913,10 +11956,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       filterToShow: null,
-      appliedFilters: {
-        teams: {},
-        viewingTypes: {},
-        scoringTypes: {}
+      appliedFilters: {// teams: {},
+        // viewingTypes: {},
+        // scoringTypes: {}
       }
     };
   },
@@ -11936,9 +11978,14 @@ __webpack_require__.r(__webpack_exports__);
     toggleFilterDisplay: function toggleFilterDisplay(event) {
       this.filterToShow = this.filterToShow === event.target.name ? null : event.target.name;
     },
-    applyFilter: function applyFilter(filterName, id, value) {
-      console.log('hello', filterName, id, value);
-      this.appliedFilters[filterName][id] = value;
+    applyFilter: function applyFilter(filterName, ids) {
+      var filters = {};
+      ids.forEach(function (id) {
+        filters[id[0]] ? filters[id[0]].push(id[1]) : filters[id[0]] = [id[1]];
+      });
+      this.appliedFilters = filters; // ids.forEach(id => this.appliedFilters[filterName][id] = true);
+
+      this.$emit('newFilter', this.appliedFilters);
     }
   }
 });
@@ -47936,9 +47983,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("utility-filter", { attrs: { items: this.toFilter } }),
+      _c("utility-filter", {
+        attrs: { items: this.toFilter },
+        on: { newFilter: _vm.newFilter }
+      }),
       _vm._v(" "),
-      _vm._l(_vm.games, function(game) {
+      _vm._l(_vm.filteredGames, function(game) {
         return _c(
           "utility-card",
           { key: game.id, staticClass: "game-card" },
@@ -48002,7 +48052,7 @@ var render = function() {
                     _c("div", { staticClass: "info-data" }, [
                       _vm._v(
                         "\n\t\t\t\t\t" +
-                          _vm._s(game.viewType.type || "N/A") +
+                          _vm._s(game.viewingType.type || "N/A") +
                           "\n\t\t\t\t"
                       )
                     ])
@@ -48255,11 +48305,41 @@ var render = function() {
     _vm._l(_vm.items, function(item) {
       return _c("span", { key: item.id, staticClass: "score-dropdown__item" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedIds,
+              expression: "selectedIds"
+            }
+          ],
           staticClass: "mr-1",
           attrs: { type: "checkbox", name: "item[keyName]" },
+          domProps: {
+            value: [_vm.filter, item.id],
+            checked: Array.isArray(_vm.selectedIds)
+              ? _vm._i(_vm.selectedIds, [_vm.filter, item.id]) > -1
+              : _vm.selectedIds
+          },
           on: {
             change: function($event) {
-              return _vm.reportClick(item.id)
+              var $$a = _vm.selectedIds,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = [_vm.filter, item.id],
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.selectedIds = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.selectedIds = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.selectedIds = $$c
+              }
             }
           }
         }),

@@ -35,9 +35,9 @@ export default {
 		return {
 			filterToShow: null,
 			appliedFilters: {
-				teams: {},
-				viewingTypes: {},
-				scoringTypes: {}
+				// teams: {},
+				// viewingTypes: {},
+				// scoringTypes: {}
 			}
 		}
 	},
@@ -55,9 +55,14 @@ export default {
 				? null 
 				: event.target.name;
 		},
-		applyFilter(filterName, id, value) {
-			console.log('hello', filterName, id, value)
-			this.appliedFilters[filterName][id] = value;
+		applyFilter(filterName, ids) {
+			let filters = {}
+			ids.forEach(id => {
+				filters[id[0]] ? filters[id[0]].push(id[1]) : filters[id[0]] = [id[1]]
+			});
+			this.appliedFilters = filters;
+			// ids.forEach(id => this.appliedFilters[filterName][id] = true);
+			this.$emit('newFilter', this.appliedFilters);
 		}
 	}
 }

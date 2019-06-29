@@ -6,7 +6,8 @@
         type="checkbox"
         name="item[keyName]"
         class="mr-1"
-        @change="reportClick(item.id)"
+        :value="[filter, item.id]"
+        v-model="selectedIds"
       >
         {{item[keyName]}}
     </span>
@@ -21,11 +22,17 @@ export default {
     keyName: String,
     filter: String
   },
-  methods: {
-    reportClick(id) {
-      this.$emit('applyFilter', this.filter, id, event.target.checked)
+  data() {
+    return {
+      selectedIds: []
     }
-  }
+  },
+  watch: {
+    selectedIds() {
+      this.$emit('applyFilter', this.filter, this.selectedIds)
+    }
+  },
+  
 
 }
 </script>
