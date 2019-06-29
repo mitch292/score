@@ -7,7 +7,7 @@
 			@click="toggleFilterDisplay" 
 			:key="index"
 			:name="item.listName"
-			class="btn btn-secondary m-4">
+			:class="['btn m-4', appliedFilters[item.listName] ? 'btn-primary' : 'btn-secondary']">
 			{{item.list.displayName}}
 		</button>
 	</utility-menu>

@@ -48381,7 +48381,12 @@ var render = function() {
             "button",
             {
               key: index,
-              staticClass: "btn btn-secondary m-4",
+              class: [
+                "btn m-4",
+                _vm.appliedFilters[item.listName]
+                  ? "btn-primary"
+                  : "btn-secondary"
+              ],
               attrs: { name: item.listName },
               on: { click: _vm.toggleFilterDisplay }
             },
