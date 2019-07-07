@@ -11764,6 +11764,13 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     UtilityCard: _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     UtilityFilter: _utility_Filter_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mounted: function mounted() {
+    window.axios.get('api/mlb/today').then(function (resp) {
+      return console.log('the resp', resp);
+    })["catch"](function (err) {
+      return console.error('err', err);
+    });
   }
 });
 
@@ -11887,11 +11894,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     items: Array,
     keyName: String,
-    filter: String
+    filter: String,
+    appliedFilters: Object
   },
   data: function data() {
     return {
@@ -11901,6 +11911,15 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     selectedIds: function selectedIds() {
       this.$emit('applyFilter', this.filter, this.selectedIds);
+    }
+  },
+  methods: {
+    isChecked: function isChecked(filterType, id) {
+      if (this.appliedFilters[filterType]) {
+        return Object.values(this.appliedFilters[filterType]).indexOf(id) >= 0;
+      }
+
+      return false;
     }
   }
 });
@@ -11918,6 +11937,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DropDown_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropDown.vue */ "./resources/js/components/utility/DropDown.vue");
 /* harmony import */ var _Menu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Menu.vue */ "./resources/js/components/utility/Menu.vue");
+//
 //
 //
 //
@@ -48317,11 +48337,15 @@ var render = function() {
           attrs: { type: "checkbox", name: "item[keyName]" },
           domProps: {
             value: [_vm.filter, item.id],
+            checked: _vm.isChecked(_vm.filter, item.id),
             checked: Array.isArray(_vm.selectedIds)
               ? _vm._i(_vm.selectedIds, [_vm.filter, item.id]) > -1
               : _vm.selectedIds
           },
           on: {
+            input: function($event) {
+              return _vm.selectedIds.push([_vm.filter, item.id])
+            },
             change: function($event) {
               var $$a = _vm.selectedIds,
                 $$el = $event.target,
@@ -48402,7 +48426,8 @@ var render = function() {
           attrs: {
             items: item.list.content,
             keyName: item.keyName,
-            filter: item.listName
+            filter: item.listName,
+            appliedFilters: _vm.appliedFilters
           },
           on: { applyFilter: _vm.applyFilter }
         })

@@ -135,7 +135,12 @@ export default {
 			];
 		}
 	},
-	components: { UtilityCard, UtilityFilter }
+	components: { UtilityCard, UtilityFilter },
+	mounted(){
+		window.axios.get('api/mlb/today')
+			.then(resp => console.log('the resp', resp))
+			.catch(err => console.error('err', err))
+	}
 }
 </script>
 

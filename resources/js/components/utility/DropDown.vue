@@ -7,7 +7,9 @@
         name="item[keyName]"
         class="mr-1"
         :value="[filter, item.id]"
+        :checked="isChecked(filter, item.id)"
         v-model="selectedIds"
+        v-on:input="selectedIds.push([filter, item.id])"
       >
         {{item[keyName]}}
     </span>
@@ -20,7 +22,8 @@ export default {
   props: {
     items: Array,
     keyName: String,
-    filter: String
+    filter: String,
+    appliedFilters: Object,
   },
   data() {
     return {
@@ -32,6 +35,14 @@ export default {
       this.$emit('applyFilter', this.filter, this.selectedIds)
     }
   },
+  methods: {
+    isChecked(filterType, id) {
+      if (this.appliedFilters[filterType]) {
+        return Object.values(this.appliedFilters[filterType]).indexOf(id) >= 0;
+      }
+      return false;
+    }
+  }
   
 
 }

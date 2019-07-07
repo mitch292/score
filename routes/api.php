@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['as' => 'mlb', 'prefix' => 'mlb'], function() {
+
+    // TODO: Wrap this in another group for something like schedule?
+    Route::get('/today', ['as' => 'todaysGames', 'uses' => 'MlbStatsController@getTodaysGames']);
+});

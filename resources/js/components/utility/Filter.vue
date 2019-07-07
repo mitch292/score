@@ -19,6 +19,7 @@
 	  :items="item.list.content"
 	  :keyName="item.keyName"
 	  :filter="item.listName"
+	  :appliedFilters="appliedFilters"
 	  @applyFilter="applyFilter"
 	>
 	</utility-dropdown>
