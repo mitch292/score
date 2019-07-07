@@ -44,4 +44,8 @@ return [
         ],
     ],
 
+    'mlb' => [
+        'api_base_url' => env('MLB_API_BASE_URL', 'http://statsapi.mlb.com/api/v1/'),
+    ]
+
 ];

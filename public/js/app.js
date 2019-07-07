@@ -11766,7 +11766,12 @@ __webpack_require__.r(__webpack_exports__);
     UtilityFilter: _utility_Filter_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   mounted: function mounted() {
-    window.axios.get('api/mlb/today').then(function (resp) {
+    window.axios.get('api/mlb/schedule/today').then(function (resp) {
+      return console.log('the resp', resp);
+    })["catch"](function (err) {
+      return console.error('err', err);
+    });
+    window.axios.get('api/mlb/game/565264').then(function (resp) {
       return console.log('the resp', resp);
     })["catch"](function (err) {
       return console.error('err', err);

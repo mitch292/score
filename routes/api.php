@@ -18,8 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['as' => 'mlb', 'prefix' => 'mlb'], function() {
+Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function() {
 
-    // TODO: Wrap this in another group for something like schedule?
-    Route::get('/today', ['as' => 'todaysGames', 'uses' => 'MlbStatsController@getTodaysGames']);
+
+    Route::group(['as' => 'schedule', 'prefix' => 'schedule'], function() {
+
+        Route::get('/today', ['as' => 'today', 'uses' => 'ScheduleController@fetchTodaysGames']);
+    
+    });
+
+    Route::group(['as' => 'game', 'prefix' => 'game'], function() {
+
+        Route::get('/{gameId}', ['as' => 'data', 'uses' => 'GameController@fetchGameData']);
+
+    });
+
 });
