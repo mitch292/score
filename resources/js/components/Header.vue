@@ -16,7 +16,7 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <router-link to='/games'>
-              <a class="nav-link" href="#">games</a>
+              <a class="nav-link" href="#">my games</a>
             </router-link>
           </li>
           <li class="nav-item">
@@ -27,6 +27,11 @@
           <li class="nav-item">
             <router-link to='/new'>
               <a class="nav-link text-red" href="#">new score card</a>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to='/schedule'>
+              <a class="nav-link text-red" href="#">mlb schedule</a>
             </router-link>
           </li>
         </ul>

@@ -8,6 +8,10 @@ let routes = [
   {
     path: '/games',
     component: require('./components/Games.vue').default
+  },
+  {
+    path: '/schedule',
+    component: require('./components/Schedule.vue').default
   }
 ];
 

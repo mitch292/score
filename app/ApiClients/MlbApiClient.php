@@ -4,8 +4,6 @@ namespace App\ApiClients;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use Carbon\Carbon;
-
 
 class MlbApiClient
 {
@@ -15,11 +13,6 @@ class MlbApiClient
         $this->client = new Client([
             'base_uri' => config('services.mlb.api_base_url')
         ]);
-    }
-
-    public function fetchTodaysGames()
-    {
-        return $this->fetchGamesForDate(Carbon::today()->format('m/d/Y'));
     }
 
     public function fetchGamesForDate($date)
@@ -32,7 +25,7 @@ class MlbApiClient
             ]
         ]);
 
-        return $response->getBody()->getContents();
+        return json_decode($response->getBody()->getContents())->dates[0]->games;
     }
 
     public function fetchGameData($gameId)

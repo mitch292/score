@@ -135,16 +135,7 @@ export default {
 			];
 		}
 	},
-	components: { UtilityCard, UtilityFilter },
-	mounted(){
-		window.axios.get('api/mlb/schedule/today')
-			.then(resp => console.log('the resp', resp))
-			.catch(err => console.error('err', err))
-
-		window.axios.get('api/mlb/game/565264')
-			.then(resp => console.log('the resp', resp))
-			.catch(err => console.error('err', err))
-	}
+	components: { UtilityCard, UtilityFilter }
 }
 </script>
 
