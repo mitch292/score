@@ -11913,7 +11913,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     // TODO: Remove --> this is for testing functions
-    window.axios.get('api/mlb/schedule/today').then(function (resp) {
+    window.axios.get('api/mlb/schedule/07-06-2019').then(function (resp) {
+      console.log('the resp', resp);
       _this.games = resp.data;
     })["catch"](function (err) {
       return console.error('err', err);

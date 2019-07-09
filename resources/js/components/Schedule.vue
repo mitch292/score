@@ -34,8 +34,9 @@ export default {
   },
 	mounted() {
 		// TODO: Remove --> this is for testing functions
-		window.axios.get('api/mlb/schedule/today')
+		window.axios.get('api/mlb/schedule/07-06-2019')
 			.then(resp => {
+				console.log('the resp', resp)
 				this.games = resp.data;
 	  		})
 			.catch(err => console.error('err', err))
