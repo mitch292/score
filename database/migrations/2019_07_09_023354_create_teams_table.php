@@ -17,7 +17,7 @@ class CreateTeamsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('external_id')->nullable(); 
-            $table->string('city')->nullable();
+            $table->string('prefix')->nullable();
             $table->string('state')->nullable();
             $table->string('ballpark_name')->nullable();
             $table->string('path_to_logo')->nullable();
