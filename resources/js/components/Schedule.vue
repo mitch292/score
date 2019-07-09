@@ -4,7 +4,13 @@
   		<utility-card v-for="game in games" :key="game.gamePk">
 			  
 			  <template slot="content">
-				  {{game.teams.away.team.name}} v. {{game.teams.home.team.name}}
+
+				<score-game 
+					:home="game.teams.home.team" 
+					:away="game.teams.away.team"
+				>
+				</score-game>
+
 			  </template>
 
 			  <template slot="bottom">
@@ -18,6 +24,7 @@
 
 <script>
 import UtilityCard from './utility/Card.vue';
+import ScoreGame from './Game.vue';
 
 export default {
   data() {
@@ -38,7 +45,7 @@ export default {
 			.catch(err => console.error('err', err))
 		// end todo
 	},
-  	components: { UtilityCard }
+  	components: { UtilityCard, ScoreGame }
 }
 
 </script>
