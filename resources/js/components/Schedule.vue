@@ -14,7 +14,9 @@
 			  </template>
 
 			  <template slot="bottom">
-				  hello
+				  <div class="text-center mt-4">
+						{{game.teams.home.quickAccess.ballpark_name}}
+					</div>
 			  </template>
   		
 		  </utility-card>

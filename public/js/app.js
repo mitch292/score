@@ -11901,6 +11901,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48488,7 +48490,13 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("template", { slot: "bottom" }, [
-            _vm._v("\n\t\t\t\t  hello\n\t\t\t  ")
+            _c("div", { staticClass: "text-center mt-4" }, [
+              _vm._v(
+                "\n\t\t\t\t\t\t" +
+                  _vm._s(game.teams.home.quickAccess.ballpark_name) +
+                  "\n\t\t\t\t\t"
+              )
+            ])
           ])
         ],
         2
