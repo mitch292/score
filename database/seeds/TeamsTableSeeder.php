@@ -17,7 +17,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Oakland',
             'state' => 'CA',
             'ballpark_name' => 'Oakland Coliseum',
-            'path_to_logo' => '/assests/images/teams/atheltics.png',
+            'path_to_logo' => '/assets/images/teams/athletics.png',
         ]);
 
         DB::table('teams')->insert([
@@ -26,7 +26,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Pittsburgh',
             'state' => 'PA',
             'ballpark_name' => 'PNC Park',
-            'path_to_logo' => '/assests/images/teams/pirates.png',
+            'path_to_logo' => '/assets/images/teams/pirates.png',
         ]);
 
         DB::table('teams')->insert([
@@ -35,7 +35,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'San Diego',
             'state' => 'CA',
             'ballpark_name' => 'Petco Park',
-            'path_to_logo' => '/assests/images/teams/padres.png',
+            'path_to_logo' => '/assets/images/teams/padres.png',
         ]);
 
         DB::table('teams')->insert([
@@ -44,7 +44,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Seattle',
             'state' => 'WA',
             'ballpark_name' => 'T-Mobile Park',
-            'path_to_logo' => '/assests/images/teams/mariners.png',
+            'path_to_logo' => '/assets/images/teams/mariners.png',
         ]);
 
         DB::table('teams')->insert([
@@ -53,7 +53,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'San Francisco',
             'state' => 'CA',
             'ballpark_name' => 'Oracle Park',
-            'path_to_logo' => '/assests/images/teams/giants.png',
+            'path_to_logo' => '/assets/images/teams/giants.png',
         ]);
 
         DB::table('teams')->insert([
@@ -62,7 +62,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'St. Louis',
             'state' => 'MO',
             'ballpark_name' => 'Busch Stadium',
-            'path_to_logo' => '/assests/images/teams/cardinals.png',
+            'path_to_logo' => '/assets/images/teams/cardinals.png',
         ]);
 
         DB::table('teams')->insert([
@@ -71,7 +71,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Tampa Bay',
             'state' => 'FL',
             'ballpark_name' => 'Tropicana Field',
-            'path_to_logo' => '/assests/images/teams/rays.png',
+            'path_to_logo' => '/assets/images/teams/rays.png',
         ]);
 
         DB::table('teams')->insert([
@@ -80,7 +80,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Texas',
             'state' => 'TX',
             'ballpark_name' => 'Globe Life Park in Arlington',
-            'path_to_logo' => '/assests/images/teams/rangers.png',
+            'path_to_logo' => '/assets/images/teams/rangers.png',
         ]);
 
         DB::table('teams')->insert([
@@ -89,7 +89,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Toronto',
             'state' => 'ON',
             'ballpark_name' => 'Rogers Centre',
-            'path_to_logo' => '/assests/images/teams/bluejays.png',
+            'path_to_logo' => '/assets/images/teams/bluejays.png',
         ]);
 
         DB::table('teams')->insert([
@@ -98,7 +98,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Minnesota',
             'state' => 'MN',
             'ballpark_name' => 'Target Field',
-            'path_to_logo' => '/assests/images/teams/twins.png',
+            'path_to_logo' => '/assets/images/teams/twins.png',
         ]);
 
         DB::table('teams')->insert([
@@ -107,7 +107,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Philadelphia',
             'state' => 'PA',
             'ballpark_name' => 'Citizens Bank Park',
-            'path_to_logo' => '/assests/images/teams/phillies.png',
+            'path_to_logo' => '/assets/images/teams/phillies.png',
         ]);
 
         DB::table('teams')->insert([
@@ -116,7 +116,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Atlanta',
             'state' => 'GA',
             'ballpark_name' => 'SunTrust Park',
-            'path_to_logo' => '/assests/images/teams/braves.png',
+            'path_to_logo' => '/assets/images/teams/braves.png',
         ]);
 
         DB::table('teams')->insert([
@@ -125,7 +125,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Chicago',
             'state' => 'IL',
             'ballpark_name' => 'Guaranteed Rate Field',
-            'path_to_logo' => '/assests/images/teams/whitesox.png',
+            'path_to_logo' => '/assets/images/teams/whitesox.png',
         ]);
 
         DB::table('teams')->insert([
@@ -134,7 +134,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Miami',
             'state' => 'FL',
             'ballpark_name' => 'Marlins Park',
-            'path_to_logo' => '/assests/images/teams/marlins.png',
+            'path_to_logo' => '/assets/images/teams/marlins.png',
         ]);
 
         DB::table('teams')->insert([
@@ -143,7 +143,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'New York',
             'state' => 'NY',
             'ballpark_name' => 'Yankee Stadium',
-            'path_to_logo' => '/assests/images/teams/yankees.png',
+            'path_to_logo' => '/assets/images/teams/yankees.png',
         ]);
 
         DB::table('teams')->insert([
@@ -152,7 +152,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Milwaukee',
             'state' => 'WI',
             'ballpark_name' => 'Miller Park',
-            'path_to_logo' => '/assests/images/teams/brewers.png',
+            'path_to_logo' => '/assets/images/teams/brewers.png',
         ]);
 
         DB::table('teams')->insert([
@@ -161,7 +161,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Los Angeles',
             'state' => 'CA',
             'ballpark_name' => 'Angel Stadium',
-            'path_to_logo' => '/assests/images/teams/angels.png',
+            'path_to_logo' => '/assets/images/teams/angels.png',
         ]);
 
         DB::table('teams')->insert([
@@ -170,7 +170,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Arizona',
             'state' => 'AZ',
             'ballpark_name' => 'Chase Field',
-            'path_to_logo' => '/assests/images/teams/diamondbacks.png',
+            'path_to_logo' => '/assets/images/teams/diamondbacks.png',
         ]);
 
         DB::table('teams')->insert([
@@ -179,7 +179,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Baltimore',
             'state' => 'MD',
             'ballpark_name' => 'Oriole Park at Camden Yards',
-            'path_to_logo' => '/assests/images/teams/orioles.png',
+            'path_to_logo' => '/assets/images/teams/orioles.png',
         ]);
 
         DB::table('teams')->insert([
@@ -188,7 +188,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Boston',
             'state' => 'MA',
             'ballpark_name' => 'Fenway Park',
-            'path_to_logo' => '/assests/images/teams/redsox.png',
+            'path_to_logo' => '/assets/images/teams/redsox.png',
         ]);
 
         DB::table('teams')->insert([
@@ -197,7 +197,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Chicago',
             'state' => 'IL',
             'ballpark_name' => 'Wrigley Field',
-            'path_to_logo' => '/assests/images/teams/cubs.png',
+            'path_to_logo' => '/assets/images/teams/cubs.png',
         ]);
 
         DB::table('teams')->insert([
@@ -206,7 +206,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Cincinnati',
             'state' => 'OH',
             'ballpark_name' => 'Great American Ball Park',
-            'path_to_logo' => '/assests/images/teams/reds.png',
+            'path_to_logo' => '/assets/images/teams/reds.png',
         ]);
 
         DB::table('teams')->insert([
@@ -215,7 +215,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Cleveland',
             'state' => 'OH',
             'ballpark_name' => 'Progressive Field',
-            'path_to_logo' => '/assests/images/teams/indians.png',
+            'path_to_logo' => '/assets/images/teams/indians.png',
         ]);
 
         DB::table('teams')->insert([
@@ -224,7 +224,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Colorado',
             'state' => 'CO',
             'ballpark_name' => 'Coors Field',
-            'path_to_logo' => '/assests/images/teams/rockies.png',
+            'path_to_logo' => '/assets/images/teams/rockies.png',
         ]);
 
         DB::table('teams')->insert([
@@ -233,7 +233,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Detroit',
             'state' => 'MI',
             'ballpark_name' => 'Comerica Park',
-            'path_to_logo' => '/assests/images/teams/tigers.png',
+            'path_to_logo' => '/assets/images/teams/tigers.png',
         ]);
 
         DB::table('teams')->insert([
@@ -242,7 +242,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Houston',
             'state' => 'TX',
             'ballpark_name' => 'Minute Maid Park',
-            'path_to_logo' => '/assests/images/teams/astros.png',
+            'path_to_logo' => '/assets/images/teams/astros.png',
         ]);
 
         DB::table('teams')->insert([
@@ -251,7 +251,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Kansas City',
             'state' => 'MO',
             'ballpark_name' => 'Kauffman Stadium',
-            'path_to_logo' => '/assests/images/teams/royals.png',
+            'path_to_logo' => '/assets/images/teams/royals.png',
         ]);
 
         DB::table('teams')->insert([
@@ -260,7 +260,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Los Angeles',
             'state' => 'CA',
             'ballpark_name' => 'Dodger Stadium',
-            'path_to_logo' => '/assests/images/teams/dodgers.png',
+            'path_to_logo' => '/assets/images/teams/dodgers.png',
         ]);
 
         DB::table('teams')->insert([
@@ -269,7 +269,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'Washington',
             'state' => 'DC',
             'ballpark_name' => 'Nationals Park',
-            'path_to_logo' => '/assests/images/teams/nationals.png',
+            'path_to_logo' => '/assets/images/teams/nationals.png',
         ]);
 
         DB::table('teams')->insert([
@@ -278,7 +278,7 @@ class TeamsTableSeeder extends Seeder
             'prefix' => 'New York',
             'state' => 'NY',
             'ballpark_name' => 'Citi Field',
-            'path_to_logo' => '/assests/images/teams/mets.png',
+            'path_to_logo' => '/assets/images/teams/mets.png',
         ]);
 
     }

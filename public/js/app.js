@@ -11919,11 +11919,6 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (err) {
       return console.error('err', err);
     });
-    window.axios.get('api/mlb/game/565264').then(function (resp) {
-      return console.log('the resp', resp);
-    })["catch"](function (err) {
-      return console.error('err', err);
-    }); // end todo
   },
   components: {
     UtilityCard: _utility_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -16579,7 +16574,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.game-filter__btn {\n\tpadding: .5rem;\n\tcolor: white;\n\tborder-radius: 4px;\n\tmargin: 1rem;\n\tmin-width: 8rem;\n}\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.game-team {\n\tmargin: 1rem 0;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.75rem;\n\tbox-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);\n}\n", ""]);
+exports.push([module.i, "\n.game-filter__btn {\n\tpadding: .5rem;\n\tcolor: white;\n\tborder-radius: 4px;\n\tmargin: 1rem;\n\tmin-width: 8rem;\n}\n.game-card {\n\tcursor: pointer;\n}\n.game-matchup {\n\tpadding: 4rem;\n}\n.game-team {\n\tmargin: 1rem 0;\n}\n.team-name {\n\tmargin-top: 1rem;\n\tfont-weight: 900;\n\tfont-size: 1rem;\n}\n.team-logo {\n\twidth: 8rem;\n}\n.game-vs {\n\tborder-radius: 50%;\n\tbackground-color: #e0e1e2;\n\tborder: 1px solid #e0e1e2;\n\twidth: 5rem;\n\theight: 5rem;\n\tfont-weight: 900;\n\tfont-size: 1.75rem;\n\tbox-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);\n\tmargin: 0 2rem;\n}\n", ""]);
 
 // exports
 
@@ -48144,11 +48139,19 @@ var render = function() {
       "div",
       { staticClass: "game-team align-middle col-sm-4 d-inline-block" },
       [
-        _c("font-awesome-icon", { attrs: { icon: "bath", size: "4x" } }),
+        _c("img", {
+          staticClass: "team-logo",
+          attrs: { src: _vm.away.quickAccess.path_to_logo }
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "team-name" }, [_vm._v(_vm._s(_vm.away.name))])
-      ],
-      1
+        _c("div", { staticClass: "team-name" }, [
+          _vm._v(
+            _vm._s(
+              _vm.away.quickAccess.prefix + " " + _vm.away.quickAccess.name
+            )
+          )
+        ])
+      ]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "game-vs d-inline-block p-4 text-red" }, [
@@ -48159,11 +48162,19 @@ var render = function() {
       "div",
       { staticClass: "game-team align-middle col-sm-4 d-inline-block" },
       [
-        _c("font-awesome-icon", { attrs: { icon: "user-secret", size: "4x" } }),
+        _c("img", {
+          staticClass: "team-logo",
+          attrs: { src: _vm.home.quickAccess.path_to_logo }
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "team-name" }, [_vm._v(_vm._s(_vm.home.name))])
-      ],
-      1
+        _c("div", { staticClass: "team-name" }, [
+          _vm._v(
+            _vm._s(
+              _vm.home.quickAccess.prefix + " " + _vm.home.quickAccess.name
+            )
+          )
+        ])
+      ]
     )
   ])
 }
@@ -48470,10 +48481,7 @@ var render = function() {
             { slot: "content" },
             [
               _c("score-game", {
-                attrs: {
-                  home: game.teams.home.team,
-                  away: game.teams.away.team
-                }
+                attrs: { home: game.teams.home, away: game.teams.away }
               })
             ],
             1

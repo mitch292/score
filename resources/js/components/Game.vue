@@ -1,15 +1,15 @@
 <template>
 	<div class="game-matchup text-center">
 		<div class="game-team align-middle col-sm-4 d-inline-block">
-			<font-awesome-icon icon="bath" size="4x"></font-awesome-icon>
-			<div class="team-name">{{away.name}}</div>
+			<img class="team-logo" :src="away.quickAccess.path_to_logo">
+			<div class="team-name">{{`${away.quickAccess.prefix} ${away.quickAccess.name}`}}</div>
 		</div>
 		<div class="game-vs d-inline-block p-4 text-red">
 			vs
 		</div>
 		<div class="game-team align-middle col-sm-4 d-inline-block">
-			<font-awesome-icon icon="user-secret" size="4x"></font-awesome-icon>
-			<div class="team-name">{{home.name}}</div>
+			<img class="team-logo" :src="home.quickAccess.path_to_logo">
+			<div class="team-name">{{`${home.quickAccess.prefix} ${home.quickAccess.name}`}}</div>
 		</div>
 	</div>
 </template>
@@ -39,13 +39,19 @@ export default {
 .game-matchup {
 	padding: 4rem;
 }
+
 .game-team {
 	margin: 1rem 0;
 }
+
 .team-name {
 	margin-top: 1rem;
 	font-weight: 900;
 	font-size: 1rem;
+}
+
+.team-logo {
+	width: 8rem;
 }
 
 .game-vs {
@@ -57,6 +63,6 @@ export default {
 	font-weight: 900;
 	font-size: 1.75rem;
 	box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
-
+	margin: 0 2rem;
 }
 </style>

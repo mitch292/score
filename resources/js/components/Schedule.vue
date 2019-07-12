@@ -6,8 +6,8 @@
 			  <template slot="content">
 
 				<score-game 
-					:home="game.teams.home.team" 
-					:away="game.teams.away.team"
+					:home="game.teams.home" 
+					:away="game.teams.away"
 				>
 				</score-game>
 
@@ -40,11 +40,6 @@ export default {
 				this.games = resp.data;
 	  		})
 			.catch(err => console.error('err', err))
-
-		window.axios.get('api/mlb/game/565264')
-			.then(resp => console.log('the resp', resp))
-			.catch(err => console.error('err', err))
-		// end todo
 	},
   	components: { UtilityCard, ScoreGame }
 }
