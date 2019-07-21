@@ -47,11 +47,6 @@
 		},
 		mounted() {
 			this.getTodaysGames();
-			window.axios.get('api/mlb/game/567512')
-				.then(resp => {
-					console.log('the resp', resp)
-				})
-				.catch(err => console.error('err', err))
 		},
 		components: { UtilityCard, ScoreGame }
 	}

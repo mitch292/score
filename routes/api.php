@@ -30,10 +30,4 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
     
     });
 
-    Route::group(['as' => 'game', 'prefix' => 'game'], function() {
-
-        Route::get('/{gameId}', ['as' => 'data', 'uses' => 'GameController@fetchGameData']);
-
-    });
-
 });
