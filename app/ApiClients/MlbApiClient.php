@@ -3,6 +3,7 @@
 namespace App\ApiClients;
 
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client;
 
 class MlbApiClient
@@ -28,12 +29,22 @@ class MlbApiClient
         return json_decode($response->getBody()->getContents())->dates[0]->games;
     }
 
-    // TODO: add error handling where player id is invalid
-    public function fetchPlayerDetails($playerId)
+    public function fetchPlayerDetails($playerId, $default = null)
     {
-        $response = $this->client->get('people'.$playerId);
+        $response = $this->client->get('people/'.$playerId);
 
-        return json_decode($response->getBody()->getContents());
+        try {
+            $players = json_decode($response->getBody()->getContents());
+    
+            if ($players->people) {
+                return $players->people[0];
+            }
+    
+            return $default;
+        } catch (RequestException $e) {
+            return $default;
+        }
+
     }
 
 }

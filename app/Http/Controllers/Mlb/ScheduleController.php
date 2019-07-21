@@ -10,7 +10,6 @@ class ScheduleController extends BaseController
 {
     public function fetchTodaysGames()
     {
-        \Debugbar::addMessage('hello sched');
         return $this->fetchGamesForDate(Carbon::today());
     }
 
