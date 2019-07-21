@@ -25,26 +25,36 @@
 </template>
 
 <script>
-import UtilityCard from './utility/Card.vue';
-import ScoreGame from './Game.vue';
 
-export default {
-  data() {
-	return {
-	  games: []
+	import UtilityCard from './utility/Card.vue';
+	import ScoreGame from './Game.vue';
+
+	export default {
+		data() {
+			return {
+				games: []
+			}
+		},
+		methods: {
+			getTodaysGames: function() {
+				window.axios.get('api/mlb/schedule/today')
+					.then(resp => {
+						console.log('the resp', resp)
+						this.games = resp.data;
+					})
+					.catch(err => console.error('err', err))
+			}
+		},
+		mounted() {
+			this.getTodaysGames();
+			window.axios.get('api/mlb/game/567512')
+				.then(resp => {
+					console.log('the resp', resp)
+				})
+				.catch(err => console.error('err', err))
+		},
+		components: { UtilityCard, ScoreGame }
 	}
-  },
-	mounted() {
-		// TODO: Remove --> this is for testing functions
-		window.axios.get('api/mlb/schedule/07-06-2019')
-			.then(resp => {
-				console.log('the resp', resp)
-				this.games = resp.data;
-	  		})
-			.catch(err => console.error('err', err))
-	},
-  	components: { UtilityCard, ScoreGame }
-}
 
 </script>
 

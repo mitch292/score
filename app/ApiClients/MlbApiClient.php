@@ -28,12 +28,12 @@ class MlbApiClient
         return json_decode($response->getBody()->getContents())->dates[0]->games;
     }
 
-    public function fetchGameData($gameId)
+    // TODO: add error handling where player id is invalid
+    public function fetchPlayerDetails($playerId)
     {
-        $requestUri = 'game/'.$gameId.'/boxscore';
+        $response = $this->client->get('people'.$playerId);
 
-        $response = $this->client->get($requestUri);
-
-        return $response->getBody()->getContents();
+        return json_decode($response->getBody()->getContents());
     }
+
 }

@@ -10,6 +10,7 @@ class ScheduleController extends BaseController
 {
     public function fetchTodaysGames()
     {
+        \Debugbar::addMessage('hello sched');
         return $this->fetchGamesForDate(Carbon::today());
     }
 
@@ -19,10 +20,10 @@ class ScheduleController extends BaseController
 
         $games = $this->mlbApi->fetchGamesForDate($date);
 
-        return $this->appendQuickAccessGameData($games);
+        return $this->appendQuickAccessTeamData($games);
     }
 
-    private function appendQuickAccessGameData($games)
+    private function appendQuickAccessTeamData($games)
     {
         foreach ($games as $game) {
             $game->teams->away->quickAccess = Team::where('external_id', $game->teams->away->team->id)->first();
