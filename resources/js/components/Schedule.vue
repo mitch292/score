@@ -21,8 +21,7 @@
 						{{ `${game.gameData.datetime.time} ${game.gameData.datetime.ampm}` }}
 					</div>
 					<div class="mt-2">
-						{{ `${game.gameData.pitchers.away.full_name} v. 
-						${game.gameData.pitchers.home.full_name}` }}
+						{{ getPitchingMatchup(game) }}
 					</div>
 				</div>
 			</template>
@@ -51,6 +50,10 @@
 						this.games = resp.data;
 					})
 					.catch(err => console.error('err', err))
+			},
+			getPitchingMatchup: function(game) {
+				return `${_.get(game.gameData.pitchers.away, 'full_name', 'TBD')} v. 
+						${_.get(game.gameData.pitchers.home, 'full_name', 'TBD')}`;
 			}
 		},
 		mounted() {

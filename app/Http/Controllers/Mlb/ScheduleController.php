@@ -26,6 +26,7 @@ class ScheduleController extends BaseController
         $date = Carbon::parse($date)->format('m/d/Y');
 
         $games = $this->mlbApi->fetchGamesForDate($date);
+        \Debugbar::info($games);
 
         $games = $this->appendQuickAccessTeamData($games);
 

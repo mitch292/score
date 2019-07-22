@@ -24,10 +24,15 @@ class GameService
 
 	private function sanitizeGame($game)
 	{
+		\Debugbar::info($game);
 		return [
 			'pitchers' => [
-				'home' => $this->player->get($game->gameData->probablePitchers->home->id),
-				'away' => $this->player->get($game->gameData->probablePitchers->away->id),
+				'home' => !empty($game->gameData->probablePitchers->home)
+					? $this->player->get($game->gameData->probablePitchers->home->id)
+					: [],
+				'away' => !empty($game->gameData->probablePitchers->away)
+					? $this->player->get($game->gameData->probablePitchers->away->id)
+					: [],
 			],
 			'weather' => $game->gameData->weather,
 			'datetime' => $game->gameData->datetime,
