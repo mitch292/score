@@ -17,7 +17,8 @@
 			<template slot="bottom">
 				<div class="text-center mt-4">
 					<div>
-						{{ game.teams.home.quickAccess.ballpark_name }}
+						{{ game.teams.home.quickAccess.ballpark_name }} @
+						{{ `${game.gameData.datetime.time} ${game.gameData.datetime.ampm}` }}
 					</div>
 					<div class="mt-2">
 						{{ `${game.gameData.pitchers.away.full_name} v. 

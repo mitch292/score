@@ -5,26 +5,25 @@
 
             <tr>
                 <th>team</th>
+                <th class="text-red">runs</th>
+                <th>hits</th>
                 <th>errors</th>
                 <th>LoB</th>
-                <th>hits</th>
-                <th class="text-red">runs</th>
-            </tr>
-
-            <tr>
-                <td>{{ homeTeam }}</td>
-                <td>{{ gameData.linescore.teams.home.errors }}</td>
-                <td>{{ gameData.linescore.teams.home.leftOnBase }}</td>
-                <td>{{ gameData.linescore.teams.home.hits }}</td>
-                <td class="text-red">{{ gameData.linescore.teams.home.runs }}</td>
             </tr>
 
             <tr>
                 <td>{{ awayTeam }}</td>
+                <td class="text-red">{{ gameData.linescore.teams.away.runs }}</td>
+                <td>{{ gameData.linescore.teams.away.hits }}</td>
                 <td>{{ gameData.linescore.teams.away.errors }}</td>
                 <td>{{ gameData.linescore.teams.away.leftOnBase }}</td>
-                <td>{{ gameData.linescore.teams.away.hits }}</td>
-                <td class="text-red">{{ gameData.linescore.teams.away.runs }}</td>
+            </tr>
+            <tr>
+                <td>{{ homeTeam }}</td>
+                <td class="text-red">{{ gameData.linescore.teams.home.runs }}</td>
+                <td>{{ gameData.linescore.teams.home.hits }}</td>
+                <td>{{ gameData.linescore.teams.home.errors }}</td>
+                <td>{{ gameData.linescore.teams.home.leftOnBase }}</td>
             </tr>
 
         </table>
