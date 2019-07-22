@@ -1,25 +1,32 @@
 <template>
 
 	<div>
-  		<utility-card v-for="game in games" :key="game.gamePk">
-			  
-			  <template slot="content">
+		<utility-card v-for="game in games" :key="game.gamePk">
+
+			<template slot="content">
 
 				<score-game 
-					:home="game.teams.home" 
-					:away="game.teams.away"
+				:home="game.teams.home" 
+				:away="game.teams.away"
+				:game="game"
 				>
 				</score-game>
 
-			  </template>
+			</template>
 
-			  <template slot="bottom">
-				  <div class="text-center mt-4">
-						{{game.teams.home.quickAccess.ballpark_name}}
+			<template slot="bottom">
+				<div class="text-center mt-4">
+					<div>
+						{{ game.teams.home.quickAccess.ballpark_name }}
 					</div>
-			  </template>
-  		
-		  </utility-card>
+					<div class="mt-2">
+						{{ `${game.gameData.pitchers.away.full_name} v. 
+						${game.gameData.pitchers.home.full_name}` }}
+					</div>
+				</div>
+			</template>
+
+		</utility-card>
 	</div>
 
 </template>

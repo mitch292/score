@@ -1,0 +1,13 @@
+.score-table {
+
+    margin-left: 30%;
+
+    @media #{$mobile} {
+        margin: none;
+    }
+
+    th, td {
+        border: 1px solid $light-grey;
+        padding: 5px;
+    }
+}

@@ -11310,6 +11310,22 @@ a.text-dark:focus {
   margin: 1rem;
 }
 
+.score-table {
+  margin-left: 30%;
+}
+
+@media screen and (max-width: 650px) {
+  .score-table {
+    margin: none;
+  }
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid #e0e1e2;
+  padding: 5px;
+}
+
 body {
   font: 100% "Raleway", sans-serif;
 }

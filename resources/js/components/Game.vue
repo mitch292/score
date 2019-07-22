@@ -1,5 +1,6 @@
 <template>
 	<div class="game-matchup text-center">
+
 		<div class="game-team align-middle col-sm-4 d-inline-block">
 			<img class="team-logo" :src="away.quickAccess.path_to_logo">
 			<div class="team-name">{{`${away.quickAccess.prefix} ${away.quickAccess.name}`}}</div>
@@ -13,16 +14,29 @@
 			<div class="team-name">{{`${home.quickAccess.prefix} ${home.quickAccess.name}`}}</div>
 			<div class="text-red mt-1">{{ `${home.leagueRecord.wins} - ${home.leagueRecord.losses} (${home.leagueRecord.pct})` }}</div>
 		</div>
+
+		<box-summary 
+			:gameData="game.gameData"
+			:homeTeam="home.quickAccess.name"
+			:awayTeam="away.quickAccess.name"
+
+		>
+		</box-summary>
+
 	</div>
 </template>
 
 <script>
-export default {
-	props: {
-		home: Object,
-		away: Object
+	import BoxSummary from './BoxSummary.vue';
+
+	export default {
+		props: {
+			home: Object,
+			away: Object,
+			game: Object,
+		},
+		components: { BoxSummary }
 	}
-}
 </script>
 
 <style>

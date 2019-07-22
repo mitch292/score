@@ -27,7 +27,7 @@ class GameService
 		return [
 			'pitchers' => [
 				'home' => $this->player->get($game->gameData->probablePitchers->home->id),
-				'away' =>$this->player->get($game->gameData->probablePitchers->away->id),
+				'away' => $this->player->get($game->gameData->probablePitchers->away->id),
 			],
 			'weather' => $game->gameData->weather,
 			'datetime' => $game->gameData->datetime,
