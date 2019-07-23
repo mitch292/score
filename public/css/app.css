@@ -11303,7 +11303,7 @@ a.text-dark:focus {
 .card__bottom {
   border-top: 1px solid #e0e1e2;
   background-color: #e0e1e2;
-  min-height: 8.5rem;
+  min-height: 6.5rem;
 }
 
 .score-dropdown__item {
@@ -11311,13 +11311,7 @@ a.text-dark:focus {
 }
 
 .score-table {
-  margin-left: 27%;
-}
-
-@media screen and (max-width: 650px) {
-  .score-table {
-    margin: 5%;
-  }
+  width: 515px;
 }
 
 .score-table th,

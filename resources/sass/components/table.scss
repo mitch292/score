@@ -1,9 +1,9 @@
 .score-table {
 
-    margin-left: 27%;
+    width: 515px;
 
     @media #{$mobile} {
-        margin: 5%;
+        // margin: 5%;
     }
 
     th, td {

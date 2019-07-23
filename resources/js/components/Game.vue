@@ -53,7 +53,7 @@
 }
 
 .game-matchup {
-	padding: 4rem;
+	padding: 2rem;
 }
 
 .game-team {
