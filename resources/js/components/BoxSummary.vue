@@ -16,7 +16,7 @@
 
             <tr>
                 <td>{{ awayTeam }}</td>
-                <td v-for="n in getNumberOfInnings(gameData)" :key="n">
+                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameData.linescore.isTopInning}">
                     {{ getRuns('away', n) }}
                 </td>
                 <td class="text-red">{{ gameData.linescore.teams.away.runs }}</td>
@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td>{{ homeTeam }}</td>
-                <td v-for="n in getNumberOfInnings(gameData)" :key="n">
+                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && !gameData.linescore.isTopInning}">
                     {{ getRuns('home', n) }}
                 </td>
                 <td class="text-red">{{ gameData.linescore.teams.home.runs }}</td>

@@ -15,13 +15,15 @@
 			<div class="text-red mt-1">{{ `${home.leagueRecord.wins} - ${home.leagueRecord.losses} (${home.leagueRecord.pct})` }}</div>
 		</div>
 
-		<box-summary 
-			:gameData="game.gameData"
-			:homeTeam="home.quickAccess.name"
-			:awayTeam="away.quickAccess.name"
+		<div class="d-none d-md-block">
+			<box-summary 
+				:gameData="game.gameData"
+				:homeTeam="home.quickAccess.name"
+				:awayTeam="away.quickAccess.name"
 
-		>
-		</box-summary>
+			>
+			</box-summary>
+		</div>
 
 	</div>
 </template>
