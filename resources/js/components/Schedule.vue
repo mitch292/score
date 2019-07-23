@@ -21,6 +21,9 @@
 						{{ `${game.gameData.datetime.time} ${game.gameData.datetime.ampm}` }}
 					</div>
 					<div class="mt-2">
+						{{ getWeather(game) }}
+					</div>
+					<div class="mt-2">
 						{{ getPitchingMatchup(game) }}
 					</div>
 				</div>
@@ -54,6 +57,9 @@
 			getPitchingMatchup: function(game) {
 				return `${_.get(game.gameData.pitchers.away, 'full_name', 'TBD')} v. 
 						${_.get(game.gameData.pitchers.home, 'full_name', 'TBD')}`;
+			},
+			getWeather: function(game) {
+				return `${_.get(game.gameData.weather, 'temp', '')}\xB0F, ${_.get(game.gameData.weather, 'condition', '')}, ${_.get(game.gameData.weather, 'wind', '')}`
 			}
 		},
 		mounted() {

@@ -18,7 +18,7 @@ class ScheduleController extends BaseController
 
     public function fetchTodaysGames()
     {
-        return $this->fetchGamesForDate(Carbon::today());
+        return $this->fetchGamesForDate(Carbon::today('America/New_York'));
     }
 
     public function fetchGamesForDate($date)
