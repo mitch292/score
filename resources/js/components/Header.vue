@@ -1,48 +1,58 @@
 <template>
   <div class="header">
-    <nav class="navbar w-100 navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#">
-        <router-link to='/' tag="div" exact>
-          <span class="header__icon">
-            <font-awesome-icon icon="baseball-ball" size="3x" />
-            <span class="header__text">score</span>
-          </span>
-        </router-link>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse pt-3" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link to='/games'>
-              <a class="nav-link" href="#">my games</a>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to='/stats'>
-              <a class="nav-link" href="#">stats</a>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to='/new'>
-              <a class="nav-link text-red" href="#">new score card</a>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to='/schedule'>
-              <a class="nav-link text-red" href="#">mlb schedule</a>
-            </router-link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+	<nav class="navbar w-100 navbar-expand-lg navbar-light">
+	  <a class="navbar-brand" href="#">
+		<router-link to='/' tag="div" exact>
+		  <span class="header__icon">
+			<font-awesome-icon icon="baseball-ball" size="3x" />
+			<span class="header__text">score</span>
+		  </span>
+		</router-link>
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse pt-3" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<router-link to='/games'>
+					<a class="nav-link" href="#">my games</a>
+				</router-link>
+			</li>
+			<li class="nav-item">
+				<router-link to='/stats'>
+					<a class="nav-link" href="#">stats</a>
+				</router-link>
+			</li>
+			<li class="nav-item">
+				<router-link to='/new'>
+					<a class="nav-link text-red" href="#">new score card</a>
+				</router-link>
+			</li>
+			<li class="nav-item">
+				<router-link to='/schedule'>
+					<a class="nav-link text-red" href="#">mlb schedule</a>
+				</router-link>
+			</li>
+			<li class="nav-item d-list-item d-sm-none">
+				<router-link to='/register'>
+					<a class="nav-link text-red" href="#">sign up</a>
+				</router-link>
+			</li>
+		</ul>
+	  </div>
+	  <div class="d-none d-sm-block">
+		<router-link to='/register'>
+		  <button class="btn btn-outline-primary">sign up</button>
+		</router-link>
+	  </div>
+	</nav>
   </div>
 </template>
 
 <script>
-    export default {
-    }
+	export default {
+	}
 </script>
 
 <style>

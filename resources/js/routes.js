@@ -12,6 +12,10 @@ let routes = [
   {
     path: '/schedule',
     component: require('./components/Schedule.vue').default
+  },
+  {
+    path: '/register',
+    component: require('./components/users/Register.vue').default
   }
 ];
 

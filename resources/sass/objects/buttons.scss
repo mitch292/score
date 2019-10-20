@@ -6,6 +6,12 @@
   color: white;
 }
 
+.btn-outline-primary {
+  @include button-variant(white, $deep-red, $deep-red);
+  border-color: $deep-red;
+  color: $deep-red;
+}
+
 .btn-secondary {
   @include button-variant(black, $light-grey, $light-grey);
   background-color: $light-grey;

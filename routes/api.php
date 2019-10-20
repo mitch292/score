@@ -18,6 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::group(['as' => 'auth', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
+
+    Route::post('/register', ['as' => 'register', 'users' => 'RegisterController@newUser']);
+
+});
+
+
 Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function() {
 
 
