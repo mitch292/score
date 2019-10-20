@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -51,15 +51,16 @@ class RegisterController extends Controller
     public function newUser(Request $request)
     {
         // validate user
-        if ($this->validator($request->all())->fails()) {
-            abort(404);
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) {
+            abort(404, 'the parameters passed to make a user are not valid');
         }
         
         $newUser = $this->create($request->all());
 
         auth()->login($newUser);
 
-        return redirect();
+        return response('User Created', 200);
 
     }
 
