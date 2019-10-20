@@ -1,6 +1,10 @@
 <template>
+	
+	<div v-if="fetchingGames">
+		<utility-loading></utility-loading>
+	</div>
 
-	<div>
+	<div v-else>
 		<utility-card v-for="game in games" :key="game.gamePk">
 
 			<template slot="content">
@@ -37,22 +41,30 @@
 <script>
 
 	import UtilityCard from './utility/Card.vue';
+	import UtilityLoading from './utility/Loading.vue';
 	import ScoreGame from './Game.vue';
 
 	export default {
 		data() {
 			return {
-				games: []
+				games: [],
+				fetchingGames: false
 			}
 		},
 		methods: {
-			getTodaysGames: function() {
-				window.axios.get('api/mlb/schedule/today')
+			// defaults to today, or pass date in YYYY-MM-DD format
+			getGames: function(date='today') {
+				this.fetchingGames = true;
+				// TODO: this endpoint name should be a value defined somewhere
+				window.axios.get(`api/mlb/schedule/${date}`)
 					.then(resp => {
-						console.log('the resp', resp)
+						this.fetchingGames = false;
 						this.games = resp.data;
 					})
-					.catch(err => console.error('err', err))
+					.catch(err => {
+						this.fetchingGames = false;
+						console.error('err', err)
+					})
 			},
 			getPitchingMatchup: function(game) {
 				return `${_.get(game.gameData.pitchers.away, 'full_name', 'TBD')} v. 
@@ -69,9 +81,9 @@
 			}
 		},
 		mounted() {
-			this.getTodaysGames();
+			this.getGames('2019-08-23');
 		},
-		components: { UtilityCard, ScoreGame }
+		components: { UtilityCard, UtilityLoading, ScoreGame }
 	}
 
 </script>
