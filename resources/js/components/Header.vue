@@ -26,43 +26,43 @@
 			</li>
 			<li class="nav-item">
 				<router-link to='/new'>
-					<a class="nav-link text-red" href="#">new score card</a>
+					<a class="nav-link" href="#">new score card</a>
 				</router-link>
 			</li>
 			<li class="nav-item">
 				<router-link to='/schedule'>
-					<a class="nav-link text-red" href="#">mlb schedule</a>
+					<a class="nav-link" href="#">mlb schedule</a>
 				</router-link>
 			</li>
-			<li class="nav-item d-list-item d-sm-none" v-if="!isAuthenticated">
+			<li class="nav-item d-list-item d-sm-none" v-if="!this.$root.$data.sharedState.isAuthenticated">
+				<router-link to='/login'>
+					<a class="nav-link" href="#">login</a>
+				</router-link>
+			</li>
+			<li class="nav-item d-list-item d-sm-none" v-if="!this.$root.$data.sharedState.isAuthenticated">
 				<router-link to='/register'>
-					<a class="nav-link text-red" href="#">sign up</a>
+					<a class="nav-link" href="#">sign up</a>
 				</router-link>
 			</li>
 		</ul>
 	  </div>
-	  <div class="d-none d-sm-block" v-if="!isAuthenticated">
-		<router-link to='/register'>
-		  <button class="btn btn-outline-primary">sign up</button>
-		</router-link>
-	  </div>
+		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
+			<router-link to='/login'>
+				<a class="nav-link" href="#">login</a>
+			</router-link>
+		</div>
+		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
+			<router-link to='/register'>
+				<button class="btn btn-outline-primary">sign up</button>
+			</router-link>
+		</div>
 	</nav>
   </div>
 </template>
 
 <script>
-	import { store } from '../app.js';
-	export default {
-		data() {
-			return {
-				isAuthenticated: store.state.isAuthenticated
-			}
-		},
-		// TODO: delete this
-		mounted(){
-			console.log(this.isAuthenticated, store)
-		}
-	}
+export default {
+}
 </script>
 
 <style>

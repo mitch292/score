@@ -15,7 +15,11 @@ let routes = [
   },
   {
     path: '/register',
-    component: require('./components/users/Register.vue').default
+    component: require('./components/auth/Register.vue').default
+  },
+  {
+    path: '/login',
+    component: require('./components/auth/Login.vue').default
   }
 ];
 

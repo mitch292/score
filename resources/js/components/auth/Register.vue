@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="alert alert-danger text-center" v-if="didRegistrationFailed">
+		<div class="alert alert-danger text-center" v-if="didRegistrationFail">
 			we're sorry, it looks like registration wasn't successful.  please try again.
 		</div>
 		<basic-card>
@@ -46,7 +46,7 @@
 				password: null,
 				passwordConfirmation: null,
 				passwordsMatch: true,
-				didRegistrationFailed: false
+				didRegistrationFail: false
 			}
 		},
 
@@ -68,7 +68,7 @@
 
 					})
 					.catch(err => {
-						this.didRegistrationFailed = true;
+						this.didRegistrationFail = true;
 					})
 			}
 		},

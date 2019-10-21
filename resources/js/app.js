@@ -61,5 +61,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        sharedState: store.state
+    }
 });
