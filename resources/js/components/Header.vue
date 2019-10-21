@@ -34,14 +34,14 @@
 					<a class="nav-link text-red" href="#">mlb schedule</a>
 				</router-link>
 			</li>
-			<li class="nav-item d-list-item d-sm-none">
+			<li class="nav-item d-list-item d-sm-none" v-if="!isAuthenticated">
 				<router-link to='/register'>
 					<a class="nav-link text-red" href="#">sign up</a>
 				</router-link>
 			</li>
 		</ul>
 	  </div>
-	  <div class="d-none d-sm-block">
+	  <div class="d-none d-sm-block" v-if="!isAuthenticated">
 		<router-link to='/register'>
 		  <button class="btn btn-outline-primary">sign up</button>
 		</router-link>
@@ -51,7 +51,17 @@
 </template>
 
 <script>
+	import { store } from '../app.js';
 	export default {
+		data() {
+			return {
+				isAuthenticated: store.state.isAuthenticated
+			}
+		},
+		// TODO: delete this
+		mounted(){
+			console.log(this.isAuthenticated, store)
+		}
 	}
 </script>
 
