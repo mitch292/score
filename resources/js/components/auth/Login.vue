@@ -42,7 +42,6 @@
 					password: this.password
 				})
 					.then(res => {
-						console.log('success', res)
 						store.setLoggedIn();
 						this.$router.push('/')
 

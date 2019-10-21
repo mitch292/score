@@ -34,6 +34,9 @@
 					<a class="nav-link" href="#">mlb schedule</a>
 				</router-link>
 			</li>
+			<li class="nav-item d-list-item d-sm-none" v-if="this.$root.$data.sharedState.isAuthenticated">
+				<a v-on:click="this.logout" class="text-red" href="#">logout</a>
+			</li>
 			<li class="nav-item d-list-item d-sm-none" v-if="!this.$root.$data.sharedState.isAuthenticated">
 				<router-link to='/login'>
 					<a class="nav-link" href="#">login</a>
@@ -46,6 +49,9 @@
 			</li>
 		</ul>
 	  </div>
+		<div class="d-none d-sm-block" v-if="this.$root.$data.sharedState.isAuthenticated">
+			<a v-on:click="this.logout" class="text-red" href="#">logout</a>
+		</div>
 		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
 			<router-link to='/login'>
 				<a class="nav-link" href="#">login</a>
@@ -61,8 +67,20 @@
 </template>
 
 <script>
-export default {
-}
+
+	import { store } from '../app.js';
+
+	export default {
+		methods: {
+			logout: function() {
+				window.axios.post('api/auth/logout')
+					.then(res => store.setLoggedOut())
+					.catch(err => console.error('There was a problem logging out the user', err))
+
+			}
+		}
+	}
+
 </script>
 
 <style>
