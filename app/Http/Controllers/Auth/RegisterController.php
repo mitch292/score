@@ -52,15 +52,16 @@ class RegisterController extends Controller
     {
         // validate user
         $validator = $this->validator($request->all());
+
         if ($validator->fails()) {
-            abort(404, 'the parameters passed to make a user are not valid');
+            abort(400, 'the parameters passed to make a user are not valid');
         }
         
         $newUser = $this->create($request->all());
 
         auth()->login($newUser);
 
-        return response('User Created', 200);
+        return response()->json('ok');
 
     }
 

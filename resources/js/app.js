@@ -25,6 +25,18 @@ window.axios = axios;
 import './bootstrap';
 import router from './routes.js';
 
+// If this get lets large, it should be put in another file and imported
+export const store = {
+    state: {
+        isAuthenticated: false
+    },
+    setLoggedIn: function() {
+        this.state.isAuthenticated = true;
+    },
+    setLoggedOut: function() {
+        this.state.isAuthenticated = false;
+    }
+}
 
 
 /**
