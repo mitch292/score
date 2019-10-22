@@ -50,11 +50,11 @@
 		</ul>
 	  </div>
 		<div class="d-none d-sm-block" v-if="this.$root.$data.sharedState.isAuthenticated">
-			<a v-on:click="this.logout" class="text-red" href="#">logout</a>
+			<a v-on:click="this.logout" class="text-translucent" href="#">logout</a>
 		</div>
 		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
 			<router-link to='/login'>
-				<a class="nav-link" href="#">login</a>
+				<a class="nav-link text-translucent" href="#">login</a>
 			</router-link>
 		</div>
 		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">

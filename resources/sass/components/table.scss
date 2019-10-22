@@ -1,6 +1,6 @@
 .score-table {
 
-    width: 515px;
+    min-width: 515px;
 
     @media #{$mobile} {
         // margin: 5%;

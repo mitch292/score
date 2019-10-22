@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-4 row">
 
         <table class="score-table d-block mx-auto">
 

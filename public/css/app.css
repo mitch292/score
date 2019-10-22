@@ -11108,6 +11108,10 @@ a.text-dark:focus {
   background-color: #a81e03;
 }
 
+.text-translucent {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 @-webkit-keyframes spin {
   from {
     -webkit-transform: rotate(0deg);
@@ -11375,7 +11379,7 @@ a.text-dark:focus {
 }
 
 .score-table {
-  width: 515px;
+  min-width: 515px;
 }
 
 .score-table th,
