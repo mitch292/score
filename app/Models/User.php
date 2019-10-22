@@ -36,4 +36,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // REGION - RELATIONSHIPS
+    
+    /**
+     * The users that have this game
+     */
+    public function games()
+    {
+        return $this->belongsToMany('Game');
+    }
+
+    // END REGION
 }

@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Game extends Model
+{
+    protected $fillable = [
+        'external_id', // repesents the mlb api key
+    ];
+
+    protected $rules = [
+        'external_id' => 'required|string',
+    ];
+
+
+    // REGION - RELATIONSHIPS
+    
+    /**
+     * The users that have this game
+     */
+    public function users()
+    {
+        return $this->belongsToMany('User');
+    }
+
+    // END REGION
+}
