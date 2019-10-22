@@ -34,30 +34,30 @@
 					<a class="nav-link" href="#">mlb schedule</a>
 				</router-link>
 			</li>
-			<li class="nav-item d-list-item d-sm-none" v-if="this.$root.$data.sharedState.isAuthenticated">
+			<li class="nav-item d-list-item d-sm-none" v-if="$root.$data.sharedState.isAuthenticated">
 				<a v-on:click="this.logout" class="text-red" href="#">logout</a>
 			</li>
-			<li class="nav-item d-list-item d-sm-none" v-if="!this.$root.$data.sharedState.isAuthenticated">
+			<li class="nav-item d-list-item d-sm-none" v-if="!$root.$data.sharedState.isAuthenticated">
 				<router-link to='/login'>
 					<a class="nav-link" href="#">login</a>
 				</router-link>
 			</li>
-			<li class="nav-item d-list-item d-sm-none" v-if="!this.$root.$data.sharedState.isAuthenticated">
+			<li class="nav-item d-list-item d-sm-none" v-if="!$root.$data.sharedState.isAuthenticated">
 				<router-link to='/register'>
 					<a class="nav-link" href="#">sign up</a>
 				</router-link>
 			</li>
 		</ul>
 	  </div>
-		<div class="d-none d-sm-block" v-if="this.$root.$data.sharedState.isAuthenticated">
+		<div class="d-none d-sm-block" v-if="$root.$data.sharedState.isAuthenticated">
 			<a v-on:click="this.logout" class="text-translucent" href="#">logout</a>
 		</div>
-		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
+		<div class="d-none d-sm-block" v-if="!$root.$data.sharedState.isAuthenticated">
 			<router-link to='/login'>
 				<a class="nav-link text-translucent" href="#">login</a>
 			</router-link>
 		</div>
-		<div class="d-none d-sm-block" v-if="!this.$root.$data.sharedState.isAuthenticated">
+		<div class="d-none d-sm-block" v-if="!$root.$data.sharedState.isAuthenticated">
 			<router-link to='/register'>
 				<button class="btn btn-outline-primary">sign up</button>
 			</router-link>
@@ -67,9 +67,7 @@
 </template>
 
 <script>
-
 	import { store } from '../app.js';
-
 	export default {
 		methods: {
 			logout: function() {

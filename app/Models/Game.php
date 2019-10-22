@@ -14,6 +14,10 @@ class Game extends Model
         'external_id' => 'required|string',
     ];
 
+    protected $casts = [
+        'external_id' => 'string',
+    ];
+
 
     // REGION - RELATIONSHIPS
     

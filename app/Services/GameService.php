@@ -24,7 +24,6 @@ class GameService
 
 	private function sanitizeGame($game)
 	{
-		\Debugbar::info($game);
 		return [
 			'pitchers' => [
 				'home' => !empty($game->gameData->probablePitchers->home)

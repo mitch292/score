@@ -30,6 +30,7 @@ class LoginController extends Controller
         abort(400, 'Login attempt failed');
     }
 
+    
     public function logout(Request $request)
     {
         Auth::logout();

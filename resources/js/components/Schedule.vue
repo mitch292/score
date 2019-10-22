@@ -9,6 +9,12 @@
 
 			<template slot="content">
 
+				<button 
+					v-if="$root.$data.sharedState.isAuthenticated" 
+					v-on:click="saveGame(game)" 
+					class="btn btn-primary"
+				>save game</button>
+
 				<score-game 
 				:home="game.teams.home" 
 				:away="game.teams.away"
@@ -55,8 +61,7 @@
 			// defaults to today, or pass date in YYYY-MM-DD format
 			getGames: function(date='today') {
 				this.fetchingGames = true;
-				// TODO: this endpoint name should be a value defined somewhere
-				window.axios.get(`api/mlb/schedule/${date}`)
+				window.axios.get(`mlb/schedule/${date}`)
 					.then(resp => {
 						this.fetchingGames = false;
 						this.games = resp.data;
@@ -78,6 +83,11 @@
 					${_.has(game.gameData.weather, 'condition') ? ',' : ''} 
 					${_.has(game.gameData.weather, 'wind') ? 'wind:' : ''}
 					 ${_.get(game.gameData.weather, 'wind', '')}`
+			},
+			saveGame(game) {
+				window.axios.post('mlb/game/save', {external_id: game.gamePk})
+					.then(resp => console.log('the response', resp))
+					.catch(err => console.error('problem saving the game', err))
 			}
 		},
 		mounted() {
