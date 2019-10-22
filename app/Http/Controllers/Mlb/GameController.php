@@ -30,8 +30,6 @@ class GameController extends BaseController
 
 		UserGame::updateOrCreate(['user_id' => $request->user()->id, 'game_id' => $game->id]);
 
-		\Debugbar::info($request->user()->games());
-
 		return response()->json('ok');
 
 	}
