@@ -14,10 +14,15 @@
 </template>
 
 <script>
-
+	import { store } from '../store.js';
 	import scoreHeader from './Header.vue';
 
 	export default {
+		
+		mounted() {
+			store.mutations.setUserAuthentication(store.state, window.isUserAuthenticated)
+		},
+
 		components: { scoreHeader }
 	}
 

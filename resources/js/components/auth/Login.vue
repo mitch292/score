@@ -23,7 +23,7 @@
 
 <script>
 	import BasicCard from '../utility/BasicCard.vue';
-	import { store } from '../../app.js';
+	import { store } from '../../store.js';
 	
 	export default {
 
@@ -42,7 +42,7 @@
 					password: this.password
 				})
 					.then(res => {
-						store.setLoggedIn();
+						store.mutations.setUserAuthentication(store.state, true);
 						this.$router.push('/')
 
 					})

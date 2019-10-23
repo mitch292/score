@@ -67,12 +67,12 @@
 </template>
 
 <script>
-	import { store } from '../app.js';
+	import { store } from '../store.js';
 	export default {
 		methods: {
 			logout: function() {
 				window.axios.post('api/auth/logout')
-					.then(res => store.setLoggedOut())
+					.then(res => store.mutations.setUserAuthentication(store.state, false))
 					.catch(err => console.error('There was a problem logging out the user', err))
 
 			}
