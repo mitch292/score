@@ -5,50 +5,21 @@
 	</div>
 
 	<div v-else>
-		<utility-card v-for="game in games" :key="game.gamePk">
-
-			<template slot="content">
-
-				<button 
-					v-if="$root.$data.sharedState.isAuthenticated" 
-					v-on:click="saveGame(game)" 
-					class="btn btn-primary"
-				>save game</button>
-
-				<score-game 
-				:home="game.teams.home" 
-				:away="game.teams.away"
-				:game="game"
-				>
-				</score-game>
-
-			</template>
-
-			<template slot="bottom">
-				<div class="text-center mt-4">
-					<div>
-						{{ game.teams.home.quickAccess.ballpark_name }} @
-						{{ `${game.gameData.datetime.time} ${game.gameData.datetime.ampm}` }}
-					</div>
-					<div class="mt-2">
-						{{ getWeather(game) }}
-					</div>
-					<div class="mt-2">
-						{{ getPitchingMatchup(game) }}
-					</div>
-				</div>
-			</template>
-
-		</utility-card>
+		<game-list
+			:games="games"
+			:showBtn="true"
+			:btnConditional="$root.$data.sharedState.isAuthenticated"
+			:btnOnClick="saveGame"
+			btnText="save game"
+		>
+		</game-list>
 	</div>
 
 </template>
 
 <script>
-
-	import UtilityCard from './utility/Card.vue';
+	import GameList from './utility/GameList.vue';
 	import UtilityLoading from './utility/Loading.vue';
-	import ScoreGame from './Game.vue';
 
 	export default {
 		data() {
@@ -71,19 +42,6 @@
 						console.error('err', err)
 					})
 			},
-			getPitchingMatchup: function(game) {
-				return `${_.get(game.gameData.pitchers.away, 'full_name', 'TBD')} v. 
-						${_.get(game.gameData.pitchers.home, 'full_name', 'TBD')}`;
-			},
-			getWeather: function(game) {
-				return `
-					${_.get(game.gameData.weather, 'temp', '')} 
-					${_.has(game.gameData.weather, 'temp') ? '\xB0F,' : ''} 
-					${_.get(game.gameData.weather, 'condition', '')} 
-					${_.has(game.gameData.weather, 'condition') ? ',' : ''} 
-					${_.has(game.gameData.weather, 'wind') ? 'wind:' : ''}
-					 ${_.get(game.gameData.weather, 'wind', '')}`
-			},
 			saveGame(game) {
 				window.axios.post('mlb/game/save', {external_id: game.gamePk})
 					.then(resp => console.log('the response', resp))
@@ -93,7 +51,7 @@
 		mounted() {
 			this.getGames('2019-08-23');
 		},
-		components: { UtilityCard, UtilityLoading, ScoreGame }
+		components: { UtilityLoading, GameList }
 	}
 
 </script>
