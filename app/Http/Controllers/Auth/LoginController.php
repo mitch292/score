@@ -23,7 +23,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials, true)) {
+        if (Auth::attempt($credentials)) {
             return response()->json('ok');
         }
 
@@ -34,5 +34,6 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+        \Session::flush();
     }
 }

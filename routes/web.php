@@ -38,3 +38,16 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 
 });
 
+
+Route::group(['as' => 'api', 'prefix' => 'api'], function() {
+    Route::group(['as' => 'auth', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
+    
+        Route::post('/register', ['as' => 'register', 'uses' => 'RegisterController@newUser']);
+    
+        Route::post('/login', ['as' => 'login', 'uses' => 'LoginController@login']);
+    
+        Route::post('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
+    
+    });
+});
+
