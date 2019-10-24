@@ -13,9 +13,10 @@
 
 
 				<score-game 
-				:home="game.teams.home" 
-				:away="game.teams.away"
-				:game="game"
+					:home="game.teams.home" 
+					:away="game.teams.away"
+					:game="game"
+					:quickAccessOnly="quickAccessOnly"
 				>
 				</score-game>
 
@@ -69,6 +70,10 @@
 			btnText: {
 				type: String,
 				default: 'score'
+			},
+			quickAccessOnly: {
+				type: Boolean,
+				default: false
 			}
 
 		},

@@ -4,7 +4,7 @@
 		<div class="game-team align-middle col-sm-4 d-inline-block">
 			<img class="team-logo" :src="away.quickAccess.path_to_logo">
 			<div class="team-name">{{`${away.quickAccess.prefix} ${away.quickAccess.name}`}}</div>
-			<div class="text-red mt-1">{{ `${away.leagueRecord.wins} - ${away.leagueRecord.losses} (${away.leagueRecord.pct})` }}</div>
+			<div v-if="!quickAccessOnly" class="text-red mt-1">{{ `${away.leagueRecord.wins} - ${away.leagueRecord.losses} (${away.leagueRecord.pct})` }}</div>
 		</div>
 		<div class="game-vs d-inline-block p-4 text-red">
 			at
@@ -12,7 +12,7 @@
 		<div class="game-team align-middle col-sm-4 d-inline-block">
 			<img class="team-logo" :src="home.quickAccess.path_to_logo">
 			<div class="team-name">{{`${home.quickAccess.prefix} ${home.quickAccess.name}`}}</div>
-			<div class="text-red mt-1">{{ `${home.leagueRecord.wins} - ${home.leagueRecord.losses} (${home.leagueRecord.pct})` }}</div>
+			<div v-if="!quickAccessOnly" class="text-red mt-1">{{ `${home.leagueRecord.wins} - ${home.leagueRecord.losses} (${home.leagueRecord.pct})` }}</div>
 		</div>
 
 		<div class="d-none d-md-block">
@@ -36,6 +36,10 @@
 			home: Object,
 			away: Object,
 			game: Object,
+			quickAccessOnly: {
+				type: Boolean,
+				default: false
+			}
 		},
 		components: { BoxSummary }
 	}
