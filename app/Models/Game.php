@@ -26,7 +26,7 @@ class Game extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('User');
+        return $this->belongsToMany('App\Models\User', 'user_game', 'game_id', 'user_id');
     }
 
     // END REGION

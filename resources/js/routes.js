@@ -7,7 +7,7 @@ let routes = [
   },
   {
     path: '/games',
-    component: require('./components/Games.vue').default
+    component: require('./components/MyGames.vue').default
   },
   {
     path: '/schedule',

@@ -45,7 +45,7 @@ class User extends Authenticatable
      */
     public function games()
     {
-        return $this->belongsToMany('App\Models\Game');
+        return $this->belongsToMany('App\Models\Game', 'user_game', 'user_id', 'game_id');
     }
 
     // END REGION

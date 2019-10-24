@@ -16,6 +16,7 @@ class GameController extends BaseController
 
     }
 
+
     public function saveGame(Request $request)
     {
 		if (empty($request->user())) {
@@ -32,7 +33,16 @@ class GameController extends BaseController
 
 		return response()->json('ok');
 
-	}
+    }
+    
+    public function fetchMyGames(Request $request)
+    {
+        if (!\Auth::check()) {
+            // might need to alter this
+            return response()->json([]);
+        }
+       return $this->gameService->fetchGamesDataFromIds($request->user()->games()->get()->pluck('external_id'));
+    }
 	
 	/**
      * Get a validator for an incoming registration request.

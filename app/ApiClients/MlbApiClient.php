@@ -16,6 +16,7 @@ class MlbApiClient
         ]);
     }
 
+    
     public function fetchGamesForDate($date)
     {
         $response = $this->client->get('schedule', [
@@ -28,6 +29,7 @@ class MlbApiClient
 
         return json_decode($response->getBody()->getContents())->dates[0]->games;
     }
+
 
     public function fetchPlayerDetails($playerId, $default = null)
     {
