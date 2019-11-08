@@ -15,28 +15,19 @@ class GameService
         $this->player = new PlayerService();
 	}
 
+
+	// array of game ids
+	public function fetchGamesDataFromIds($gameIds)
+	{
+		return $this->sanitizeGames($this->formatGamesFromGameIds($gameIds));
+	}
+
+
 	public function sanitizeGames($rawGames)
 	{
 		return $this->appendQuickAccessTeamData($this->appendGameData($rawGames));
 	}
 
-	// array of game ids
-	public function fetchGamesDataFromIds($gameIds)
-	{
-		$games = [];
-
-		foreach ($gameIds as $gameId) {
-			// $game = collect(['teams' => collect(['away' => [], 'home' => []]), 'gamePk' => $gameId]);
-			$game = new \stdClass;
-			$game->teams = new \stdClass;
-			$game->teams->away = new \stdClass;
-			$game->teams->home = new \stdClass;
-			$game->gamePk = $gameId;
-			array_push($games, $game);
-		}
-
-		return $this->sanitizeGames($games);
-	}
 
 	// a single game id
 	public function fetchGameData($gameId)
@@ -83,6 +74,30 @@ class GameService
 			'boxscore' => $game->liveData->boxscore,
 			'teams' => $game->gameData->teams,
 		];
+	}
+
+
+	private function formatGamesFromGameIds($gameIds)
+	{
+		$games = [];
+
+		foreach ($gameIds as $gameId) {
+			array_push($games, $this->formatEmptyGameFromGameId($gameId));
+		}
+
+		return $games;
+	}
+
+	
+	private function formatEmptyGameFromGameId($gameId)
+	{
+		$game = new \stdClass;
+		$game->teams = new \stdClass;
+		$game->teams->away = new \stdClass;
+		$game->teams->home = new \stdClass;
+		$game->gamePk = $gameId;
+
+		return $game;
 	}
 
 }
