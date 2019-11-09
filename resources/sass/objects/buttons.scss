@@ -10,6 +10,7 @@
   @include button-variant(white, $deep-red, $deep-red);
   border-color: $deep-red;
   color: $deep-red;
+  background-color: inherit;
 }
 
 .btn-secondary {
