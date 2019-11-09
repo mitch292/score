@@ -27,6 +27,8 @@ once you have these tools available follow these steps to get up and running
 * run `npm install`
 * link the site with laravel valet `valet link score`
 * run `npm run watch`
+* run the db migration `php artisan migrate`
+* run the db seeders `php artisan db:seed`
 
 now your good to go.  happy coding!
 
