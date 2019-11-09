@@ -1,6 +1,6 @@
 <template>
     <div class="mt-4">
-        <div class="row justify-content-center">
+        <div v-if="gameState" class="row justify-content-center">
             <div class="btn btn-outline-primary">{{gameState}}</div>
         </div>
         <div class="row mt-4">
@@ -53,7 +53,7 @@
             awayTeam: String,
             gameStatus: {
 				type: Object,
-				default: {}
+				default: () => ({})
 			}
         },
         methods: {
