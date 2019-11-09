@@ -20,6 +20,7 @@
 				:gameData="game.gameData"
 				:homeTeam="home.quickAccess.name"
 				:awayTeam="away.quickAccess.name"
+				:gameStatus="game.status"
 
 			>
 			</box-summary>

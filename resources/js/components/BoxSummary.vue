@@ -5,10 +5,10 @@
 
             <tr>
                 <th>team</th>
-                <th v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n}">
+                <th v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameState !== GAME_IS_FINAL}">
                     {{ n }}
                 </th>
-                <th class="text-red">R</th>
+                <th :class="{'text-red':gameState !== GAME_IS_FINAL}">R</th>
                 <th>H</th>
                 <th>E</th>
                 <th>LoB</th>
@@ -16,7 +16,7 @@
 
             <tr>
                 <td>{{ awayTeam }}</td>
-                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameData.linescore.isTopInning}">
+                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameData.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
                     {{ getRuns('away', n) }}
                 </td>
                 <td class="text-red">{{ gameData.linescore.teams.away.runs }}</td>
@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td>{{ homeTeam }}</td>
-                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && !gameData.linescore.isTopInning}">
+                <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && !gameData.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
                     {{ getRuns('home', n) }}
                 </td>
                 <td class="text-red">{{ gameData.linescore.teams.home.runs }}</td>
@@ -48,6 +48,10 @@
             gameData: Object,
             homeTeam: String,
             awayTeam: String,
+            gameStatus: {
+				type: Object,
+				default: {}
+			}
         },
         methods: {
             getRuns: function(team, inning) {
@@ -57,14 +61,17 @@
                 return gameData.linescore.innings.length > 9 ? gameData.linescore.innings.length : 9;
             }
         },
-        // data() {
-        //     return {
-        //         currentInning: null,
-        //     }
-        // },
+        data() {
+            return {
+                GAME_IS_FINAL: 'final',
+            }
+        },
         computed: {
             currentInning: function() {
                 return this.gameData.linescore.currentInning
+            },
+            gameState: function() {
+                return _.get(this.gameStatus, ['detailedState'], '').toLowerCase();
             }
         }
     }
