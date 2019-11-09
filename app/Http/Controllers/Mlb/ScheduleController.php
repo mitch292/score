@@ -27,9 +27,7 @@ class ScheduleController extends BaseController
     public function fetchGamesForDate($date)
     {
         $date = Carbon::parse($date)->format('m/d/Y');
-
         $rawGames = $this->mlbApi->fetchGamesForDate($date);
-
         return $this->gameService->sanitizeGames($rawGames);
     }
 
