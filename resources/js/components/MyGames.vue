@@ -32,7 +32,6 @@
 				this.fetchingGames = true;
 				window.axios.get('/mlb/game/my-games')
 					.then(resp => {
-						console.log('resp', resp)
 						this.fetchingGames = false;
 						this.games = resp.data
 					})
