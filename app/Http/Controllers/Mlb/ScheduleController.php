@@ -12,7 +12,7 @@ class ScheduleController extends BaseController
 
     public function __construct()
     {
-        $this->game = new GameService();
+        $this->gameService = new GameService();
         parent::__construct();
 
     }
@@ -30,7 +30,7 @@ class ScheduleController extends BaseController
 
         $rawGames = $this->mlbApi->fetchGamesForDate($date);
 
-        return $this->game->sanitizeGames($rawGames);
+        return $this->gameService->sanitizeGames($rawGames);
     }
 
 }

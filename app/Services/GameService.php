@@ -16,20 +16,39 @@ class GameService
 	}
 
 
-	// array of game ids
+	/**
+	 * Fetch score's formatted games from an array of MLB Game Ids
+	 * 
+	 * @param Array $gameIds - an array of gameIds that are representative of MLB's gamePk
+	 * 
+	 * @return Array - score's univerisal game format used on the front end
+	 */
 	public function fetchGamesDataFromIds($gameIds)
 	{
-		return $this->sanitizeGames($this->formatGamesFromGameIds($gameIds));
+		return $this->sanitizeGames($this->formatEmptyGamesFromGameIds($gameIds));
 	}
 
 
+	/**
+	 * Sanitize a set of raw games to be in score's format
+	 * 
+	 * @param Array $rawGames - an array of rawGames that is in Mlb's data format
+	 * 
+	 * @return Array - score's univerisal game format used on the front end
+	 */
 	public function sanitizeGames($rawGames)
 	{
 		return $this->appendQuickAccessTeamData($this->appendGameData($rawGames));
 	}
 
 
-	// a single game id
+	/**
+	 * Fetch raw MLB game data 
+	 * 
+	 * @param String $gameId - the MLB game id
+	 * 
+	 * @return Object - A raw mlb data structure with all keys that score's format expects
+	 */	
 	public function fetchGameData($gameId)
 	{
 		$gameData = $this->mlbGameApi->fetchGameData($gameId);
@@ -38,6 +57,13 @@ class GameService
 	}
 
 
+	/**
+	 * Add some easy to access team data to the game's data structure
+	 * 
+	 * @param Array $games - an array of raw mlb game objects to append to
+	 * 
+	 * @return Array - An array of game objects with the game's team data appended
+	 */	
 	private function appendQuickAccessTeamData($games)
     {
         foreach ($games as $game) {
@@ -46,8 +72,15 @@ class GameService
 		}
         return $games;
 	}
-	
 
+
+	/**
+	 * Append required gameData to the game
+	 * 
+	 * @param Array $games - an array of raw mlb game objects to append to
+	 * 
+	 * @return Array - An array of game objects with the game's team data appended
+	 */	
 	private function appendGameData($games)
     {
         foreach ($games as $game) {
@@ -57,6 +90,13 @@ class GameService
     }
 
 
+	/**
+	 * Format a game in score's data structure
+	 * 
+	 * @param Object $game - A game objecrt
+	 * 
+	 * @return AssociativeArray - A game in score's format
+	 */	
 	private function formatGame($game)
 	{
 		return [
@@ -77,7 +117,14 @@ class GameService
 	}
 
 
-	private function formatGamesFromGameIds($gameIds)
+	/**
+	 * Format some empty game data structures from game ids
+	 * 
+	 * @param Array $gameIds - A set of game ids
+	 * 
+	 * @return Array - An array of empty games for the game ids
+	 */	
+	private function formatEmptyGamesFromGameIds($gameIds)
 	{
 		$games = [];
 
@@ -88,7 +135,14 @@ class GameService
 		return $games;
 	}
 
-	
+
+	/**
+	 * Format an empty game from a game id
+	 * 
+	 * @param String $gameId - An MLB game id
+	 * 
+	 * @return Object - An empty game object
+	 */	
 	private function formatEmptyGameFromGameId($gameId)
 	{
 		$game = new \stdClass;
