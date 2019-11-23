@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4">
         <div v-if="gameState" class="row justify-content-center">
-            <div class="btn btn-outline-primary">{{gameState}}</div>
+            <div class="btn btn-outline-primary--inherit">{{gameState}}</div>
         </div>
         <div class="row mt-4">
             <table class="score-table d-block mx-auto">
