@@ -20,6 +20,11 @@ let routes = [
   {
     path: '/login',
     component: require('./components/auth/Login.vue').default
+  },
+  {
+    path: '/highlights/:gamePk',
+    component: require('./components/Highlights.vue').default,
+    props: true
   }
 ];
 

@@ -10,6 +10,11 @@
 						:class="btnClass"
 					>{{ btnText }}</button>
 				</span>
+				<span class="float-right">
+					<router-link :to="`/highlights/${game.gamePk}`">
+						<button class="btn btn-primary">highlights</button>
+					</router-link>
+				</span>
 
 
 				<score-game 

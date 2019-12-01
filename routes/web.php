@@ -36,6 +36,12 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
         Route::get('/my-games', ['as' => 'myGames', 'uses' => 'GameController@fetchMyGames']);
     });
 
+    Route::group(['as' => 'highlights', 'prefix' => 'highlights'], function() {
+        
+        Route::get('/{gamePk}', ['as' => 'fetchHighlights', 'uses' => 'HighlightsController@fetchHighlights']);
+
+    });
+
 });
 
 

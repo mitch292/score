@@ -49,4 +49,11 @@ class MlbApiClient
 
     }
 
+    public function fetchHighlights($gamePk)
+    {
+        $response = $this->client->get('game/'.$gamePk.'/content');
+        // \Debugbar::info($response->getBody()->getContents());
+        return ($response->getBody()->getContents());
+    }
+
 }
