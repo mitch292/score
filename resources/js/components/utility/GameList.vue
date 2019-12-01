@@ -3,18 +3,20 @@
 		<utility-card v-for="game in games" :key="game.gamePk">
 
 			<template slot="content">
-				<span v-if="showBtn">
-					<button
-						v-if="btnConditional"
-						v-on:click="btnOnClick(game)"
-						:class="btnClass"
-					>{{ btnText }}</button>
-				</span>
-				<span class="float-right">
-					<router-link :to="`/highlights/${game.gamePk}`">
-						<button class="btn btn-primary">highlights</button>
-					</router-link>
-				</span>
+				<div class="d-flex justify-content-between p-2">
+					<span v-if="showBtn">
+						<button
+							v-if="btnConditional"
+							v-on:click="btnOnClick(game)"
+							:class="btnClass"
+						>{{ btnText }}</button>
+					</span>
+					<span class="">
+						<router-link :to="`/highlights/${game.gamePk}`">
+							<button class="btn btn-primary">highlights</button>
+						</router-link>
+					</span>
+				</div>
 
 
 				<score-game 
