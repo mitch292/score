@@ -12,6 +12,7 @@
 			<div class="text-center mt-4">
 				<div class="h5 text-red">{{title}}</div>
 				<div class="m-2 p-2">{{description}}</div>
+				<button v-on:click="saveHighlight" class="btn btn-outline-primary--inherit mb-4">save</button>
 			</div>
 		</template>
 
@@ -25,6 +26,13 @@
 	export default {
 		props: {
 			highlight: Object
+		},
+		methods: {
+			saveHighlight() {
+				window.axios.post('/mlb/highlights', this.highlight)
+					.then(resp => console.log('Saved'))
+					.catch(err => console.log('error saving the highlight', err));
+			}
 		},
 		computed: {
 			title() {

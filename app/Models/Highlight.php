@@ -30,11 +30,19 @@ class Highlight extends Model
     // REGION - RELATIONSHIPS
     
     /**
-     * The users that have this game
+     * The game that this highlight is associated with
      */
     public function game()
     {
         return $this->belongsTo('App\Models\Game', 'game_id');
+    }
+
+    /**
+     * The users that have saved this highlight
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'user_highlight', 'highlight_idar', 'user_id');
     }
 
     // END REGION

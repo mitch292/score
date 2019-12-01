@@ -49,7 +49,7 @@
 			}
 		},
 		mounted() {
-			this.getGames('2019-08-23');
+			this.getGames('2019-08-24');
 		},
 		components: { UtilityLoading, GameList }
 	}

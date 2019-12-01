@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mlb;
 use Illuminate\Http\Request;
 use App\Models\Highlight;
 use App\Models\Game;
+use App\Models\UserHighlight;
 
 class HighlightsController extends BaseController
 {
@@ -14,6 +15,23 @@ class HighlightsController extends BaseController
 		$highlights = $this->mlbApi->fetchHighlights($gamePk);
 		return $this->sanitizeHighlights($highlights, $gamePk);
 		// return $highlights;
+	}
+
+	public function saveHighlight(Request $request)
+	{
+		if (empty($request->user())) {
+			abort(403, 'Only authenticated users can save highlights');
+		}
+
+		if ($this->validator($request->all())->fails()) {
+			abort(400, 'Please pass all required parameters');
+		}
+
+		$highlight = Highlight::firstOrCreate(['external_id' => $request->get('external_id')]);
+
+		UserHighlight::updateOrCreate(['user_id' => $request->user()->id, 'highlight_id' => $highlight->id]);
+
+		return response()->json('ok');
 	}
 	
 	private function sanitizeHighlights($highlights, $gamePk)
@@ -31,5 +49,18 @@ class HighlightsController extends BaseController
 		}
 		return $collectionOfHighlights;
 	}
+
+	/**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    private function validator(array $data)
+    {
+        return \Validator::make($data, [
+            'external_id' => ['required'],
+        ]);
+    }
 
 }

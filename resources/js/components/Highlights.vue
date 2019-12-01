@@ -25,15 +25,6 @@
 				highlights: []
 			}
 		},
-		computed: {
-			formattedHighlights() {
-				return this.highlights.map(highlight => {
-					highlight.title = highlight.title.toLowerCase();
-					highlight.description = highlight.description.toLowerCase();
-					return highlight;
-				})
-			}
-		},
 		methods: {
 			getHighlights: function(gamePk) {
 				this.fetchingGames = true;

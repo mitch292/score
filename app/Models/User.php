@@ -41,11 +41,19 @@ class User extends Authenticatable
     // REGION - RELATIONSHIPS
     
     /**
-     * The users that have this game
+     * The games that this user has saved
      */
     public function games()
     {
         return $this->belongsToMany('App\Models\Game', 'user_game', 'user_id', 'game_id');
+    }
+
+    /**
+     * The highlights that this user has saved
+     */
+    public function highlights()
+    {
+        return $this->belongsToMany('App\Models\Highlight', 'user_highlight', 'user_id', 'highlight_id');
     }
 
     // END REGION
