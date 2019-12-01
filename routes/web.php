@@ -42,6 +42,8 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 
         Route::post('/', ['as' => 'saveHighlight', 'uses' => 'HighlightsController@saveHighlight']);
 
+        Route::get('/my-highlights', ['as' => 'fetchMyHighlights', 'uses' => 'HighlightsController@fetchMyHighlights']);
+
     });
 
 });
