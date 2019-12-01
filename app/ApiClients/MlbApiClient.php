@@ -52,8 +52,8 @@ class MlbApiClient
     public function fetchHighlights($gamePk)
     {
         $response = $this->client->get('game/'.$gamePk.'/content');
-        // \Debugbar::info($response->getBody()->getContents());
-        return ($response->getBody()->getContents());
+        // TODO: Error Handling here and use case where game is live (highlights->live...)
+        return json_decode($response->getBody()->getContents())->highlights->highlights->items;
     }
 
 }
