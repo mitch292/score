@@ -48,7 +48,6 @@
 				this.fetchingGames = true;
 				window.axios.get(`mlb/highlights/${gamePk}`)
 					.then(resp => {
-						console.log('the response', resp)
 						this.fetchingHighlights = false;
 						this.highlights = resp.data;
 					})
