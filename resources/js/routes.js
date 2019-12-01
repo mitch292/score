@@ -25,6 +25,10 @@ let routes = [
     path: '/highlights/:gamePk',
     component: require('./components/Highlights.vue').default,
     props: true
+  },
+  {
+    path: '/my-highlights',
+    component: require('./components/MyHighlights.vue').default
   }
 ];
 

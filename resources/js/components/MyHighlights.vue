@@ -11,13 +11,13 @@
 </template>
 
 <script>
-
+	import UtilityLoading from './utility/Loading.vue';
 	import ScoreHighlight from './Highlight.vue';
 
 	export default {
 		data() {
 			return {
-				fetchHighlights: true,
+				fetchingHighlights: true,
 				highlights: []
 			};
 		},
@@ -25,11 +25,11 @@
 			fetchHighlights() {
 				window.axios.get('/mlb/highlights/my-highlights')
 					.then(resp => {
-						this.fetchHighlights = false;
+						this.fetchingHighlights = false;
 						this.highlights = resp.data;
 					})
 					.catch(err => {
-						this.fetchHighlights = false;
+						this.fetchingHighlights = false;
 						console.error('there was an error fetching the highlights', err);
 					});
 
@@ -38,7 +38,7 @@
 		mounted() {
 			this.fetchHighlights();
 		},
-		components: { ScoreHighlights }
+		components: { UtilityLoading, ScoreHighlight }
 
 	}
 

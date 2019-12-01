@@ -38,11 +38,12 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 
     Route::group(['as' => 'highlights', 'prefix' => 'highlights'], function() {
         
+        Route::get('/my-highlights', ['as' => 'fetchMyHighlights', 'uses' => 'HighlightsController@fetchMyHighlights']);
+        
         Route::get('/{gamePk}', ['as' => 'fetchHighlights', 'uses' => 'HighlightsController@fetchHighlights']);
 
         Route::post('/', ['as' => 'saveHighlight', 'uses' => 'HighlightsController@saveHighlight']);
 
-        Route::get('/my-highlights', ['as' => 'fetchMyHighlights', 'uses' => 'HighlightsController@fetchMyHighlights']);
 
     });
 

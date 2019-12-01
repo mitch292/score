@@ -20,6 +20,11 @@
 				</router-link>
 			</li>
 			<li class="nav-item">
+				<router-link to='/my-highlights'>
+					<a class="nav-link" href="#">my highlights</a>
+				</router-link>
+			</li>
+			<li class="nav-item">
 				<router-link to='/stats'>
 					<a class="nav-link" href="#">stats</a>
 				</router-link>

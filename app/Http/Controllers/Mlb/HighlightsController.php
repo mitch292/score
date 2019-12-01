@@ -33,6 +33,15 @@ class HighlightsController extends BaseController
 
 		return response()->json('ok');
 	}
+
+	public function fetchMyHighlights(Request $request)
+	{
+		if (empty($request->user())) {
+			abort(403, 'You have to be authenticated to see your highlights');
+		}
+
+		return $request->user()->highlights;
+	}
 	
 	private function sanitizeHighlights($highlights, $gamePk)
 	{
