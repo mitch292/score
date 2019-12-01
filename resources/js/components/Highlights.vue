@@ -4,26 +4,17 @@
 	</div>
 	
 	<div v-else>
-		<utility-card v-for="highlight in formattedHighlights" :key="highlight.id">
-			<template slot="content">
-				<video width="100%" height="100%" controls>
-					<source :src="highlight.playback_url" type="video/mp4">
-				</video>
-			</template>
-			<template slot="bottom">
-				<div class="text-center mt-4">
-					<div class="h5 text-red">{{highlight.title}}</div>
-					<div class="m-2 p-2">{{highlight.description}}</div>
-				</div>
-			</template>
-		</utility-card>
-
+		<div v-for="highlight in highlights" :key="highlight.id">
+			<score-highlight :highlight="highlight"></score-highlight>
+		</div>
 	</div>
+	
 </template>
 
 <script>
 	import UtilityLoading from './utility/Loading.vue';
-	import UtilityCard from './utility/Card.vue';
+	import ScoreHighlight from './Highlight.vue';
+
 	export default {
 		props: {
 			gamePk: String
@@ -60,7 +51,7 @@
 		mounted() {
 			this.getHighlights(this.gamePk);
 		},
-		components: { UtilityLoading, UtilityCard }
+		components: { UtilityLoading, ScoreHighlight }
 
 	}
 </script>
