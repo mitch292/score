@@ -20,13 +20,13 @@ export const store = {
 		}
 	},
 	initializers: {
-		initializeSavedHighlights() {
-			if (this.state.isAuthenticated) {
-				window.axios.get('/mlb/highlights/my-highlights', {idOnly: true})
-					.then(resp => this.savedHighlights = resp.data)
+		initializeSavedHighlights(state) {
+			if (state.isAuthenticated) {
+				window.axios.get('/mlb/highlights/my-highlights', {params: {idOnly: true}})
+					.then(resp => state.savedHighlights = resp.data)
 					.catch(err => console.error('there was a problem initializing saved highlights', err));
 			} else {
-				this.savedHighlights = [];
+				state.savedHighlights = [];
 			}
 		}
 	}

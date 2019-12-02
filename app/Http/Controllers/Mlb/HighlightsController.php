@@ -40,10 +40,34 @@ class HighlightsController extends BaseController
 		if ($this->validator($request->all())->fails()) {
 			abort(400, 'Please pass all required parameters');
 		}
-
-		$highlight = Highlight::firstOrCreate(['external_id' => $request->get('external_id')]);
+		
+		$highlight = Highlight::find($request->get('id'));
 
 		UserHighlight::updateOrCreate(['user_id' => $request->user()->id, 'highlight_id' => $highlight->id]);
+
+		return response()->json('ok');
+	}
+
+
+	/**
+	 * Delete a highlight that a user previously saved
+	 * 
+	 * @param Request
+	 * 
+	 * @return void\
+	 */	
+	public function deleteHighlight(Request $request)
+	{
+
+		if (empty($request->user())) {
+			abort(403, 'Only authenticated users can delete highlights');
+		}
+
+		if ($this->validator($request->all())->fails()) {
+			abort(400, 'Please pass all required parameters');
+		}
+
+		UserHighlight::where('highlight_id', $request->get('id'))->delete();
 
 		return response()->json('ok');
 	}
@@ -58,9 +82,12 @@ class HighlightsController extends BaseController
 	 */	
 	public function fetchMyHighlights(Request $request)
 	{
-		\Debugbar::info($request->all());
 		if (empty($request->user())) {
 			abort(403, 'You have to be authenticated to see your highlights');
+		}
+
+		if ($request->get('idOnly') == true) {
+			return $request->user()->highlights->pluck('id');
 		}
 
 		return $request->user()->highlights;
@@ -99,7 +126,7 @@ class HighlightsController extends BaseController
     private function validator(array $data)
     {
         return \Validator::make($data, [
-            'external_id' => ['required'],
+            'id' => ['required'],
         ]);
     }
 

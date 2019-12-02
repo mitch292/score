@@ -36,17 +36,20 @@
 			saveHighlight() {
 				window.axios.post('/mlb/highlights', this.highlight)
 					.then(resp => {
-						this.$root.initializers.initializeSavedHighlights();
+						this.$root.initializeSavedHighlights(this.$root.$data.sharedState);
 						console.log('Saved')
 					})
 					.catch(err => console.log('error saving the highlight', err));
 			},
 			removeHighlight() {
-				window.axios.delete('/mlb/highlights', this.highlight)
+				window.axios.delete('/mlb/highlights', {data: this.highlight})
 					.then(resp => {
-						this.$root.initializers.initializeSavedHighlights();
+						this.$root.initializeSavedHighlights(this.$root.$data.sharedState);
 						console.log('Removed');
 					})
+			},
+			testFunc() {
+				console.log(this.$root.$data.sharedState.savedHighlights.indexOf(this.highlight.id), this.highlight.id, this.$root.$data.sharedState.savedHighlights);
 			}
 		},
 		computed: {
@@ -56,6 +59,9 @@
 			description() {
 				return this.highlight.description.toLowerCase();
 			}
+		},
+		mounted() {
+			this.testFunc()
 		},
 		components: { UtilityCard }
 
