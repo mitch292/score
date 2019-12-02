@@ -1,3 +1,4 @@
+import { fetchUserHighlightIds } from './global.js';
 export const store = {
     state: {
 		isAuthenticated: false,
@@ -7,24 +8,22 @@ export const store = {
 		setUserAuthentication(state, authBool) {
 			state.isAuthenticated = authBool;
 		},
-		setSavedHighlights(state, ...highlightsToSave) {
-			state.savedHighlights = [...state.savedHighlights, highlightsToSave];
+		setSavedHighlights(state, savedHighlights, appendMode=false) {
+			state.savedHighlights = appendMode ? [...state.savedHighlights, ...savedHighlights] : savedHighlights;
 		}
 	},
 	getters: {
 		getUserAuthenticated() {
 			return this.state.isAuthenticated;
 		},
-		getSavedHighlights() {
-			return this.state.savedHighlights;
+		getSavedHighlights(state) {
+			return 
 		}
 	},
 	initializers: {
 		initializeSavedHighlights(state) {
 			if (state.isAuthenticated) {
-				window.axios.get('/mlb/highlights/my-highlights', {params: {idOnly: true}})
-					.then(resp => state.savedHighlights = resp.data)
-					.catch(err => console.error('there was a problem initializing saved highlights', err));
+				fetchUserHighlightIds().then(resp => state.savedHighlights = resp.data);
 			} else {
 				state.savedHighlights = [];
 			}

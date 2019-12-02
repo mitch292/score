@@ -12,7 +12,7 @@
 			<div class="text-center mt-4">
 				<div class="h5 text-red">{{title}}</div>
 				<div class="m-2 p-2">{{description}}</div>
-				<span v-if="!$root.$data.sharedState.savedHighlights.indexOf(highlight.id)"> 
+				<span v-if="$root.$data.sharedState.savedHighlights.indexOf(highlight.id) >= 0"> 
 					<button v-on:click="removeHighlight" class="btn btn-outline-primary--inherit mb-4">remove save</button>
 				</span>
 				<span v-else>
@@ -27,6 +27,9 @@
 
 <script>
 	import UtilityCard from './utility/Card.vue';
+	import { store } from '../store.js';
+	import { fetchUserHighlightIds } from '../global.js';
+
 
 	export default {
 		props: {
@@ -36,20 +39,18 @@
 			saveHighlight() {
 				window.axios.post('/mlb/highlights', this.highlight)
 					.then(resp => {
-						this.$root.initializeSavedHighlights(this.$root.$data.sharedState);
-						console.log('Saved')
+						fetchUserHighlightIds().then(resp => store.mutations.setSavedHighlights(store.state, resp.data))
 					})
 					.catch(err => console.log('error saving the highlight', err));
 			},
 			removeHighlight() {
 				window.axios.delete('/mlb/highlights', {data: this.highlight})
 					.then(resp => {
-						this.$root.initializeSavedHighlights(this.$root.$data.sharedState);
-						console.log('Removed');
+						fetchUserHighlightIds().then(resp => {
+							this.$emit('highlightRemoved');
+							store.mutations.setSavedHighlights(store.state, resp.data)
+						});
 					})
-			},
-			testFunc() {
-				console.log(this.$root.$data.sharedState.savedHighlights.indexOf(this.highlight.id), this.highlight.id, this.$root.$data.sharedState.savedHighlights);
 			}
 		},
 		computed: {
@@ -59,9 +60,6 @@
 			description() {
 				return this.highlight.description.toLowerCase();
 			}
-		},
-		mounted() {
-			this.testFunc()
 		},
 		components: { UtilityCard }
 

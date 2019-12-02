@@ -20,7 +20,8 @@
 	export default {
 		
 		mounted() {
-			store.mutations.setUserAuthentication(store.state, window.isUserAuthenticated)
+			store.mutations.setUserAuthentication(store.state, window.isUserAuthenticated);
+			store.initializers.initializeSavedHighlights(store.state);
 		},
 
 		components: { scoreHeader }

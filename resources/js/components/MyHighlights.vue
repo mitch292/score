@@ -5,7 +5,7 @@
 	
 	<div v-else>
 		<div v-for="highlight in highlights" :key="highlight.id">
-			<score-highlight :highlight="highlight"></score-highlight>
+			<score-highlight @highlightRemoved :highlight="highlight"></score-highlight>
 		</div>
 	</div>
 </template>
@@ -33,7 +33,11 @@
 						console.error('there was an error fetching the highlights', err);
 					});
 
-			}
+			},
+			highlightRemoved() {
+				console.log('hellooo')
+				this.fetchingHighlights();
+			},
 		},
 		mounted() {
 			this.fetchHighlights();
