@@ -14,24 +14,14 @@
 	  </button>
 	  <div class="collapse navbar-collapse pt-3" id="navbarNav">
 		<ul class="navbar-nav">
-			<li class="nav-item">
+			<li class="nav-item" v-if="$root.$data.sharedState.isAuthenticated">
 				<router-link to='/games'>
 					<a class="nav-link" href="#">my games</a>
 				</router-link>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" v-if="$root.$data.sharedState.isAuthenticated">
 				<router-link to='/my-highlights'>
 					<a class="nav-link" href="#">my highlights</a>
-				</router-link>
-			</li>
-			<li class="nav-item">
-				<router-link to='/stats'>
-					<a class="nav-link" href="#">stats</a>
-				</router-link>
-			</li>
-			<li class="nav-item">
-				<router-link to='/new'>
-					<a class="nav-link" href="#">new score card</a>
 				</router-link>
 			</li>
 			<li class="nav-item">
