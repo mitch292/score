@@ -46,8 +46,8 @@
 		},
 		methods: {
 			// defaults to today, or pass date in yyyy-MM-DD format
-			getGames: function() {
-				let momentDate = moment(this.date);
+			getGames: function(date) {
+				let momentDate = moment(date);
 				let formattedDate = momentDate.format('YYYY-MM-DD');
 				this.fetchingGames = true;
 
@@ -63,7 +63,7 @@
 			},
 			saveGame(game) {
 				window.axios.post('mlb/game/save', {external_id: game.gamePk})
-					.then(resp => console.log('the response', resp))
+					.then(resp => {})
 					.catch(err => console.error('problem saving the game', err))
 			}
 		},
