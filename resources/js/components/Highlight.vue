@@ -12,7 +12,7 @@
 			<div class="text-center mt-4">
 				<div class="h5 text-red">{{title}}</div>
 				<div class="m-2 p-2">{{description}}</div>
-				<span v-if="$root.$data.sharedState.savedHighlights.indexOf(highlight.id)"> 
+				<span v-if="!$root.$data.sharedState.savedHighlights.indexOf(highlight.id)"> 
 					<button v-on:click="removeHighlight" class="btn btn-outline-primary--inherit mb-4">remove save</button>
 				</span>
 				<span v-else>
