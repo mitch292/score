@@ -54,5 +54,8 @@ const app = new Vue({
     router,
     data: {
         sharedState: store.state
+    },
+    methods: {
+        initializeSavedHighlights: store.initializers.initializeSavedHighlights
     }
 });

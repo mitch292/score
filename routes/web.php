@@ -42,6 +42,8 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
         
         Route::get('/{gamePk}', ['as' => 'fetchHighlights', 'uses' => 'HighlightsController@fetchHighlights']);
 
+        Route::delete('/', ['as' => 'deleteHighlight', 'uses' => 'HighlightsController@deleteHighlight']);
+
         Route::post('/', ['as' => 'saveHighlight', 'uses' => 'HighlightsController@saveHighlight']);
 
 

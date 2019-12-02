@@ -10,13 +10,27 @@ use App\Models\UserHighlight;
 class HighlightsController extends BaseController
 {
 
+	/**
+	 * Fetch highlights for a given gamePK
+	 * 
+	 * @param String $gamePk - The MLB API's primary key for a given game
+	 * 
+	 * @return Array - An array of Highlights
+	 */	
     public function fetchHighlights($gamePk)
     {
 		$highlights = $this->mlbApi->fetchHighlights($gamePk);
+		
 		return $this->sanitizeHighlights($highlights, $gamePk);
-		// return $highlights;
 	}
 
+	/**
+	 * Save a highlight for an authenticated user
+	 * 
+	 * @param Request 
+	 * 
+	 * @return void
+	 */	
 	public function saveHighlight(Request $request)
 	{
 		if (empty($request->user())) {
@@ -34,15 +48,32 @@ class HighlightsController extends BaseController
 		return response()->json('ok');
 	}
 
+
+	/**
+	 * Fetch highlights for a given user
+	 * 
+	 * @param Request - The request can have an optional idOnly bool
+	 * 
+	 * @return Array - An array of Highlights or an array of Highlight IDs
+	 */	
 	public function fetchMyHighlights(Request $request)
 	{
+		\Debugbar::info($request->all());
 		if (empty($request->user())) {
 			abort(403, 'You have to be authenticated to see your highlights');
 		}
 
 		return $request->user()->highlights;
 	}
-	
+
+	/**
+	 * Fetch highlights for a given user
+	 * 
+	 * @param Array $highlights - an array of raw highlights from the MLB API
+	 * @param String $gamePk - The extenal_id (or MLB primary key) for the game that this highlight is associated with
+	 * 
+	 * @return Array - An array of Highlights
+	 */	
 	private function sanitizeHighlights($highlights, $gamePk)
 	{
 		$collectionOfHighlights = collect();
