@@ -27,7 +27,13 @@ class MlbApiClient
             ]
         ]);
 
-        return json_decode($response->getBody()->getContents())->dates[0]->games;
+        $data = json_decode($response->getBody()->getContents());
+
+        if (empty($data->dates)) {
+            return [];
+        }
+
+        return $data->dates[0]->games;
     }
 
 

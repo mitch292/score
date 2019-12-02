@@ -1,0 +1,11 @@
+.calendar {
+	.cell.selected {
+	  background: $deep-red !important;
+	  border-color: $deep-red !important;
+	  color: white !important
+	}
+
+	.cell:hover {
+		border: 1px solid $deep-red !important;
+	}
+  }

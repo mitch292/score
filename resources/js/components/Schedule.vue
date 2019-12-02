@@ -5,6 +5,18 @@
 	</div>
 
 	<div v-else>
+		<div class="row d-flex align-items-center justify-content-center">
+			<div class="text-red h3 m-3">select a date:</div>
+			<date-picker 
+				calendar-class="bg-red calendar" 
+				input-class="text-secondary h5 text-center p-2" 
+				class="text-secondary" 
+				@selected="getGames" 
+				v-model="date" 
+				format="yyyy-MM-dd"
+			>
+			</date-picker>
+		</div>
 		<game-list
 			:games="games"
 			:showBtn="true"
@@ -20,19 +32,26 @@
 <script>
 	import GameList from './utility/GameList.vue';
 	import UtilityLoading from './utility/Loading.vue';
+	import DatePicker from 'vuejs-datepicker';
+	import moment from 'moment';
+
 
 	export default {
 		data() {
 			return {
 				games: [],
-				fetchingGames: false
+				fetchingGames: false,
+				date: new Date(),
 			}
 		},
 		methods: {
-			// defaults to today, or pass date in YYYY-MM-DD format
-			getGames: function(date='today') {
+			// defaults to today, or pass date in yyyy-MM-DD format
+			getGames: function() {
+				let momentDate = moment(this.date);
+				let formattedDate = momentDate.format('YYYY-MM-DD');
 				this.fetchingGames = true;
-				window.axios.get(`mlb/schedule/${date}`)
+
+				window.axios.get(`mlb/schedule/${formattedDate}`)
 					.then(resp => {
 						this.fetchingGames = false;
 						this.games = resp.data;
@@ -49,9 +68,9 @@
 			}
 		},
 		mounted() {
-			this.getGames('2019-08-24');
+			this.getGames();
 		},
-		components: { UtilityLoading, GameList }
+		components: { UtilityLoading, GameList, DatePicker }
 	}
 
 </script>
