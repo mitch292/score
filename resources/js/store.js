@@ -1,8 +1,9 @@
-import { fetchUserHighlightIds } from './global.js';
+import { fetchUserHighlightIds, fetchUserGameIds } from './global.js';
 export const store = {
     state: {
 		isAuthenticated: false,
-		savedHighlights: []
+		savedHighlights: [],
+		savedGames: [],
 	},
 	mutations: {
 		setUserAuthentication(state, authBool) {
@@ -10,6 +11,11 @@ export const store = {
 		},
 		setSavedHighlights(state, savedHighlights, appendMode=false) {
 			state.savedHighlights = appendMode ? [...state.savedHighlights, ...savedHighlights] : savedHighlights;
+		},
+		setSavedGames(state, savedGames, appendMode=false) {
+			console.log('the saved games', savedGames)
+			state.savedGames = appendMode ? [...state.savedGames, ...savedGames] : savedGames;
+
 		}
 	},
 	getters: {
@@ -17,7 +23,10 @@ export const store = {
 			return this.state.isAuthenticated;
 		},
 		getSavedHighlights(state) {
-			return 
+			return state.savedHighlights;
+		},
+		getSavedGames(state) {
+			return state.savedGames;
 		}
 	},
 	initializers: {
@@ -27,6 +36,13 @@ export const store = {
 			} else {
 				state.savedHighlights = [];
 			}
-		}
+		},
+		initializeSavedGames(state) {
+			if (state.isAuthenticated) {
+				fetchUserGameIds().then(resp => state.savedGames = resp.data);
+			} else {
+				state.savedGames = [];
+			}
+		},
 	}
 }

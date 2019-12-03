@@ -4,12 +4,13 @@
 
 			<template slot="content">
 				<div class="d-flex justify-content-between p-2">
-					<span v-if="showBtn">
-						<button
-							v-if="btnConditional"
-							v-on:click="btnOnClick(game)"
-							:class="btnClass"
-						>{{ btnText }}</button>
+					<span v-if="$root.$data.sharedState.isAuthenticated">
+						<span v-if="$root.$data.sharedState.savedGames.indexOf(game.gamePk.toString()) >= 0"> 
+							<button v-on:click="removeGame(game)" class="btn btn-outline-primary--inherit mb-4">remove save</button>
+						</span>
+						<span v-else>
+							<button v-on:click="saveGame(game)" class="btn btn-primary mb-4">save</button>
+						</span>
 					</span>
 					<span class="">
 						<router-link :to="`/highlights/${game.gamePk}`">
@@ -53,36 +54,18 @@
 
 	import UtilityCard from './Card.vue';
 	import ScoreGame from '../Game.vue';
+	import { store } from '../../store.js';
+	import { fetchUserGameIds } from '../../global.js';
+
 
 	export default {
 
 		props: {
 			games: Array,
-			showBtn: {
-				type: Boolean,
-				default: false
-			},
-			btnConditional: {
-				type: Boolean,
-				default: false
-			},
-			btnOnClick: {
-				type: Function,
-				default: (game) => {}
-			},
-			btnClass: {
-				type: String,
-				default: 'btn btn-primary'
-			},
-			btnText: {
-				type: String,
-				default: 'score'
-			},
 			quickAccessOnly: {
 				type: Boolean,
 				default: false
 			}
-
 		},
 
 		methods: {
@@ -99,6 +82,23 @@
 					${_.has(game.gameData.weather, 'wind') ? 'wind:' : ''}
 					 ${_.get(game.gameData.weather, 'wind', '')}`
 			},
+			saveGame(game) {
+				window.axios.post('mlb/game/save', {external_id: game.gamePk})
+					.then(resp => {
+						fetchUserGameIds().then(resp => store.mutations.setSavedGames(store.state, resp.data))
+					})
+					.catch(err => console.error('problem saving the game', err))
+			},
+			removeGame(game) {
+				window.axios.delete('/mlb/game', {data: {external_id: game.gamePk}})
+					.then(resp => {
+						fetchUserGameIds().then(resp => {
+							this.$emit('gameRemoved');
+							store.mutations.setSavedGames(store.state, resp.data)
+						});
+					})
+					.catch(err => console.error('there was an error removing the game from your profile', err))
+			}
 		},
 		components: { UtilityCard, ScoreGame }
 	}

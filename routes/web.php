@@ -31,6 +31,8 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 
     Route::group(['as' => 'game', 'prefix' => 'game'], function() {
 
+        Route::delete('/', ['as' => 'deleteGame', 'uses' => 'GameController@deleteGame']);
+
         Route::post('/save', ['as' => 'game', 'uses' => 'GameController@saveGame']);
 
         Route::get('/my-games', ['as' => 'myGames', 'uses' => 'GameController@fetchMyGames']);

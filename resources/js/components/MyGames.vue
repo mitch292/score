@@ -7,8 +7,7 @@
 		<game-list
 			:games="games"
 			:quickAccessOnly="true"
-			:showBtn="false"
-			:btnConditional="$root.$data.sharedState.isAuthenticated"
+			v-on:gameRemoved="fetchMyGames"
 		>
 		</game-list>
 	</div>
@@ -23,13 +22,12 @@
 		data() {
 			return {
 				games: [],
-				fetchingGames: false
+				fetchingGames: true
 			}
 		},
 
 		methods: {
 			fetchMyGames: function() {
-				this.fetchingGames = true;
 				window.axios.get('/mlb/game/my-games')
 					.then(resp => {
 						this.fetchingGames = false;

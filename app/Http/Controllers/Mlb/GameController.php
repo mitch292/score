@@ -34,6 +34,23 @@ class GameController extends BaseController
 		return response()->json('ok');
 
     }
+
+    public function deleteGame(Request $request)
+    {
+        if (empty($request->user())) {
+			abort(403, 'Only authenticated users can delete highlights');
+		}
+
+		if ($this->validator($request->all())->fails()) {
+			abort(400, 'Please pass all required parameters');
+        }
+        
+        $game = Game::where('external_id', $request->get('external_id'))->firstOrFail();
+
+		UserGame::where('game_id', $game->id)->delete();
+
+		return response()->json('ok');
+    }
     
     public function fetchMyGames(Request $request)
     {
@@ -41,7 +58,12 @@ class GameController extends BaseController
             // might need to alter this
             return response()->json([]);
         }
-       return $this->gameService->fetchGamesDataFromIds($request->user()->games()->get()->pluck('external_id'));
+
+        if ($request->get('gamePkOnly') == true) {
+			return $request->user()->games->pluck('external_id');
+        }
+        
+        return $this->gameService->fetchGamesDataFromIds($request->user()->games->pluck('external_id'));
     }
 	
 	/**

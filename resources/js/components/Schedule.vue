@@ -1,11 +1,7 @@
 <template>
-	
-	<div v-if="fetchingGames">
-		<utility-loading></utility-loading>
-	</div>
 
-	<div v-else>
-		<div class="row d-flex align-items-center justify-content-center">
+	<div>
+		<div class="row mb-5 d-flex align-items-center justify-content-center">
 			<div class="text-red h3 m-3">select a date:</div>
 			<date-picker 
 				calendar-class="bg-red calendar" 
@@ -17,15 +13,27 @@
 			>
 			</date-picker>
 		</div>
-		<game-list
-			:games="games"
-			:showBtn="true"
-			:btnConditional="$root.$data.sharedState.isAuthenticated"
-			:btnOnClick="saveGame"
-			btnText="save game"
-		>
-		</game-list>
+
+		<div v-if="fetchingGames">
+			<utility-loading></utility-loading>
+		</div>
+
+		<div v-else-if="!fetchingGames && games.length === 0">
+			<div class="d-flex align-items-center justify-content-center">
+				<font-awesome-icon class="text-red mr-4" icon="calendar-times" size="3x" />
+				looks like there aren't any games on this day
+			</div>
+		</div>
+
+		<div v-else>
+			<game-list
+				:games="games"
+			>
+			</game-list>
+		</div>
+
 	</div>
+	
 
 </template>
 
@@ -59,12 +67,7 @@
 					.catch(err => {
 						this.fetchingGames = false;
 						console.error('err', err)
-					})
-			},
-			saveGame(game) {
-				window.axios.post('mlb/game/save', {external_id: game.gamePk})
-					.then(resp => {})
-					.catch(err => console.error('problem saving the game', err))
+					});
 			}
 		},
 		mounted() {

@@ -17,7 +17,7 @@
 						<button v-on:click="removeHighlight" class="btn btn-outline-primary--inherit mb-4">remove save</button>
 					</span>
 					<span v-else>
-						<button v-on:click="saveHighlight" class="btn btn-outline-primary--inherit mb-4">save</button>
+						<button v-on:click="saveHighlight" class="btn btn-primary mb-4">save</button>
 					</span>
 				</span>
 			</div>
@@ -53,6 +53,7 @@
 							store.mutations.setSavedHighlights(store.state, resp.data)
 						});
 					})
+					.catch(err => console.error('error removing the highlight from your profile', err));
 			}
 		},
 		computed: {
