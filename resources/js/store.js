@@ -13,7 +13,6 @@ export const store = {
 			state.savedHighlights = appendMode ? [...state.savedHighlights, ...savedHighlights] : savedHighlights;
 		},
 		setSavedGames(state, savedGames, appendMode=false) {
-			console.log('the saved games', savedGames)
 			state.savedGames = appendMode ? [...state.savedGames, ...savedGames] : savedGames;
 
 		}

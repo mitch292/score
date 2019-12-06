@@ -4,7 +4,7 @@
 			looks like there was a problem logging in, please try again.
 		</div>
 		<basic-card>
-			<form class="mx-auto col-sm-8 p-5">
+			<form class="mx-auto col-10 mt-5 mb-5">
 				<p>
 					<label class="text-red mr-2">email:</label><br>
 					<input class="p-2 w-100" autocomplete="username" type="text" v-model="email" placeholder="mickey.mantle@gmail.com" required>
@@ -43,8 +43,9 @@
 				})
 					.then(res => {
 						store.mutations.setUserAuthentication(store.state, true);
+						store.initializers.initializeSavedGames();
+						store.initializers.initializeSavedHighlights();
 						this.$router.push('/')
-
 					})
 					.catch(err => {
 						console.error('the error', err)

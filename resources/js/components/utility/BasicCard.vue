@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card col-sm-8 mx-auto">
       <slot></slot>
   </div>
 </template>

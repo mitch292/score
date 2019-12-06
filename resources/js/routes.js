@@ -29,7 +29,9 @@ let routes = [
   {
     path: '/my-highlights',
     component: require('./components/MyHighlights.vue').default
-  }
+  },
+  // CATCH ALL - THIS SHOULD BE A 404
+  { path: '*', redirect: '/' }
 ];
 
 export default new VueRouter({

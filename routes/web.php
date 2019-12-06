@@ -25,7 +25,6 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
         Route::get('/today', ['as' => 'today', 'uses' => 'ScheduleController@fetchTodaysGames']);
 
         Route::get('/{date}', ['as' => 'schedule', 'uses' => 'ScheduleController@fetchGamesForDate']);
-            // ->where(['date' => ]);
 
     });
 
@@ -65,4 +64,3 @@ Route::group(['as' => 'api', 'prefix' => 'api'], function() {
     
     });
 });
-
