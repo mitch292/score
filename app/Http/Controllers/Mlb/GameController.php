@@ -16,7 +16,13 @@ class GameController extends BaseController
 
     }
 
-
+	/**
+	 * Save a game to a user's profile
+	 * 
+	 * @param Request
+	 * 
+	 * @return Response
+	 */	
     public function saveGame(Request $request)
     {
 		if (empty($request->user())) {
@@ -35,6 +41,14 @@ class GameController extends BaseController
 
     }
 
+
+    /**
+	 * Delete a game from a user's profile
+	 * 
+	 * @param Request
+	 * 
+	 * @return Response
+	 */	
     public function deleteGame(Request $request)
     {
         if (empty($request->user())) {
@@ -52,6 +66,14 @@ class GameController extends BaseController
 		return response()->json('ok');
     }
     
+
+	/**
+	 * Fetch all the games for an authenticated user
+	 * 
+	 * @param Request
+	 * 
+	 * @return Array
+	 */	
     public function fetchMyGames(Request $request)
     {
         if (!\Auth::check()) {
@@ -65,7 +87,8 @@ class GameController extends BaseController
         
         return $this->gameService->fetchGamesDataFromIds($request->user()->games->pluck('external_id'));
     }
-	
+
+
 	/**
      * Get a validator for an incoming registration request.
      *

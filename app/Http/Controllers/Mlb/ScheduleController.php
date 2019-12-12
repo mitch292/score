@@ -18,12 +18,24 @@ class ScheduleController extends BaseController
     }
 
 
+	/**
+	 * Fetch the games for today from the MLB API
+	 * 
+	 * @return Array
+	 */	
     public function fetchTodaysGames()
     {
         return $this->fetchGamesForDate(Carbon::today('America/New_York'));
     }
 
 
+	/**
+	 * Fetch the games for a given date from the MLB API
+	 * 
+	 * @param String $date - in a carbon parsable format
+	 * 
+	 * @return Array
+	 */	
     public function fetchGamesForDate($date)
     {
         $date = Carbon::parse($date)->format('m/d/Y');

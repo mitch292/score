@@ -18,7 +18,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    
+
+    /**
+	 * Authenticate a user
+	 * 
+	 * @param Request
+	 * 
+	 * @return Response
+	 */	
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -31,6 +38,13 @@ class LoginController extends Controller
     }
 
     
+    /**
+	 * Unauthenticate a user and flush the session
+	 * 
+	 * @param Request
+	 * 
+	 * @return void
+	 */	
     public function logout(Request $request)
     {
         Auth::logout();

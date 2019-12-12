@@ -54,7 +54,7 @@ class HighlightsController extends BaseController
 	 * 
 	 * @param Request
 	 * 
-	 * @return void\
+	 * @return void
 	 */	
 	public function deleteHighlight(Request $request)
 	{
