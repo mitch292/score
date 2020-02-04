@@ -37,6 +37,7 @@ export const store = {
 			}
 		},
 		initializeSavedGames(state) {
+			console.log('state', state, state.isAuthenticated)
 			if (state.isAuthenticated) {
 				fetchUserGameIds().then(resp => state.savedGames = resp.data);
 			} else {

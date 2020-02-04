@@ -20,6 +20,7 @@
 	export default {
 		
 		mounted() {
+			console.log('app vue', store)
 			store.mutations.setUserAuthentication(store.state, window.isUserAuthenticated);
 			// TODO: should we just loop through this object and call all functions or have a handler?
 			store.initializers.initializeSavedHighlights(store.state);

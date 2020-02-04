@@ -42,9 +42,10 @@
 					password: this.password
 				})
 					.then(res => {
+						console.log('the store', store);
 						store.mutations.setUserAuthentication(store.state, true);
-						store.initializers.initializeSavedGames();
-						store.initializers.initializeSavedHighlights();
+						store.initializers.initializeSavedGames(store.state);
+						store.initializers.initializeSavedHighlights(store.state);
 						this.$router.push('/')
 					})
 					.catch(err => {
