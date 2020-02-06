@@ -3,12 +3,24 @@
 namespace App\Http\Controllers\Mlb;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\MlbService;
 use App\Models\Highlight;
 use App\Models\Game;
 use App\Models\UserHighlight;
 
-class HighlightsController extends BaseController
+class HighlightsController extends Controller
 {
+	/**
+     * @var MlbService
+     */
+    private $mlbService;
+
+    public function __construct()
+    {
+        $this->mlbService = app(MlbService::class);
+        parent::__construct();
+    }
 
 	/**
 	 * Fetch highlights for a given gamePK
@@ -19,9 +31,8 @@ class HighlightsController extends BaseController
 	 */	
     public function fetchHighlights($gamePk)
     {
-		$highlights = $this->mlbApi->fetchHighlights($gamePk);
+		return $this->mlbService->fetchHighlights($gamePk);
 		
-		return $this->sanitizeHighlights($highlights, $gamePk);
 	}
 
 	/**
@@ -91,30 +102,6 @@ class HighlightsController extends BaseController
 		}
 
 		return $request->user()->highlights;
-	}
-
-	/**
-	 * Fetch highlights for a given user
-	 * 
-	 * @param Array $highlights - an array of raw highlights from the MLB API
-	 * @param String $gamePk - The extenal_id (or MLB primary key) for the game that this highlight is associated with
-	 * 
-	 * @return Array - An array of Highlights
-	 */	
-	private function sanitizeHighlights($highlights, $gamePk)
-	{
-		$collectionOfHighlights = collect();
-		foreach ($highlights as $highlight) {
-			// maybe some error handling in here
-			$collectionOfHighlights->push(Highlight::firstOrCreate(['external_id' => $highlight->mediaPlaybackId], [
-				'playback_url' => $highlight->playbacks[0]->url,
-				'title' => $highlight->headline,
-				'description' => $highlight->description,
-				'game_id' => Game::firstOrCreate(['external_id' => $gamePk])->id,
-			]));
-
-		}
-		return $collectionOfHighlights;
 	}
 
 	/**

@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use App\Http\Clients\MlbClient;
 use App\Models\Team;
 use App\Models\Player;
+use App\Models\Highlight;
+use App\Models\Game;
+
 
 class MlbService
 {
@@ -49,6 +52,48 @@ class MlbService
         return $collection;
 	}
 
+	public function fetchGamesFromIds($gamePks): Collection
+	{
+		$collection = collect($gamePks)->map(function($gamePk) {
+			return $this->formatGame([
+				'gamePk' => $gamePk
+			]);
+		});
+
+		return $collection;
+	}
+
+    public function fetchHighlights($gamePk): Collection
+    {
+		$response = $this->mlbClient->get('game/'.$gamePk.'/content');
+		
+		// TODO: Error Handling here and use case where game is live (highlights->live...)
+		$data = json_decode((string) $response->getBody(), true);
+
+		if (empty($data['highlights'])) {
+			return [];
+		}
+
+		$collection = collect($data['highlights']['highlights']['items'])->map(function ($highlight) use($gamePk) {
+			return Highlight::firstOrCreate(['external_id' => $highlight['mediaPlaybackId']], [
+				'playback_url' => $highlight['playbacks'][0]['url'],
+				'title' => $highlight['headline'],
+				'description' => $highlight['description'],
+				'game_id' => Game::firstOrCreate(['external_id' => $gamePk])->id,
+			]);
+		});
+
+        return $collection;
+	}
+
+	
+	/***********************************************************************************************************************
+	 * 
+	 * PRIVATE FUNCTIONS
+	 * 
+	 ***********************************************************************************************************************/
+
+	
 	private function formatGame($game): Array
 	{
 		$extraData = $this->fetchGameData($game['gamePk']);
@@ -58,9 +103,11 @@ class MlbService
 
 		return [
 			'gamePk' => $game['gamePk'],
-			'link' => $game['link'],
-			'date' => Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $game['gameDate']),
-			'status' => $game['status'],
+			'link' => $game['link'] ?? null,
+			'date' => !empty($game['gameDate']) 
+				? Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $game['gameDate'])
+				: null,
+			'status' => $game['status'] ?? null,
 			'teams' => $extraData['gameData']['teams'],
 			'pitchers' => [
 				'home' => $homePitcher,
@@ -103,6 +150,8 @@ class MlbService
 			$response = $this->mlbClient->get('people/'.$externalPlayerId);
 
 			$data = json_decode((string) $response->getBody(), true);
+
+			
 			if (empty($data['people'])) {
 				[];
 			}

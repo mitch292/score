@@ -3,20 +3,23 @@
 namespace App\Http\Controllers\Mlb;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Carbon\Carbon;
-use App\Services\GameService;
 use App\Services\MlbService;
 
-class ScheduleController extends BaseController
+class ScheduleController extends Controller
 {
 
+    /**
+     * @var MlbService
+     */
+    private $mlbService;
 
     public function __construct()
     {
         $this->mlbService = app(MlbService::class);
-        $this->gameService = new GameService();
         parent::__construct();
-
     }
 
 
@@ -25,7 +28,7 @@ class ScheduleController extends BaseController
 	 * 
 	 * @return Array
 	 */	
-    public function fetchTodaysGames()
+    public function fetchTodaysGames(): Collection
     {
         return $this->fetchGamesForDate(Carbon::today('America/New_York'));
     }
@@ -38,12 +41,10 @@ class ScheduleController extends BaseController
 	 * 
 	 * @return Array
 	 */	
-    public function fetchGamesForDate($date)
+    public function fetchGamesForDate($date): Collection
     {
         $date = Carbon::parse($date)->format('m/d/Y');
         return $this->mlbService->fetchGamesForDate($date);
-        // $rawGames = $this->mlbApi->fetchGamesForDate($date);
-        // return $this->gameService->sanitizeGames($rawGames);
     }
 
 }

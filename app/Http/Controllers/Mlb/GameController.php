@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Mlb;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\UserGame;
-use App\Services\GameService;
+use App\Services\MlbService;
 
-class GameController extends BaseController
+class GameController extends Controller
 {
+	/**
+     * @var MlbService
+     */
+    private $mlbService;
+
     public function __construct()
     {
-        $this->gameService = new GameService();
+        $this->mlbService = app(MlbService::class);
         parent::__construct();
-
     }
 
 	/**
@@ -85,7 +90,7 @@ class GameController extends BaseController
 			return $request->user()->games->pluck('external_id');
         }
         
-        return $this->gameService->fetchGamesDataFromIds($request->user()->games->pluck('external_id'));
+		return $this->mlbService->fetchGamesFromIds($request->user()->games->pluck('external_id'));
     }
 
 

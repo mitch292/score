@@ -20,21 +20,18 @@ class Player extends Model
 
 
     // expects format of mlb api player response
-    public static function formatPlayer($mlbPlayer)
+    public static function formatPlayer($mlbPlayer): Array
     {
-        if (!empty($mlbPlayer)) {
             return [
-                'first_name' => $mlbPlayer->firstName ?? null,
-                'last_name' => $mlbPlayer->lastName ?? null,
-                'full_name' => $mlbPlayer->fullName ?? null,
-                'birth_city' => $mlbPlayer->birthCity ?? null,
-                'birth_state_province' => $mlbPlayer->birthStateProvince ?? null,
-                'birth_country' => $mlbPlayer->birthCountry ?? null,
-                'external_id' => $mlbPlayer->id ?? null,
+                'first_name' => $mlbPlayer['firstName'] ?? null,
+                'last_name' => $mlbPlayer['lastName'] ?? null,
+                'full_name' => $mlbPlayer['fullName'] ?? null,
+                'birth_city' => $mlbPlayer['birthCity'] ?? null,
+                'birth_state_province' => $mlbPlayer['birthStateProvince'] ?? null,
+                'birth_country' => $mlbPlayer['birthCountry'] ?? null,
+                'external_id' => $mlbPlayer['id'] ?? null,
             ];
-        }
 
-        return null;
     }
 
 }
