@@ -19,7 +19,6 @@ class HighlightsController extends Controller
     public function __construct()
     {
         $this->mlbService = app(MlbService::class);
-        parent::__construct();
     }
 
 	/**
