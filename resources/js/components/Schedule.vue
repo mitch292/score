@@ -61,7 +61,6 @@
 
 				window.axios.get(`mlb/schedule/${formattedDate}`)
 					.then(resp => {
-						console.log('res.date', resp.data)
 						this.fetchingGames = false;
 						this.games = resp.data;
 					})

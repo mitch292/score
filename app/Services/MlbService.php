@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Http\Clients\MlbClient;
 use App\Models\Team;
+use App\Models\Player;
 
 class MlbService
 {
@@ -51,6 +52,9 @@ class MlbService
 	private function formatGame($game): Array
 	{
 		$extraData = $this->fetchGameData($game['gamePk']);
+		$homePitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['home']['id']);
+		$awayPitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['away']['id']);
+
 
 		return [
 			'gamePk' => $game['gamePk'],
@@ -59,12 +63,8 @@ class MlbService
 			'status' => $game['status'],
 			'teams' => $extraData['gameData']['teams'],
 			'pitchers' => [
-				'home' => [
-					$extraData['gameData']['probablePitchers']['home']['id']
-				],
-				'away' => [
-					$extraData['gameData']['probablePitchers']['away']['id']
-				],
+				'home' => $homePitcher,
+				'away' => $awayPitcher,
 			],
 			'weather' => $extraData['gameData']['weather'],
 			'datetime' => $extraData['gameData']['datetime'],
@@ -92,6 +92,26 @@ class MlbService
 		}
 
 		return $data;
+	}
+
+	private function getPlayerDetails($externalPlayerId): Player
+	{
+		$player = Player::where('external_id', $externalPlayerId)->first();
+
+		if (empty($player)) {
+
+			$response = $this->mlbClient->get('people/'.$externalPlayerId);
+
+			$data = json_decode((string) $response->getBody(), true);
+			if (empty($data['people'])) {
+				[];
+			}
+			$player = Player::create(
+				Player::formatPlayer($data['people'][0])
+			);
+		}
+
+		return $player;
 	}
 
 	
