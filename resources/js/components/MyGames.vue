@@ -6,7 +6,7 @@
 	<div v-else>
 		<game-list
 			:games="games"
-			:quickAccessOnly="true"
+			:scoreDataOnly="true"
 			v-on:gameRemoved="fetchMyGames"
 		>
 		</game-list>

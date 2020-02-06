@@ -2,24 +2,24 @@
 	<div class="game-matchup text-center">
 
 		<div class="game-team align-middle col-sm-4 d-inline-block">
-			<img class="team-logo" :src="away.quickAccess.path_to_logo">
-			<div class="team-name">{{`${away.quickAccess.prefix} ${away.quickAccess.name}`}}</div>
-			<div v-if="!quickAccessOnly" class="text-red mt-1">{{ `${away.leagueRecord.wins} - ${away.leagueRecord.losses} (${away.leagueRecord.pct})` }}</div>
+			<img class="team-logo" :src="game.scoreData.away.path_to_logo">
+			<div class="team-name">{{`${game.scoreData.away.prefix} ${game.scoreData.away.name}`}}</div>
+			<div v-if="!scoreDataOnly" class="text-red mt-1">{{ `${game.teams.away.record.wins} - ${game.teams.away.record.losses} (${game.teams.away.record.winningPercentage})` }}</div>
 		</div>
 		<div class="game-vs d-inline-block p-4 text-red">
 			at
 		</div>
 		<div class="game-team align-middle col-sm-4 d-inline-block">
-			<img class="team-logo" :src="home.quickAccess.path_to_logo">
-			<div class="team-name">{{`${home.quickAccess.prefix} ${home.quickAccess.name}`}}</div>
-			<div v-if="!quickAccessOnly" class="text-red mt-1">{{ `${home.leagueRecord.wins} - ${home.leagueRecord.losses} (${home.leagueRecord.pct})` }}</div>
+			<img class="team-logo" :src="game.scoreData.home.path_to_logo">
+			<div class="team-name">{{`${game.scoreData.home.prefix} ${game.scoreData.home.name}`}}</div>
+			<div v-if="!scoreDataOnly" class="text-red mt-1">{{ `${game.teams.home.wins} - ${game.teams.home.losses} (${game.teams.home.winningPercentage})` }}</div>
 		</div>
 
 		<div class="d-none d-md-block">
-			<box-summary 
-				:gameData="game.gameData"
-				:homeTeam="home.quickAccess.name"
-				:awayTeam="away.quickAccess.name"
+			<box-summary
+				:game="game"
+				:homeTeam="game.scoreData.home.name"
+				:awayTeam="game.scoreData.away.name"
 				:gameStatus="game.status"
 
 			>
@@ -37,7 +37,7 @@
 			home: Object,
 			away: Object,
 			game: Object,
-			quickAccessOnly: {
+			scoreDataOnly: {
 				type: Boolean,
 				default: false
 			}

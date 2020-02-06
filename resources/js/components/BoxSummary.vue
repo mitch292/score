@@ -8,7 +8,7 @@
 
                 <tr>
                     <th>team</th>
-                    <th v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameState !== GAME_IS_FINAL}">
+                    <th v-for="n in getNumberOfInnings(game)" :key="n" :class="{'text-red': currentInning === n && gameState !== GAME_IS_FINAL}">
                         {{ n }}
                     </th>
                     <th class="text-red">R</th>
@@ -19,23 +19,23 @@
 
                 <tr>
                     <td>{{ awayTeam }}</td>
-                    <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && gameData.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
+                    <td v-for="n in getNumberOfInnings(game)" :key="n" :class="{'text-red': currentInning === n && game.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
                         {{ getRuns('away', n) }}
                     </td>
-                    <td class="text-red">{{ gameData.linescore.teams.away.runs }}</td>
-                    <td>{{ gameData.linescore.teams.away.hits }}</td>
-                    <td>{{ gameData.linescore.teams.away.errors }}</td>
-                    <td>{{ gameData.linescore.teams.away.leftOnBase }}</td>
+                    <td class="text-red">{{ game.linescore.teams.away.runs }}</td>
+                    <td>{{ game.linescore.teams.away.hits }}</td>
+                    <td>{{ game.linescore.teams.away.errors }}</td>
+                    <td>{{ game.linescore.teams.away.leftOnBase }}</td>
                 </tr>
                 <tr>
                     <td>{{ homeTeam }}</td>
-                    <td v-for="n in getNumberOfInnings(gameData)" :key="n" :class="{'text-red': currentInning === n && !gameData.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
+                    <td v-for="n in getNumberOfInnings(game)" :key="n" :class="{'text-red': currentInning === n && !game.linescore.isTopInning && gameState !== GAME_IS_FINAL}">
                         {{ getRuns('home', n) }}
                     </td>
-                    <td class="text-red">{{ gameData.linescore.teams.home.runs }}</td>
-                    <td>{{ gameData.linescore.teams.home.hits }}</td>
-                    <td>{{ gameData.linescore.teams.home.errors }}</td>
-                    <td>{{ gameData.linescore.teams.home.leftOnBase }}</td>
+                    <td class="text-red">{{ game.linescore.teams.home.runs }}</td>
+                    <td>{{ game.linescore.teams.home.hits }}</td>
+                    <td>{{ game.linescore.teams.home.errors }}</td>
+                    <td>{{ game.linescore.teams.home.leftOnBase }}</td>
                 </tr>
 
             </table>
@@ -48,7 +48,7 @@
 
     export default {
         props: {
-            gameData: Object,
+            game: Object,
             homeTeam: String,
             awayTeam: String,
             gameStatus: {
@@ -58,10 +58,10 @@
         },
         methods: {
             getRuns: function(team, inning) {
-                return _.get(this.gameData.linescore.innings, [inning - 1, team, 'runs'], '')
+                return _.get(this.game.linescore.innings, [inning - 1, team, 'runs'], '')
             },
-            getNumberOfInnings: function(gameData) {
-                return gameData.linescore.innings.length > 9 ? gameData.linescore.innings.length : 9;
+            getNumberOfInnings: function(game) {
+                return game.linescore.innings.length > 9 ? game.linescore.innings.length : 9;
             }
         },
         data() {
@@ -71,7 +71,7 @@
         },
         computed: {
             currentInning: function() {
-                return this.gameData.linescore.currentInning
+                return this.game.linescore.currentInning
             },
             gameState: function() {
                 return _.get(this.gameStatus, ['detailedState'], '').toLowerCase();

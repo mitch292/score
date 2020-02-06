@@ -24,7 +24,7 @@
 					:home="game.teams.home" 
 					:away="game.teams.away"
 					:game="game"
-					:quickAccessOnly="quickAccessOnly"
+					:scoreDataOnly="scoreDataOnly"
 				>
 				</score-game>
 
@@ -33,8 +33,8 @@
 			<template slot="bottom">
 				<div class="text-center mt-4">
 					<div>
-						{{ game.teams.home.quickAccess.ballpark_name }} @
-						{{ `${game.gameData.datetime.time} ${game.gameData.datetime.ampm}` }}
+						{{ game.scoreData.ballpark_name }} @
+						{{ `${game.datetime.time} ${game.datetime.ampm}` }}
 					</div>
 					<div class="mt-2">
 						{{ getWeather(game) }}
@@ -62,7 +62,7 @@
 
 		props: {
 			games: Array,
-			quickAccessOnly: {
+			scoreDataOnly: {
 				type: Boolean,
 				default: false
 			}
@@ -70,17 +70,17 @@
 
 		methods: {
 			getPitchingMatchup: function(game) {
-				return `${_.get(game.gameData.pitchers.away, 'full_name', 'TBD')} v. 
-						${_.get(game.gameData.pitchers.home, 'full_name', 'TBD')}`;
+				return `${_.get(game.pitchers.away, 'full_name', 'TBD')} v. 
+						${_.get(game.pitchers.home, 'full_name', 'TBD')}`;
 			},
 			getWeather: function(game) {
 				return `
-					${_.get(game.gameData.weather, 'temp', '')} 
-					${_.has(game.gameData.weather, 'temp') ? '\xB0F,' : ''} 
-					${_.get(game.gameData.weather, 'condition', '')} 
-					${_.has(game.gameData.weather, 'condition') ? ',' : ''} 
-					${_.has(game.gameData.weather, 'wind') ? 'wind:' : ''}
-					 ${_.get(game.gameData.weather, 'wind', '')}`
+					${_.get(game.weather, 'temp', '')} 
+					${_.has(game.weather, 'temp') ? '\xB0F,' : ''} 
+					${_.get(game.weather, 'condition', '')} 
+					${_.has(game.weather, 'condition') ? ',' : ''} 
+					${_.has(game.weather, 'wind') ? 'wind:' : ''}
+					 ${_.get(game.weather, 'wind', '')}`
 			},
 			saveGame(game) {
 				window.axios.post('mlb/game/save', {external_id: game.gamePk})
