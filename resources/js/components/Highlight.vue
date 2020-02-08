@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import Swal from 'sweetalert2';
 	import UtilityCard from './utility/Card.vue';
 	import { store } from '../store.js';
 	import { fetchUserHighlightIds } from '../global.js';
@@ -41,6 +42,7 @@
 			saveHighlight() {
 				window.axios.post('/mlb/highlights', this.highlight)
 					.then(resp => {
+						this.fireSweetAlert();
 						fetchUserHighlightIds().then(resp => store.mutations.setSavedHighlights(store.state, resp.data))
 					})
 					.catch(err => console.log('error saving the highlight', err));
@@ -49,12 +51,23 @@
 				window.axios.delete('/mlb/highlights', {data: this.highlight})
 					.then(resp => {
 						fetchUserHighlightIds().then(resp => {
+							this.fireSweetAlert('highlight removed');
 							this.$emit('highlightRemoved');
 							store.mutations.setSavedHighlights(store.state, resp.data)
 						});
 					})
 					.catch(err => console.error('error removing the highlight from your profile', err));
-			}
+			},
+			fireSweetAlert(text='highlight saved') {
+				Swal.fire({
+					position: 'top',
+					icon: 'success',
+					title: text,
+					showConfirmButton: false,
+					timer: 1250,
+					toast: true,
+				});
+			},
 		},
 		computed: {
 			title() {
