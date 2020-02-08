@@ -31,6 +31,7 @@ class MlbService
 
 	public function fetchGamesForDate($date): Collection
     {
+		\Log::info('testing');
         $response = $this->mlbClient->get('schedule', [
             'query' => [
                 'sportId' => 1,
