@@ -69,7 +69,7 @@
 				window.axios.post('api/auth/logout')
 					.then(res => {
 						store.mutations.setUserAuthentication(store.state, false)
-						this.$router.push('/')
+						this.$router.push('/').catch(err => {});
 					})
 					.catch(err => console.error('There was a problem logging out the user', err))
 
