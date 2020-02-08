@@ -13,9 +13,6 @@ there are a couple tools that'll help you run a simple dev environment
 * [composer](https://getcomposer.org/)
 * [npm](https://www.npmjs.com/)
 
-Laravel Valet
-* Run 
-
 once you have these tools available follow these steps to get up and running
 1. database
 * running your development db on docker lets you run multiple databases at once simply on your machine and helps keep our db environment uniform
