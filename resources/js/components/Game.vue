@@ -12,7 +12,7 @@
 		<div class="game-team align-middle col-sm-4 d-inline-block">
 			<img class="team-logo" :src="game.scoreData.home.path_to_logo">
 			<div class="team-name">{{`${game.scoreData.home.prefix} ${game.scoreData.home.name}`}}</div>
-			<div v-if="!scoreDataOnly" class="text-red mt-1">{{ `${game.teams.home.wins} - ${game.teams.home.losses} (${game.teams.home.winningPercentage})` }}</div>
+			<div v-if="!scoreDataOnly" class="text-red mt-1">{{ `${game.teams.home.record.wins} - ${game.teams.home.record.losses} (${game.teams.home.record.winningPercentage})` }}</div>
 		</div>
 
 		<div class="d-none d-md-block">
