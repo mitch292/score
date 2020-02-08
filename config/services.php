@@ -47,6 +47,12 @@ return [
     'mlb' => [
         'api_base_url' => env('MLB_API_BASE_URL', 'http://statsapi.mlb.com/api/v1/'),
         'game_api_base_url' => env('MLB_GAME_API_BASE_URL', 'http://statsapi.mlb.com/api/v1.1/'),
-    ]
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_OAUTH_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_OAUTH_SECRET'),
+        'redirect' => 'http://score.abc/api/auth/login/google/callback',
+    ],
 
 ];

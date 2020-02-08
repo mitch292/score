@@ -13,6 +13,9 @@ there are a couple tools that'll help you run a simple dev environment
 * [composer](https://getcomposer.org/)
 * [npm](https://www.npmjs.com/)
 
+Laravel Valet
+* Run 
+
 once you have these tools available follow these steps to get up and running
 1. database
 * running your development db on docker lets you run multiple databases at once simply on your machine and helps keep our db environment uniform
@@ -21,7 +24,11 @@ once you have these tools available follow these steps to get up and running
 * use the command line or a SQL client to connect to the db, `mysql -u root -h 127.0.0.1 --port=3307 -p`
 * create a score database `CREATE DATABASE score;`
 
-2. Application
+2. laravel valet 
+* We need a valid top level domain for OAuth in the dev, so we change the default valet domain
+* Run `valet tld abc` to change the top level domain to `.abc`
+
+3. application
 * clone the repo
 * run `composer install`
 * run `npm install`
@@ -30,5 +37,5 @@ once you have these tools available follow these steps to get up and running
 * run the db migration `php artisan migrate`
 * run the db seeders `php artisan db:seed`
 
-now your good to go.  happy coding!
+now your good to go. navigate to `http://score.abc`.  happy coding!
 

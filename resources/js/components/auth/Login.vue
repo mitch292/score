@@ -17,6 +17,10 @@
 					<button class="btn btn-primary" v-on:click="this.loginUser">login</button>
 				</div>
 			</form>
+				<div class="mt-4 text-center">
+					<a class="btn btn-primary" href="api/auth/login/google">google</a>
+				</div>
+
 		</basic-card>
 	</div>
 </template>
@@ -51,7 +55,7 @@
 						console.error('the error', err)
 						this.didLoginFail = true;
 					})
-			}
+			},
 		},
 
 		components: { BasicCard }

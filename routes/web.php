@@ -53,14 +53,19 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 });
 
 
+// Auth routes
 Route::group(['as' => 'api', 'prefix' => 'api'], function() {
     Route::group(['as' => 'auth', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
-    
+        
         Route::post('/register', ['as' => 'register', 'uses' => 'RegisterController@newUser']);
-    
+        
+        Route::get('/login/google', ['as' => 'login.oauth.google', 'uses' => 'LoginController@redirectToProvider']);
+        
+        Route::get('/login/google/callback', ['as' => 'login.oauth.google.callback', 'uses' => 'LoginController@handleProviderCallback']);
+        
         Route::post('/login', ['as' => 'login', 'uses' => 'LoginController@login']);
-    
+        
         Route::post('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
-    
+        
     });
 });
