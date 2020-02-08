@@ -59,9 +59,9 @@ Route::group(['as' => 'api', 'prefix' => 'api'], function() {
         
         Route::post('/register', ['as' => 'register', 'uses' => 'RegisterController@newUser']);
         
-        Route::get('/login/google', ['as' => 'login.oauth.google', 'uses' => 'LoginController@redirectToProvider']);
+        Route::get('/login/{provider}', ['as' => 'login.oauth.google', 'uses' => 'LoginController@redirectToProvider']);
         
-        Route::get('/login/google/callback', ['as' => 'login.oauth.google.callback', 'uses' => 'LoginController@handleProviderCallback']);
+        Route::get('/login/{provider}/callback', ['as' => 'login.oauth.google.callback', 'uses' => 'LoginController@handleProviderCallback']);
         
         Route::post('/login', ['as' => 'login', 'uses' => 'LoginController@login']);
         

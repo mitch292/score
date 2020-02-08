@@ -55,22 +55,26 @@ class LoginController extends Controller
 
     /**
      * Redirect the user to the Google authentication page.
+     * 
+     * @param $provider - the OAuth provider, such as google
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
      * Obtain the user information from Google.
+     * 
+     * @param $provider - the OAuth provider, such as google
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver($provider)->user();
 
         $authUser = User::firstOrCreate([
             'name' => $user->getName(),
