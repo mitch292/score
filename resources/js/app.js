@@ -12,10 +12,11 @@ Vue.use(VueRouter);
 
 // Font awesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBaseballBall, faCalendarTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBaseballBall, faCalendarTimes  } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faBaseballBall, faCalendarTimes);
+library.add(faBaseballBall, faCalendarTimes, faGoogle);
 
 // Axios
 import axios from 'axios';

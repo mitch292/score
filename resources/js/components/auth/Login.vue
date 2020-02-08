@@ -16,10 +16,13 @@
 				<div class="mt-4 text-center">
 					<button class="btn btn-primary" v-on:click="this.loginUser">login</button>
 				</div>
-			</form>
-				<div class="mt-4 text-center">
-					<a class="btn btn-primary" href="api/auth/login/google">google</a>
+				<div class="mt-5 border-top text-center">
+					<a class="btn mt-3 btn-outline-primary" href="api/auth/login/google">
+						<font-awesome-icon :icon="['fab', 'google']" />
+						<span class="ml-2">log in with google</span>
+					</a>
 				</div>
+			</form>
 
 		</basic-card>
 	</div>
