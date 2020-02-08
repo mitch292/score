@@ -25,6 +25,7 @@
 					:away="game.teams.away"
 					:game="game"
 					:scoreDataOnly="scoreDataOnly"
+					v-on:gameSaved="saveGame(game)"
 				>
 				</score-game>
 

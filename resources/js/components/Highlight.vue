@@ -52,7 +52,6 @@
 					.then(resp => {
 						fetchUserHighlightIds().then(resp => {
 							this.fireSweetAlert('highlight removed');
-							this.$emit('highlightRemoved');
 							store.mutations.setSavedHighlights(store.state, resp.data)
 						});
 					})
@@ -67,7 +66,7 @@
 					timer: 1250,
 					toast: true,
 				});
-			},
+			}
 		},
 		computed: {
 			title() {
