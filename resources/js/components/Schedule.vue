@@ -7,7 +7,7 @@
 				calendar-class="bg-red calendar" 
 				input-class="text-secondary h5 text-center p-2" 
 				class="text-secondary" 
-				@selected="getGames" 
+				@selected="setGames" 
 				v-model="date" 
 				format="yyyy-MM-dd"
 			>
@@ -38,10 +38,11 @@
 </template>
 
 <script>
+	import moment from 'moment';
+	import { isNull } from 'lodash';
 	import GameList from './utility/GameList.vue';
 	import UtilityLoading from './utility/Loading.vue';
 	import DatePicker from 'vuejs-datepicker';
-	import moment from 'moment';
 
 
 	export default {
@@ -49,15 +50,23 @@
 			return {
 				games: [],
 				fetchingGames: false,
-				date: new Date(),
+				date: isNull(localStorage.getItem('scheduleDate'))
+					? new Date()
+					: new Date(`${localStorage.getItem('scheduleDate')} EST`)
 			}
 		},
 		methods: {
-			// defaults to today, or pass date in yyyy-MM-DD format
-			getGames: function(date) {
-				let momentDate = moment(date);
-				let formattedDate = momentDate.format('YYYY-MM-DD');
+			// defaults to today, or pass date in YYYY-MM-DD format
+			setGames: function(date) {
+				let formattedDate = null;
+				if (!date && !isNull(localStorage.getItem('scheduleDate'))) {
+					formattedDate = localStorage.getItem('scheduleDate');
+				} else {
+					let momentDate = moment(date);
+					formattedDate = momentDate.format('YYYY-MM-DD');
+				}
 				this.fetchingGames = true;
+				localStorage.setItem('scheduleDate', formattedDate);
 
 				window.axios.get(`mlb/schedule/${formattedDate}`)
 					.then(resp => {
@@ -66,12 +75,12 @@
 					})
 					.catch(err => {
 						this.fetchingGames = false;
-						console.error('err', err)
+						console.error('err', err);
 					});
 			}
 		},
 		mounted() {
-			this.getGames();
+			this.setGames();
 		},
 		components: { UtilityLoading, GameList, DatePicker }
 	}
