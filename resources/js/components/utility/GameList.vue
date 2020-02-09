@@ -34,7 +34,7 @@
 			<template slot="bottom">
 				<div class="text-center mt-4">
 					<div>
-						{{ game.scoreData.ballpark_name }} @
+						{{ game.scoreData.home.ballpark_name }} @
 						{{ `${game.datetime.time} ${game.datetime.ampm}` }}
 					</div>
 					<div class="mt-2">
