@@ -15,11 +15,10 @@
 </template>
 
 <script>
-	import Swal from 'sweetalert2';
 	import UtilityLoading from './utility/Loading.vue';
 	import ScoreHighlight from './Highlight.vue';
 	import { store } from '../store.js';
-	import { fetchUserGameIds } from '../global.js';
+	import { fetchUserGameIds, fireSweetAlert } from '../global.js';
 
 	export default {
 		props: {
@@ -47,14 +46,7 @@
 			saveGame(gamePk) {
 				window.axios.post('mlb/game/save', {external_id: gamePk})
 					.then(resp => {
-						Swal.fire({
-							position: 'top',
-							icon: 'success',
-							title: 'game saved',
-							showConfirmButton: false,
-							timer: 1250,
-							toast: true,
-						})
+						fireSweetAlert({title: 'highlight saved'});
 						fetchUserGameIds().then(resp => store.mutations.setSavedGames(store.state, resp.data))
 					})
 					.catch(err => console.error('problem saving the game', err))

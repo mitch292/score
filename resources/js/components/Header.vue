@@ -62,21 +62,14 @@
 </template>
 
 <script>
-	import Swal from 'sweetalert2';
 	import { store } from '../store.js';
+	import { fireSweetAlert } from '../global.js';
 	export default {
 		methods: {
 			logout: function() {
 				window.axios.post('api/auth/logout')
 					.then(res => {
-						Swal.fire({
-							position: 'top',
-							icon: 'success',
-							title: 'logged out',
-							showConfirmButton: false,
-							timer: 1250,
-							toast: true,
-						});
+						fireSweetAlert({title: 'logged out'});
 						store.mutations.setUserAuthentication(store.state, false)
 						this.$router.push('/').catch(err => {});
 					})

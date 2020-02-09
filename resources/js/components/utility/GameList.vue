@@ -52,11 +52,10 @@
 </template>
 
 <script>
-	import Swal from 'sweetalert2'
 	import UtilityCard from './Card.vue';
 	import ScoreGame from '../Game.vue';
 	import { store } from '../../store.js';
-	import { fetchUserGameIds } from '../../global.js';
+	import { fetchUserGameIds, fireSweetAlert } from '../../global.js';
 
 
 	export default {
@@ -86,7 +85,7 @@
 			saveGame(game) {
 				window.axios.post('mlb/game/save', {external_id: game.gamePk})
 					.then(resp => {
-						this.fireSweetAlert();
+						fireSweetAlert({title: 'game saved'});
 						fetchUserGameIds().then(resp => store.mutations.setSavedGames(store.state, resp.data))
 					})
 					.catch(err => console.error('problem saving the game', err))
@@ -95,23 +94,13 @@
 				window.axios.delete('/mlb/game', {data: {external_id: game.gamePk}})
 					.then(resp => {
 						fetchUserGameIds().then(resp => {
-							this.fireSweetAlert('game removed')
+							fireSweetAlert({title: 'game removed'})
 							this.$emit('gameRemoved');
 							store.mutations.setSavedGames(store.state, resp.data)
 						});
 					})
 					.catch(err => console.error('there was an error removing the game from your profile', err))
 			},
-			fireSweetAlert(text='game saved') {
-				Swal.fire({
-					position: 'top',
-					icon: 'success',
-					title: text,
-					showConfirmButton: false,
-					timer: 1250,
-					toast: true,
-				})
-			}
 		},
 		components: { UtilityCard, ScoreGame }
 	}
