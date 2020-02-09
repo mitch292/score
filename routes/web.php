@@ -17,27 +17,27 @@ Route::get('/', function () {
 
     
     
-Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function() {
+Route::group(['as' => 'mlb.', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function() {
 
 
-    Route::group(['as' => 'schedule', 'prefix' => 'schedule'], function() {
+    Route::group(['as' => 'schedule.', 'prefix' => 'schedule'], function() {
 
         Route::get('/today', ['as' => 'today', 'uses' => 'ScheduleController@fetchTodaysGames']);
 
-        Route::get('/{date}', ['as' => 'schedule', 'uses' => 'ScheduleController@fetchGamesForDate']);
+        Route::get('/{date}', ['as' => 'date', 'uses' => 'ScheduleController@fetchGamesForDate']);
 
     });
 
-    Route::group(['as' => 'game', 'prefix' => 'game'], function() {
+    Route::group(['as' => 'game.', 'prefix' => 'game'], function() {
 
         Route::delete('/', ['as' => 'deleteGame', 'uses' => 'GameController@deleteGame']);
 
-        Route::post('/save', ['as' => 'game', 'uses' => 'GameController@saveGame']);
+        Route::post('/save', ['as' => 'save', 'uses' => 'GameController@saveGame']);
 
         Route::get('/my-games', ['as' => 'myGames', 'uses' => 'GameController@fetchMyGames']);
     });
 
-    Route::group(['as' => 'highlights', 'prefix' => 'highlights'], function() {
+    Route::group(['as' => 'highlights.', 'prefix' => 'highlights'], function() {
         
         Route::get('/my-highlights', ['as' => 'fetchMyHighlights', 'uses' => 'HighlightsController@fetchMyHighlights']);
 
@@ -54,14 +54,14 @@ Route::group(['as' => 'mlb', 'prefix' => 'mlb', 'namespace' => 'Mlb'], function(
 
 
 // Auth routes
-Route::group(['as' => 'api', 'prefix' => 'api'], function() {
-    Route::group(['as' => 'auth', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
+Route::group(['as' => 'api.', 'prefix' => 'api'], function() {
+    Route::group(['as' => 'auth.', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
         
         Route::post('/register', ['as' => 'register', 'uses' => 'RegisterController@newUser']);
         
-        Route::get('/login/{provider}', ['as' => 'login.oauth.google', 'uses' => 'LoginController@redirectToProvider']);
+        Route::get('/login/{provider}', ['as' => 'login.oauth', 'uses' => 'LoginController@redirectToProvider']);
         
-        Route::get('/login/{provider}/callback', ['as' => 'login.oauth.google.callback', 'uses' => 'LoginController@handleProviderCallback']);
+        Route::get('/login/{provider}/callback', ['as' => 'login.oauth.callback', 'uses' => 'LoginController@handleProviderCallback']);
         
         Route::post('/login', ['as' => 'login', 'uses' => 'LoginController@login']);
         

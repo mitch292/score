@@ -17,7 +17,7 @@
 					<button class="btn btn-primary" v-on:click="this.loginUser">login</button>
 				</div>
 				<div class="mt-5 border-top text-center">
-					<a class="btn mt-3 btn-outline-primary" href="api/auth/login/google">
+					<a class="btn mt-3 btn-outline-primary" :href="googleAuthRoute">
 						<font-awesome-icon :icon="['fab', 'google']" />
 						<span class="ml-2">log in with google</span>
 					</a>
@@ -38,13 +38,14 @@
 			return {
 				email: null,
 				password: null,
-				didLoginFail: false
+				didLoginFail: false,
+				googleAuthRoute: route('api.auth.login.oauth', {provider: 'google'})
 			}
 		},
 
 		methods: {
 			loginUser: function() {
-				window.axios.post('api/auth/login', {
+				window.axios.post(route('api.auth.login'), {
 					email: this.email,
 					password: this.password
 				})

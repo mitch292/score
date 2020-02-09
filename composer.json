@@ -16,7 +16,8 @@
         "laravel/framework": "^6.0",
         "laravel/socialite": "^4.3",
         "laravel/telescope": "^2.1",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "tightenco/ziggy": "^0.8.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

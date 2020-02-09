@@ -67,7 +67,7 @@
 	export default {
 		methods: {
 			logout: function() {
-				window.axios.post('api/auth/logout')
+				window.axios.post(route('api.auth.logout'))
 					.then(res => {
 						fireSweetAlert({title: 'logged out'});
 						store.mutations.setUserAuthentication(store.state, false)

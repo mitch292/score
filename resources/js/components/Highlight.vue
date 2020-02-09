@@ -39,7 +39,7 @@
 		},
 		methods: {
 			saveHighlight() {
-				window.axios.post('/mlb/highlights', this.highlight)
+				window.axios.post(route('mlb.highlights.saveHighlight'), this.highlight)
 					.then(resp => {
 						fireSweetAlert({title: 'highlight saved'});
 						fetchUserHighlightIds().then(resp => store.mutations.setSavedHighlights(store.state, resp.data))
@@ -47,7 +47,7 @@
 					.catch(err => console.log('error saving the highlight', err));
 			},
 			removeHighlight() {
-				window.axios.delete('/mlb/highlights', {data: this.highlight})
+				window.axios.delete(route('mlb.highlights.deleteHighlight'), {data: this.highlight})
 					.then(resp => {
 						fetchUserHighlightIds().then(resp => {
 							fireSweetAlert({title: 'highlight removed'});

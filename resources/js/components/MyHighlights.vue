@@ -23,7 +23,7 @@
 		},
 		methods: {
 			fetchHighlights() {
-				window.axios.get('/mlb/highlights/my-highlights')
+				window.axios.get(route('mlb.highlights.fetchMyHighlights'))
 					.then(resp => {
 						this.fetchingHighlights = false;
 						this.highlights = resp.data;

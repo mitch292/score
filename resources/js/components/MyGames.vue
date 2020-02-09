@@ -28,7 +28,7 @@
 
 		methods: {
 			fetchMyGames: function() {
-				window.axios.get('/mlb/game/my-games')
+				window.axios.get(route('mlb.game.myGames'))
 					.then(resp => {
 						this.fetchingGames = false;
 						this.games = resp.data

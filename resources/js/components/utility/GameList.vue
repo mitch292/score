@@ -83,7 +83,7 @@
 					 ${_.get(game.weather, 'wind', '')}`
 			},
 			saveGame(game) {
-				window.axios.post('mlb/game/save', {external_id: game.gamePk})
+				window.axios.post(route('mlb.game.save'), {external_id: game.gamePk})
 					.then(resp => {
 						fireSweetAlert({title: 'game saved'});
 						fetchUserGameIds().then(resp => store.mutations.setSavedGames(store.state, resp.data))
@@ -91,7 +91,7 @@
 					.catch(err => console.error('problem saving the game', err))
 			},
 			removeGame(game) {
-				window.axios.delete('/mlb/game', {data: {external_id: game.gamePk}})
+				window.axios.delete(route('mlb.game.deleteGame'), {data: {external_id: game.gamePk}})
 					.then(resp => {
 						fetchUserGameIds().then(resp => {
 							fireSweetAlert({title: 'game removed'})

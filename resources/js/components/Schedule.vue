@@ -68,7 +68,7 @@
 				this.fetchingGames = true;
 				localStorage.setItem('scheduleDate', formattedDate);
 
-				window.axios.get(`mlb/schedule/${formattedDate}`)
+				window.axios.get(route('mlb.schedule.date', {date: formattedDate}))
 					.then(resp => {
 						this.fetchingGames = false;
 						this.games = resp.data;

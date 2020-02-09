@@ -9,6 +9,7 @@
 		<!-- Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 		<link href="css/app.css" rel="stylesheet" />
+		@routes
 	</head>
 	<body>
 		<script>window.isUserAuthenticated = {{ json_encode($isUserAuthenticated) }};</script>

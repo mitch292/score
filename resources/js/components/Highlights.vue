@@ -33,7 +33,7 @@
 		methods: {
 			getHighlights: function(gamePk) {
 				this.fetchingGames = true;
-				window.axios.get(`mlb/highlights/${gamePk}`)
+				window.axios.get(route('mlb.highlights.fetchHighlights', {gamePk: gamePk}))
 					.then(resp => {
 						this.fetchingHighlights = false;
 						this.highlights = resp.data;
@@ -44,7 +44,7 @@
 					})
 			},
 			saveGame(gamePk) {
-				window.axios.post('mlb/game/save', {external_id: gamePk})
+				window.axios.post(route('mlb.game.save'), {external_id: gamePk})
 					.then(resp => {
 						fireSweetAlert({title: 'highlight saved'});
 						fetchUserGameIds().then(resp => store.mutations.setSavedGames(store.state, resp.data))

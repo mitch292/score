@@ -30,7 +30,7 @@
 				</div>
 
 				<div class="mt-5 border-top text-center">
-					<a class="btn mt-3 btn-outline-primary" href="api/auth/login/google">
+					<a class="btn mt-3 btn-outline-primary" :href="googleAuthRoute">
 						<font-awesome-icon :icon="['fab', 'google']" />
 						<span class="ml-2">sign up with google</span>
 					</a>
@@ -54,7 +54,8 @@
 				password: null,
 				passwordConfirmation: null,
 				passwordsMatch: true,
-				didRegistrationFail: false
+				didRegistrationFail: false,
+				googleAuthRoute: route('api.auth.login.oauth', {provider: 'google'})
 			}
 		},
 
@@ -64,7 +65,7 @@
 				if (!this.passwordsMatch) {
 					return;
 				}
-				window.axios.post('api/auth/register', {
+				window.axios.post(route('api.auth.register'), {
 					name: this.name, 
 					email: this.email, 
 					password: this.password,
