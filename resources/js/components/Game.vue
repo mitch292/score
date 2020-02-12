@@ -60,7 +60,7 @@
 }
 
 .game-matchup {
-	padding: 2rem;
+	padding: 1srem;
 }
 
 .game-team {
@@ -68,23 +68,23 @@
 }
 
 .team-name {
-	margin-top: 1rem;
+	margin-top: 0.5rem;
 	font-weight: 900;
 	font-size: 1rem;
 }
 
 .team-logo {
-	width: 8rem;
+	width: 6rem;
 }
 
 .game-vs {
 	border-radius: 50%;
 	background-color: #e0e1e2;
 	border: 1px solid #e0e1e2;
-	width: 5rem;
-	height: 5rem;
+	width: 4.25rem;
+	height: 4.25rem;
 	font-weight: 900;
-	font-size: 1.75rem;
+	font-size: 1.25rem;
 	box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
 	margin: 0 2rem;
 }

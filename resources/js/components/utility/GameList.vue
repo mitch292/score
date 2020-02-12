@@ -32,7 +32,7 @@
 			</template>
 
 			<template slot="bottom">
-				<div class="text-center mt-4">
+				<div class="text-center mt-3">
 					<div>
 						{{ game.scoreData.home.ballpark_name }} @
 						{{ `${game.datetime.time} ${game.datetime.ampm}` }}

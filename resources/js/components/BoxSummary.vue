@@ -1,9 +1,9 @@
 <template>
-    <div class="mt-4">
+    <div class="mt-3">
         <div v-if="gameState" class="row justify-content-center">
             <div class="btn btn-outline-primary--inherit">{{gameState}}</div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-3 mb-3">
             <table class="score-table d-block mx-auto">
 
                 <tr>
