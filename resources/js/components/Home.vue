@@ -1,11 +1,7 @@
 <template>
-	<div>
-		
-		<div class="w-100">
-			<img class="homepage-image--large" alt="score-screen-shot" src="/images/homepage/score-snapshot.png">
-		</div>
+	<div class="row">
 
-		<div class="text-center p-1">
+		<div class="text-center mx-auto p-1">
 			
 			<basic-card :isWide="true">
 				<div class="row p-5">
@@ -58,9 +54,5 @@
 <style>
 	.homepage-image {
 		height: 250px;
-	}
-
-	.homepage-image--large {
-		height: 500px;
 	}
 </style>
