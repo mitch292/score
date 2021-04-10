@@ -4,7 +4,7 @@
 			we're sorry, it looks like registration wasn't successful.  please try again.
 		</div>
 		<basic-card>
-			<form class="mx-auto col-sm-8 p-5">
+			<form class="mx-auto col-10 p-5">
 				<p>
 					<label class="text-red mr-2">name:</label><br>
 					<input class="p-2 w-100" type="text" v-model="name" placeholder="Mickey Mantle" required>
