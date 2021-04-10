@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Closure;
 use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\Game;
@@ -9,8 +10,9 @@ use App\Models\Player;
 use App\Models\Highlight;
 use App\Http\Clients\MlbClient;
 use Illuminate\Support\Collection;
+use Laravel\Octane\Facades\Octane;
 use App\Classes\Mlb\ApiClient\Client;
-use App\Classes\Mlb\ApiClient\Api\DataObjects\Game;
+use App\Classes\Mlb\ApiClient\DataObjects\Game as GameDataObject;
 
 
 class MlbService
@@ -59,8 +61,8 @@ class MlbService
 		return $collection;
 	}
 
-    public function fetchHighlights($gamePk): Collection
-    {
+	public function fetchHighlights($gamePk): Collection
+	{
 		$response = $this->mlbClient->get('game/'.$gamePk.'/content');
 		
 		// TODO: Error Handling here and use case where game is live (highlights->live...)
@@ -79,7 +81,7 @@ class MlbService
 			]);
 		});
 
-        return $collection;
+		return $collection;
 	}
 
 	
@@ -90,12 +92,14 @@ class MlbService
 	 ***********************************************************************************************************************/
 
 	
-	private function formatGame(Game $game): Array
+	private function formatGame(GameDataObject $game): array
 	{
 		$extraData = $this->fetchGameData($game->getGamePk());
-		$homePitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['home']['id']);
-		$awayPitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['away']['id']);
-
+		
+		[$homePitcher, $awayPitcher] = Octane::concurrently([
+			$this->getPlayerDetails($extraData['gameData']['probablePitchers']['home']['id']),
+			$this->getPlayerDetails($extraData['gameData']['probablePitchers']['away']['id']),
+		]);
 
 		return [
 			'gamePk' => $game->getGamePk(),
@@ -135,28 +139,33 @@ class MlbService
 		return $data;
 	}
 
-	private function getPlayerDetails($externalPlayerId): Player
+	/**
+	 * Get player details for a given external id
+	 * 
+	 * @param string|int $externalPlayerId
+	 * @return Closure
+	 */
+	public function getPlayerDetails(string|int $externalPlayerId): Closure
 	{
 		$player = Player::where('external_id', $externalPlayerId)->first();
 		
 		if (empty($player)) {
 
-			$person = $this->client->people()->getPerson($externalPlayerId);
+			$person = $this->client->people()->getPerson($externalPlayerId); // TODO: Catch PlayerException
 
-			$player = Player::create(
-				[
-					'external_id' => $person->getExternalId(),
-					'first_name' => $person->getFirstName(),
-					'last_name' => $person->getLastName(),
-					'full_name' => $person->getFullName(),
-					'birth_city' => $person->getBirthCity(),
-					'birth_state_province' => $person->getBirthStateProvince,
-					'birth_country' => $person->getBirthCountry(),
-				]
-			);
+			$player = Player::create([
+				'external_id' => $person->getExternalId(),
+				'first_name' => $person->getFirstName(),
+				'last_name' => $person->getLastName(),
+				'full_name' => $person->getFullName(),
+				'birth_city' => $person->getBirthCity(),
+				'birth_state_province' => $person->getBirthStateProvince,
+				'birth_country' => $person->getBirthCountry(),
+			]);
 
 		}
 
-		return $player;
+		// Since this function conncurrently in Octane/Swool, return a Closure
+		return fn () => $player;
 	}
 }

@@ -11,6 +11,7 @@ class Date extends BaseDataObject
 	private int $totalGamesInProgress;
 	/** @var Game[] */
 	private array $games;
+	private array $events;
 
 	public function __construct(array $data) {
 		$this->date = $data["date"];
@@ -18,7 +19,8 @@ class Date extends BaseDataObject
 		$this->totalEvents = $data["totalEvents"];
 		$this->totalGames = $data["totalGames"];
 		$this->totalGamesInProgress = $data["totalGamesInProgress"];
-		$this->games = array_map(fn($game) => new game($date), $data["games"]);
+		$this->games = array_map(fn ($game) => new Game($game), $data["games"]);
+		$this->events = $data["events"];
 	}
 
 	public function getCopyright(): string
@@ -49,6 +51,12 @@ class Date extends BaseDataObject
 	/** @return Game[] */
 	public function getGames(): array
 	{
-		return $this->game;
+		return $this->games;
+	}
+
+	/** Haven't seen events populated */
+	public function getEvents(): array
+	{
+		return $this->events;
 	}
 }

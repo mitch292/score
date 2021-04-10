@@ -4,7 +4,7 @@ namespace App\Classes\Mlb\ApiClient\DataObjects;
 
 class GameStatus extends BaseDataObject
 {
-	private string $abstractGameStatus;
+	private string $abstractGameState;
 	private string $codedGameState;
 	private string $detailedState;
 	private string $statusCode;
@@ -12,7 +12,7 @@ class GameStatus extends BaseDataObject
 	private string $abstractGameCode;
 
 	public function __construct(array $data) {
-		$this->abstractGameStatus = $data["abstractGameStatus"];
+		$this->abstractGameState = $data["abstractGameState"];
 		$this->codedGameState = $data["codedGameState"];
 		$this->detailedState = $data["detailedState"];
 		$this->statusCode = $data["statusCode"];
@@ -20,9 +20,9 @@ class GameStatus extends BaseDataObject
 		$this->abstractGameCode = $data["abstractGameCode"];
 	}
 
-	public function getAbstractGameStatus(): string
+	public function getAbstractGameState(): string
 	{
-		return $this->abstractGameStatus;
+		return $this->abstractGameState;
 	}
 
 	public function getCodedGameState(): string

@@ -5,7 +5,7 @@ namespace App\Classes\Mlb\ApiClient\DataObjects;
 class GameVenue extends BaseDataObject
 {
 	private int $id;
-	private int $name;
+	private string $name;
 	private string $link;
 
 	public function __construct(array $data) {

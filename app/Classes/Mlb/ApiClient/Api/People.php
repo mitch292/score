@@ -18,7 +18,7 @@ class People extends BaseApi
 	public function getPerson(string|int $extId): Person
 	{
 		try {
-			$response = $this->client()->get("/people/{$extId}");
+			$response = $this->client()->get("people/{$extId}");
 		} catch (ClientException $e) {
 			throw new PeopleException;
 		}

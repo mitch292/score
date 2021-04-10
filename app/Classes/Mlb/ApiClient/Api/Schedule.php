@@ -3,22 +3,27 @@
 namespace App\Classes\Mlb\ApiClient\Api;
 
 use GuzzleHttp\Exception\ClientException;
-use App\Classes\Plaid\ApiClient\DataObjects\Schedule;
-use App\Classes\Plaid\ApiClient\Exceptions\ScheduleException;
+use App\Classes\Mlb\ApiClient\DataObjects\Schedule as ScheduleDataObject;
+use App\Classes\Mlb\ApiClient\Exceptions\ScheduleException;
 
-class People extends BaseApi
+class Schedule extends BaseApi
 {
 	/**
 	 * Gets a schedule for a given date
 	 * 
 	 * @param string $date in YYYY-MM-DD
-	 * @return Scedule
+	 * @return Schedule
 	 * @throws ScheduleException
 	 */
-	public function getSchedule(string $date): Scedule
+	public function getSchedule(string $date): ScheduleDataObject
 	{
 		try {
-			$response = $this->client()->get("/people/{$extId}");
+			$response = $this->client()->get("schedule", [
+				'query' => [
+					'sportId' => 1,
+					'date' => $date,
+				],
+			]);
 		} catch (ClientException $e) {
 			throw new ScheduleException($e->getMessage());
 		}
@@ -29,7 +34,7 @@ class People extends BaseApi
 			throw new ScheduleException("There was no schedule for the given day");
 		}
 
-		$schedule = new Scedule($rawSchedule);
+		$schedule = new ScheduleDataObject($rawSchedule);
 
 		return $schedule;
 	}

@@ -36,11 +36,11 @@ class ScheduleController extends Controller
 	/**
 	 * Fetch the games for a given date from the MLB API
 	 * 
-	 * @param String $date - in a carbon parsable format
+	 * @param string $date - in a carbon parsable format
 	 * 
 	 * @return Array
 	 */	
-    public function fetchGamesForDate($date): Collection
+    public function fetchGamesForDate(string $date): Collection
     {
         $date = Carbon::parse($date);
 
