@@ -25,6 +25,7 @@ class Position extends BaseDataObject
 	{
 		return $this->name;
 	}
+
 	public function getType(): string
 	{
 		return $this->type;

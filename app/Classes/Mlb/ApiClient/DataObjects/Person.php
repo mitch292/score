@@ -28,16 +28,16 @@ class Person extends BaseDataObject
 	private string $mlbDebutDate;
 	private HandPreference $batSide;
 	private HandPreference $pitchHand;
-	private string $nameFirstLast = $data["nameFirstLast"];
-	private string $nameSlug = $data["nameSlug"];
-	private string $firstLastName = $data["firstLastName"];
-	private string $lastFirstName = $data["lastFirstName"];
-	private string $lastInitName = $data["lastInitName"];
-	private string $initLastName = $data["initLastName"];
-	private string $fullFMLName = $data["fullFMLName"];
-	private string $fullLFMName = $data["fullLFMName"];
-	private float $strikeZoneTop = $data["strikeZoneTop"];
-	private float $strikeZoneBottom = $data["strikeZOneBottom"];
+	private string $nameFirstLast;
+	private string $nameSlug;
+	private string $firstLastName;
+	private string $lastFirstName;
+	private string $lastInitName ;
+	private string $initLastName;
+	private string $fullFMLName;
+	private string $fullLFMName;
+	private float $strikeZoneTop;
+	private float $strikeZoneBottom;
 
 
 	public function __construct(array $data) {
@@ -171,11 +171,6 @@ class Person extends BaseDataObject
 	public function getIsPlayer(): bool
 	{
 		return $this->isPlayer;
-	}
-
-	public function getNickName(): string
-	{
-		return $this->nickName;
 	}
 
 	public function getIsVerified(): bool

@@ -15,7 +15,7 @@ class People extends BaseApi
 	 * 
 	 * @throws PeopleException
 	 */
-	public function getPerson(string|int $extId)
+	public function getPerson(string|int $extId): Person
 	{
 		try {
 			$response = $this->client()->get("/people/{$extId}");
@@ -26,7 +26,7 @@ class People extends BaseApi
 		$people = json_decode((string) $response->getBody(), true);
 
 		if (empty($people)) {
-			throw new PeopleException("There was no person returned from the MLB API")
+			throw new PeopleException("There was no person returned from the MLB API");
 		}
 
 		$person = new Person($people[0]);
