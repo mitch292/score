@@ -29,8 +29,10 @@ once you have these tools available follow these steps to get up and running
 -   run `npm install`
 -   run `npm run watch`
 
-### social login
+## social login
 
--   in order for social login to work, we need a vanity url - `sudo vim /etc/hosts/` - Add to your localhost or 127.0.0.1 line, `http://score.abc`
+-   in order for social login to work, we need a vanity url:
+-   `sudo vim /etc/hosts/`
+-   Add to your localhost or 127.0.0.1 line, `http://score.abc`
 
 now your good to go. navigate to `http://score.abc`. happy coding!
