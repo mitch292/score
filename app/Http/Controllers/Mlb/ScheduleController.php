@@ -42,7 +42,8 @@ class ScheduleController extends Controller
 	 */	
     public function fetchGamesForDate($date): Collection
     {
-        $date = Carbon::parse($date)->format('m/d/Y');
+        $date = Carbon::parse($date);
+
         return $this->mlbService->fetchGamesForDate($date);
     }
 

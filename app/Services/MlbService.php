@@ -2,13 +2,15 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Collection;
 use Carbon\Carbon;
-use App\Http\Clients\MlbClient;
 use App\Models\Team;
+use App\Models\Game;
 use App\Models\Player;
 use App\Models\Highlight;
-use App\Models\Game;
+use App\Http\Clients\MlbClient;
+use Illuminate\Support\Collection;
+use App\Classes\Mlb\ApiClient\Client;
+use App\Classes\Mlb\ApiClient\Api\DataObjects\Game;
 
 
 class MlbService
@@ -23,33 +25,27 @@ class MlbService
 	 */
 	private $mlbGameClient;
 
+	private Client $client;
+
 	public function __construct(MlbClient $mlbClient, MlbClient $mlbGameClient)
 	{
+		// TODO: Complete refactoring to new client then move this to service provider
+		$this->client = new Client(config('services.mlb.api_base_url'), config('services.mlb.game_api_base_url'));
+
 		$this->mlbClient = $mlbClient;
 		$this->mlbGameClient = $mlbGameClient;
 	}
 
-	public function fetchGamesForDate($date): Collection
-    {
-        $response = $this->mlbClient->get('schedule', [
-            'query' => [
-                'sportId' => 1,
-                'date' => $date
+	public function fetchGamesForDate(Carbon $date): Collection
+	{
+		$schedule = $this->client->schedule()->getSchedule($date->toDateString());
 
-            ]
-        ]);
-
-		$data = json_decode((string) $response->getBody(), true);
-		
-		if (empty($data['dates'])) {
-			return collect([]);
+		if (empty($schedule->getFirstDate())) {
+			return collect([]); // TODO: should we throw an exception to handle?
 		}
 
-		$collection = collect($data['dates'][0]['games'])->map(function ($game) {
-			return $this->formatGame($game);
-		});
-
-        return $collection;
+		return collect($schedule->getFirstDate()->getGames())
+			->map(fn($game) => $this->formatGame($game));
 	}
 
 	public function fetchGamesFromIds($gamePks): Collection
@@ -94,20 +90,18 @@ class MlbService
 	 ***********************************************************************************************************************/
 
 	
-	private function formatGame($game): Array
+	private function formatGame(Game $game): Array
 	{
-		$extraData = $this->fetchGameData($game['gamePk']);
+		$extraData = $this->fetchGameData($game->getGamePk());
 		$homePitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['home']['id']);
 		$awayPitcher = $this->getPlayerDetails($extraData['gameData']['probablePitchers']['away']['id']);
 
 
 		return [
-			'gamePk' => $game['gamePk'],
-			'link' => $game['link'] ?? null,
-			'date' => !empty($game['gameDate']) 
-				? Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $game['gameDate'])
-				: null,
-			'status' => $game['status'] ?? null,
+			'gamePk' => $game->getGamePk(),
+			'link' => $game->getLink(),
+			'date' => Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $game->getGameDate()),
+			'status' => $game->getStatus(),
 			'teams' => $extraData['gameData']['teams'],
 			'pitchers' => [
 				'home' => $homePitcher,
@@ -144,24 +138,25 @@ class MlbService
 	private function getPlayerDetails($externalPlayerId): Player
 	{
 		$player = Player::where('external_id', $externalPlayerId)->first();
-
+		
 		if (empty($player)) {
 
-			$response = $this->mlbClient->get('people/'.$externalPlayerId);
+			$person = $this->client->people()->getPerson($externalPlayerId);
 
-			$data = json_decode((string) $response->getBody(), true);
-
-			
-			if (empty($data['people'])) {
-				[];
-			}
 			$player = Player::create(
-				Player::formatPlayer($data['people'][0])
+				[
+					'external_id' => $person->getExternalId(),
+					'first_name' => $person->getFirstName(),
+					'last_name' => $person->getLastName(),
+					'full_name' => $person->getFullName(),
+					'birth_city' => $person->getBirthCity(),
+					'birth_state_province' => $person->getBirthStateProvince,
+					'birth_country' => $person->getBirthCountry(),
+				]
 			);
+
 		}
 
 		return $player;
 	}
-
-	
 }

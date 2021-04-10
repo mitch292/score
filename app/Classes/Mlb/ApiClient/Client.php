@@ -6,12 +6,15 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class Client
 {
+	private ?People $people = null;
+	private ?Schedule $schedule = null;
+
+
 	public function __construct(
 		protected string $baseUri, 
 		protected string $gameUri
 	) {}
 
-	/** @return People */
 	public function people(): People
 	{
 		if (is_null($this->people)) {
@@ -19,5 +22,12 @@ class Client
 		}
 
 		return $this->people;
+	}
+
+	public function schedule(): Schedule
+	{
+		if (is_null($this->schedule)) {
+			$this->schedule = new Schedule(GuzzleClient(['base_uri' => $this->baseUri]));
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Plaid\ApiClient\Api;
+namespace App\Classes\Mlb\ApiClient\Api;
 
 use GuzzleHttp\Exception\ClientException;
 use App\Classes\Plaid\ApiClient\DataObjects\Person;

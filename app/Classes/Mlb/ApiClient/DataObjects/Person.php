@@ -13,6 +13,7 @@ class Person extends BaseDataObject
 	private string $birthDate;
 	private int $currentAge;
 	private string $birthCity;
+	private string $birthDateProvience;
 	private string $birthCountry;
 	private int $height;
 	private bool $active;
@@ -50,6 +51,7 @@ class Person extends BaseDataObject
 		$this->birthDate = $data["birthDate"];
 		$this->currentAge = $data["currentAge"];
 		$this->birthCity = $data["birthCity"];
+		$this->birthDateProvience = $data["birthStateProvince"];
 		$this->birthCountry = $data["birthCountry"];
 		$this->height = $data["height"];
 		$this->weight = $data["weight"];
@@ -121,6 +123,11 @@ class Person extends BaseDataObject
 	public function getBirthCity(): string
 	{
 		return $this->birthCity;
+	}
+
+	public function getBirthDateProvience(): string
+	{
+		return $this->birthDateProvience;
 	}
 
 	public function getBirthCountry(): string
