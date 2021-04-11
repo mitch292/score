@@ -63,11 +63,18 @@ class MlbService
 		return $collection;
 	}
 
+	/**
+	 * Get the highlights for a given external game pk 
+	 * 
+	 * @param string|int $gamePk
+	 * @return Collection
+	 */
 	public function getHighlightsForGame(string|int $gamePk): Collection
 	{
 		$data = $this->client->highlights()->getHighlights($gamePk);
 
 		// TODO: Error Handling here and use case where game is live (data->getLive...)
+		// TODO: maybe this save highlights should be in a separate function
 		$highlights = array_map(function($highlight) use($gamePk) {
 			return Highlight::firstOrCreate(
 				[
