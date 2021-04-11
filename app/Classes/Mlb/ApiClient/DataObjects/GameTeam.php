@@ -12,7 +12,7 @@ class GameTeam extends BaseDataObject
 
 	public function __construct(array $data) {
 		$this->leagueRecord = new TeamRecord($data["leagueRecord"]);
-		$this->score = $data["score"];
+		$this->score = $data["score"] ?? 0;
 		$this->team = new TeamLink($data["team"]);
 		$this->splitSquad = $data["splitSquad"];
 		$this->seriesNumber = $data["seriesNumber"];

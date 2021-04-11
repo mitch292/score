@@ -13,19 +13,19 @@ class Person extends BaseDataObject
 	private string $birthDate;
 	private int $currentAge;
 	private string $birthCity;
-	private string $birthDateProvience;
+	private string $birthStateProvince;
 	private string $birthCountry;
-	private int $height;
+	private string $height;
 	private bool $active;
 	private Position $position;
 	private string $useName;
 	private string $boxscoreName;
 	private string $nickName;
 	private string $gender;
-	private string $nameMatrilineal;
+	private ?string $nameMatrilineal;
 	private bool $isPlayer;
 	private bool $isVerified;
-	private string $pronunciation;
+	private ?string $pronunciation;
 	private string $mlbDebutDate;
 	private HandPreference $batSide;
 	private HandPreference $pitchHand;
@@ -51,7 +51,7 @@ class Person extends BaseDataObject
 		$this->birthDate = $data["birthDate"];
 		$this->currentAge = $data["currentAge"];
 		$this->birthCity = $data["birthCity"];
-		$this->birthDateProvience = $data["birthStateProvince"];
+		$this->birthStateProvince = $data["birthStateProvince"];
 		$this->birthCountry = $data["birthCountry"];
 		$this->height = $data["height"];
 		$this->weight = $data["weight"];
@@ -61,10 +61,10 @@ class Person extends BaseDataObject
 		$this->boxscoreName = $data["boxscoreName"];
 		$this->nickName = $data["nickName"];
 		$this->gender = $data["gender"];
-		$this->nameMatrilineal = $data["nameMatrilineal"];
+		$this->nameMatrilineal = $data["nameMatrilineal"] ?? null;
 		$this->isPlayer = $data["isPlayer"];
 		$this->isVerified = $data["isVerified"];
-		$this->pronunciation = $data["pronunciation"];
+		$this->pronunciation = $data["pronunciation"] ?? null;
 		$this->mlbDebutDate = $data["mlbDebutDate"];
 		$this->batSide = new HandPreference($data["batSide"]);
 		$this->pitchHand = new HandPreference($data["pitchHand"]);
@@ -77,7 +77,7 @@ class Person extends BaseDataObject
 		$this->fullFMLName = $data["fullFMLName"];
 		$this->fullLFMName = $data["fullLFMName"];
 		$this->strikeZoneTop = $data["strikeZoneTop"];
-		$this->strikeZoneBottom = $data["strikeZOneBottom"];
+		$this->strikeZoneBottom = $data["strikeZoneBottom"];
 	}
 
 	public function getExternalId(): string
@@ -85,7 +85,7 @@ class Person extends BaseDataObject
 		return $this->externalId;
 	}
 
-	public function getFullNamed(): string
+	public function getFullName(): string
 	{
 		return $this->fullName;
 	}
@@ -125,9 +125,9 @@ class Person extends BaseDataObject
 		return $this->birthCity;
 	}
 
-	public function getBirthDateProvience(): string
+	public function getBirthStateProvince(): string
 	{
-		return $this->birthDateProvience;
+		return $this->birthStateProvince;
 	}
 
 	public function getBirthCountry(): string
@@ -170,7 +170,7 @@ class Person extends BaseDataObject
 		return $this->gender;
 	}
 
-	public function getNameMatrilineal(): string
+	public function getNameMatrilineal(): ?string
 	{
 		return $this->nameMatrilineal;
 	}
@@ -185,7 +185,7 @@ class Person extends BaseDataObject
 		return $this->isVerified;
 	}
 
-	public function getPronunciation(): string
+	public function getPronunciation(): ?string
 	{
 		return $this->pronunciation;
 	}

@@ -27,9 +27,9 @@ class ScheduleController extends Controller
 	 * 
 	 * @return Array
 	 */	
-    public function fetchTodaysGames(): Collection
+    public function getScheduledGamesForToday(): Collection
     {
-        return $this->fetchGamesForDate(Carbon::today('America/New_York'));
+        return $this->getGamesForDate(Carbon::today('America/New_York'));
     }
 
 
@@ -40,11 +40,11 @@ class ScheduleController extends Controller
 	 * 
 	 * @return Array
 	 */	
-    public function fetchGamesForDate(string $date): Collection
+    public function getGamesForDate(string $date): Collection
     {
         $date = Carbon::parse($date);
 
-        return $this->mlbService->fetchGamesForDate($date);
+        return $this->mlbService->getGamesForDate($date);
     }
 
 }

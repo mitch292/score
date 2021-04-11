@@ -12,7 +12,7 @@ class Game extends BaseDataObject
 	private string $officialDate;
 	private GameStatus $status;
 	private GameTeams $teams;
-	private GameVenue $venue;
+	private GenericLink $venue;
 	private GameContent $content;
 	private int $gameNumber;
 	private bool $publicFacing;
@@ -40,13 +40,13 @@ class Game extends BaseDataObject
 		$this->officialDate = $data["officialDate"];
 		$this->status = new GameStatus($data["status"]);
 		$this->teams = new GameTeams($data["teams"]);
-		$this->venue = new GameVenue($data["venue"]);
+		$this->venue = new GenericLink($data["venue"]);
 		$this->content = new GameContent($data["content"]);
 		$this->gameNumber = $data["gameNumber"];
 		$this->publicFacing = $data["publicFacing"];
 		$this->doubleHeader = $data["doubleHeader"];
 		$this->tiebreaker = $data["tiebreaker"];
-		$this->calendarEventID = $data["calendarEventID"];
+		$this->calendarEventId = $data["calendarEventID"];
 		$this->seasonDisplay = $data["seasonDisplay"];
 		$this->dayNight = $data["dayNight"];
 		$this->scheduledInnings = $data["scheduledInnings"];
@@ -75,9 +75,9 @@ class Game extends BaseDataObject
 		return $this->gameType;
 	}
 	
-	public function getSchedule(): string
+	public function getSeason(): string
 	{
-		return $this->schedule;
+		return $this->season;
 	}
 
 	public function getGameDate(): string
@@ -100,7 +100,7 @@ class Game extends BaseDataObject
 		return $this->teams;
 	}
 
-	public function getVenue(): GameVenue
+	public function getVenue(): GenericLink
 	{
 		return $this->venue;
 	}

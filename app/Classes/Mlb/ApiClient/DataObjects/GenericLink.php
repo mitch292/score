@@ -2,16 +2,18 @@
 
 namespace App\Classes\Mlb\ApiClient\DataObjects;
 
-class GameVenue extends BaseDataObject
+class GenericLink extends BaseDataObject
 {
 	private int $id;
 	private string $name;
 	private string $link;
+	private ?string $abbreviation;
 
 	public function __construct(array $data) {
 		$this->id = $data["id"];
 		$this->name = $data["name"];
 		$this->link = $data["link"];
+		$this->abbreviation = $data["abbreviation"] ?? null;
 	}
 
 	public function getId(): int
@@ -27,5 +29,10 @@ class GameVenue extends BaseDataObject
 	public function getLink(): string
 	{
 		return $this->link;
+	}
+
+	public function getAbbreviation(): ?string
+	{
+		return $this->abbreviation;
 	}
 }

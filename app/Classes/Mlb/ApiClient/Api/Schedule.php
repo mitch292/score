@@ -3,8 +3,8 @@
 namespace App\Classes\Mlb\ApiClient\Api;
 
 use GuzzleHttp\Exception\ClientException;
-use App\Classes\Mlb\ApiClient\DataObjects\Schedule as ScheduleDataObject;
 use App\Classes\Mlb\ApiClient\Exceptions\ScheduleException;
+use App\Classes\Mlb\ApiClient\DataObjects\Schedule as ScheduleDataObject;
 
 class Schedule extends BaseApi
 {
@@ -12,7 +12,7 @@ class Schedule extends BaseApi
 	 * Gets a schedule for a given date
 	 * 
 	 * @param string $date in YYYY-MM-DD
-	 * @return Schedule
+	 * @return ScheduleDataObject
 	 * @throws ScheduleException
 	 */
 	public function getSchedule(string $date): ScheduleDataObject

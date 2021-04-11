@@ -13,6 +13,7 @@ use Illuminate\Support\Collection;
 use Laravel\Octane\Facades\Octane;
 use App\Classes\Mlb\ApiClient\Client;
 use App\Classes\Mlb\ApiClient\DataObjects\Game as GameDataObject;
+use App\Classes\Mlb\ApiClient\DataObjects\Score as ScoreDataObject;
 
 
 class MlbService
@@ -38,29 +39,43 @@ class MlbService
 		$this->mlbGameClient = $mlbGameClient;
 	}
 
-	public function fetchGamesForDate(Carbon $date): Collection
+	/**
+	 * Get the scheduled games for the date as a Collection
+	 * 
+	 */
+	public function getGamesForDate(Carbon $date): Collection
 	{
+		// TODO: handle the exception thrown here
 		$schedule = $this->client->schedule()->getSchedule($date->toDateString());
 
 		if (empty($schedule->getFirstDate())) {
 			return collect([]); // TODO: should we throw an exception to handle?
 		}
 
-		return collect($schedule->getFirstDate()->getGames())
-			->map(fn($game) => $this->formatGame($game));
+		$games = $schedule->getFirstDate()->getGames();
+		$score = $this->getGameScoreData($games);
+
+		$zipped = collect($games)->zip($score);
+		
+		$this->saveGames($zipped);
+
+		return $zipped->map(function($game) {
+			[$gameData, $scoreData] = $game;
+			return $this->formatGame($gameData, $scoreData);
+		});
 	}
 
-	public function fetchGamesFromIds($gamePks): Collection
+	public function getPersistedGamesFromExtId($gamePks): Collection
 	{
 		$collection = collect($gamePks)->map(function($gamePk) {
-			return $this->formatGame([
-				'gamePk' => $gamePk
-			]);
+			$game = Game::where("external_id", $gamePk);
+			return $this->formatGame($game->schedule_data, $game->score_data);
 		});
 
 		return $collection;
 	}
 
+	// TODO: Refactor
 	public function fetchHighlights($gamePk): Collection
 	{
 		$response = $this->mlbClient->get('game/'.$gamePk.'/content');
@@ -91,53 +106,98 @@ class MlbService
 	 * 
 	 ***********************************************************************************************************************/
 
-	
-	private function formatGame(GameDataObject $game): array
+	/**
+	 * Save the mlb games to the database.
+	 * 
+	 * @param Collection $games - [[GameDataObject, ScoreDataObject]]
+	 * @return void
+	 */
+	private function saveGames(Collection $games): void
 	{
-		$extraData = $this->fetchGameData($game->getGamePk());
-		
-		[$homePitcher, $awayPitcher] = Octane::concurrently([
-			$this->getPlayerDetails($extraData['gameData']['probablePitchers']['home']['id']),
-			$this->getPlayerDetails($extraData['gameData']['probablePitchers']['away']['id']),
-		]);
+		// TODO: run concurrently via Octane
+		$games->map(function($game) {
+			[$gameData, $scoreData] = $game;
+			Game::updateOrCreate(
+				[
+					"external_id" => $gameData->getGamePk(),
+				],
+				[
+					"schedule_data" => $gameData,
+					"score_data" => $scoreData,
+				],
+			);
+		});
+	}
+
+	/**
+	 * Get the game score or boxscore like data for a set of games.
+	 * 
+	 * @param GameDataObject[] $games
+	 * @return ScoreDataObject[]
+	 */
+	public function getGameScoreData(array $games): array
+	{
+		return array_map(fn ($game) => $this->fetchgameData($game->getGamePk()), $games);
+	}
+
+	/**
+	 * Get the score data for a given game id.
+	 * 
+	 * @param string|int $gameId
+	 * @return ScoreDataObject
+	 */
+	private function fetchGameData(string|int $gameId): ScoreDataObject
+	{
+		$gameData = $this->client->score()->getScore($gameId); // TODO: catch exception
+
+		return $gameData;
+	}
+
+
+
+
+
+
+	/**
+	 * Format and summarize game and score data into an associated array
+	 * 
+	 * @param GameDataObject $game
+	 * @param ScoreDataObject $score
+	 * @return array
+	 */
+	private function formatGame(GameDataObject $game, ScoreDataObject $score): array
+	{
+		$gameData = $score->getGameData();
+		$probablePitcherHome = $gameData->getProbablePitchers()->getHome();
+		$probablePitcherAway = $gameData->getProbablePitchers()->getAway();
+
+		if (!empty($probablePitcherHome) && !empty($probablePitcherAway)) {
+			[$homePitcher, $awayPitcher] = Octane::concurrently([
+				$this->getPlayerDetails($probablePitcherHome->getId()),
+				$this->getPlayerDetails($probablePitcherAway->getId()),
+			]);
+		}
 
 		return [
 			'gamePk' => $game->getGamePk(),
 			'link' => $game->getLink(),
 			'date' => Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $game->getGameDate()),
 			'status' => $game->getStatus(),
-			'teams' => $extraData['gameData']['teams'],
+			'teams' => $gameData->getTeams()->toArray(),
 			'pitchers' => [
-				'home' => $homePitcher,
-				'away' => $awayPitcher,
+				'home' => $homePitcher ?? null,
+				'away' => $awayPitcher ?? null,
 			],
-			'weather' => $extraData['gameData']['weather'],
-			'datetime' => $extraData['gameData']['datetime'],
-			'linescore' => $extraData['liveData']['linescore'],
-			'boxscore' => $extraData['liveData']['boxscore'],
+			'weather' => $gameData->getWeather()->toArray(),
+			'datetime' => $gameData->GetDatetime()->toArray(),
+			'linescore' => $score->getLiveData()->getLinescore()->toArray(),
 			'scoreData' => [
-				'home' => Team::where('external_id', $extraData['gameData']['teams']['home']['id'])->first(),
-				'away' => Team::where('external_id', $extraData['gameData']['teams']['away']['id'])->first(),
+				'home' => Team::where('external_id', $gameData->getTeams()->getHome()->getId())->first(),
+				'away' => Team::where('external_id', $gameData->getTeams()->getAway()->getId())->first(),
 			]
-
-
 		];
 	}
-	
-	private function fetchGameData($gameId): Array
-	{
-		$requestUri = 'game/'.$gameId.'/feed/live';
 
-		$response = $this->mlbGameClient->get($requestUri);
-		
-		$data = json_decode((string) $response->getBody(), true);
-		
-		if (empty($data)){
-			return [];
-		}
-
-		return $data;
-	}
 
 	/**
 	 * Get player details for a given external id
@@ -159,13 +219,12 @@ class MlbService
 				'last_name' => $person->getLastName(),
 				'full_name' => $person->getFullName(),
 				'birth_city' => $person->getBirthCity(),
-				'birth_state_province' => $person->getBirthStateProvince,
+				'birth_state_province' => $person->getBirthStateProvince(),
 				'birth_country' => $person->getBirthCountry(),
 			]);
-
 		}
 
-		// Since this function conncurrently in Octane/Swool, return a Closure
+		// Since this function is run conncurrently in Octane/Swool, return a Closure
 		return fn () => $player;
 	}
 }

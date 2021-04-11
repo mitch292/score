@@ -3,7 +3,7 @@
 namespace App\Classes\Mlb\ApiClient\Api;
 
 use GuzzleHttp\Exception\ClientException;
-use App\Classes\Plaid\ApiClient\DataObjects\Person;
+use App\Classes\Mlb\ApiClient\DataObjects\Person;
 use App\Classes\Plaid\ApiClient\Exceptions\PeopleException;
 
 class People extends BaseApi
@@ -23,13 +23,13 @@ class People extends BaseApi
 			throw new PeopleException;
 		}
 
-		$people = json_decode((string) $response->getBody(), true);
+		$data = json_decode((string) $response->getBody(), true);
 
-		if (empty($people)) {
+		if (empty($data) || count($data["people"]) < 1) {
 			throw new PeopleException("There was no person returned from the MLB API");
 		}
 
-		$person = new Person($people[0]);
+		$person = new Person($data["people"][0]);
 
 		return $person;
 	}

@@ -89,7 +89,7 @@ class GameController extends Controller
 			return $request->user()->games->pluck('external_id');
         }
         
-		return $this->mlbService->fetchGamesFromIds($request->user()->games->pluck('external_id'));
+		return $this->mlbService->getPersistedGamesFromExtId($request->user()->games->pluck('external_id'));
     }
 
 
