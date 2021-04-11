@@ -42,6 +42,8 @@ class MlbService
 	/**
 	 * Get the scheduled games for the date as a Collection
 	 * 
+	 * @param Carbon $date
+	 * @return Collection
 	 */
 	public function getGamesForDate(Carbon $date): Collection
 	{
@@ -53,9 +55,9 @@ class MlbService
 		}
 
 		$games = $schedule->getFirstDate()->getGames();
-		$score = $this->getGameScoreData($games);
+		$scores = $this->getScoreDataforGames($games);
 
-		$zipped = collect($games)->zip($score);
+		$zipped = collect($games)->zip($scores);
 		
 		$this->saveGames($zipped);
 
@@ -65,6 +67,7 @@ class MlbService
 		});
 	}
 
+	// TODO: Can I remove this?
 	public function getPersistedGamesFromExtId($gamePks): Collection
 	{
 		$collection = collect($gamePks)->map(function($gamePk) {
@@ -135,7 +138,7 @@ class MlbService
 	 * @param GameDataObject[] $games
 	 * @return ScoreDataObject[]
 	 */
-	public function getGameScoreData(array $games): array
+	public function getScoreDataforGames(array $games): array
 	{
 		return array_map(fn ($game) => $this->fetchgameData($game->getGamePk()), $games);
 	}
