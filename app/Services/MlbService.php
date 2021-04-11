@@ -8,7 +8,6 @@ use App\Models\Team;
 use App\Models\Game;
 use App\Models\Player;
 use App\Models\Highlight;
-use App\Http\Clients\MlbClient;
 use Illuminate\Support\Collection;
 use Laravel\Octane\Facades\Octane;
 use App\Classes\Mlb\ApiClient\Client;
@@ -18,25 +17,11 @@ use App\Classes\Mlb\ApiClient\DataObjects\Score as ScoreDataObject;
 
 class MlbService
 {
-	/**
-	 * @var MlbClient
-	 */
-	private $mlbClient;
-
-	/**
-	 * @var MlbClient
-	 */
-	private $mlbGameClient;
-
 	private Client $client;
 
-	public function __construct(MlbClient $mlbClient, MlbClient $mlbGameClient)
+	public function __construct(Client $client)
 	{
-		// TODO: Complete refactoring to new client then move this to service provider
-		$this->client = new Client(config('services.mlb.api_base_url'), config('services.mlb.game_api_base_url'));
-
-		$this->mlbClient = $mlbClient;
-		$this->mlbGameClient = $mlbGameClient;
+		$this->client = $client;
 	}
 
 	/**
@@ -78,36 +63,27 @@ class MlbService
 		return $collection;
 	}
 
-	// TODO: Refactor
-	public function fetchHighlights($gamePk): Collection
+	public function getHighlightsForGame(string|int $gamePk): Collection
 	{
-		$response = $this->mlbClient->get('game/'.$gamePk.'/content');
-		
-		// TODO: Error Handling here and use case where game is live (highlights->live...)
-		$data = json_decode((string) $response->getBody(), true);
+		$data = $this->client->highlights()->getHighlights($gamePk);
 
-		if (empty($data['highlights'])) {
-			return [];
-		}
+		// TODO: Error Handling here and use case where game is live (data->getLive...)
+		$highlights = array_map(function($highlight) use($gamePk) {
+			return Highlight::firstOrCreate(
+				[
+					'external_id' => $highlight->getMediaPlaybackId(),
+				],
+				[
+					'playback_url' => $highlight->getFirstPlayback()->getUrl(),
+					'title' => $highlight->getHeadline(),
+					'description' => $highlight->getDescription(),
+					'game_id' => Game::where('external_id', $gamePk)->first()->id,
+				],
+			);
+		}, $data->getHighlights()->getItems());
 
-		$collection = collect($data['highlights']['highlights']['items'])->map(function ($highlight) use($gamePk) {
-			return Highlight::firstOrCreate(['external_id' => $highlight['mediaPlaybackId']], [
-				'playback_url' => $highlight['playbacks'][0]['url'],
-				'title' => $highlight['headline'],
-				'description' => $highlight['description'],
-				'game_id' => Game::firstOrCreate(['external_id' => $gamePk])->id,
-			]);
-		});
-
-		return $collection;
+		return collect($highlights);
 	}
-
-	
-	/***********************************************************************************************************************
-	 * 
-	 * PRIVATE FUNCTIONS
-	 * 
-	 ***********************************************************************************************************************/
 
 	/**
 	 * Save the mlb games to the database.
@@ -156,11 +132,6 @@ class MlbService
 		return $gameData;
 	}
 
-
-
-
-
-
 	/**
 	 * Format and summarize game and score data into an associated array
 	 * 
@@ -200,7 +171,6 @@ class MlbService
 			]
 		];
 	}
-
 
 	/**
 	 * Get player details for a given external id

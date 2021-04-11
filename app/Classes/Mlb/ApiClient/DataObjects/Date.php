@@ -23,9 +23,9 @@ class Date extends BaseDataObject
 		$this->events = $data["events"];
 	}
 
-	public function getCopyright(): string
+	public function getDate(): string
 	{
-		return $this->copyright;
+		return $this->date;
 	}
 
 	public function getTotalItems(): int

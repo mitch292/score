@@ -6,13 +6,14 @@ use GuzzleHttp\Client as GuzzleClient;
 use App\Classes\Mlb\ApiClient\Api\Score;
 use App\Classes\Mlb\ApiClient\Api\People;
 use App\Classes\Mlb\ApiClient\Api\Schedule;
+use App\Classes\Mlb\ApiClient\Api\Highlights;
 
 class Client
 {
 	private ?People $people = null;
 	private ?Schedule $schedule = null;
 	private ?Score $score = null;
-
+	private ?Highlights $highlights = null;
 
 	public function __construct(
 		protected string $baseUri, 
@@ -59,5 +60,19 @@ class Client
 		}
 
 		return $this->score;
+	}
+
+	/**
+	 * Get the highlight api
+	 * 
+	 * @return Highlights
+	 */
+	public function highlights(): Highlights
+	{
+		if (is_null($this->highlights)) {
+			$this->highlights = new Highlights(new GuzzleClient(['base_uri' => $this->baseUri]));
+		}
+
+		return $this->highlights;
 	}
 }

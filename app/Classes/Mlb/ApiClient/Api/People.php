@@ -12,7 +12,7 @@ class People extends BaseApi
 	 * Gets a person from the mlb api.
 	 * 
 	 * @param string|int $extId
-	 * 
+	 * @return Person
 	 * @throws PeopleException
 	 */
 	public function getPerson(string|int $extId): Person

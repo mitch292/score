@@ -20,13 +20,13 @@ class Person extends BaseDataObject
 	private Position $position;
 	private string $useName;
 	private string $boxscoreName;
-	private string $nickName;
+	private ?string $nickName;
 	private string $gender;
 	private ?string $nameMatrilineal;
 	private bool $isPlayer;
 	private bool $isVerified;
 	private ?string $pronunciation;
-	private string $mlbDebutDate;
+	private ?string $mlbDebutDate;
 	private HandPreference $batSide;
 	private HandPreference $pitchHand;
 	private string $nameFirstLast;
@@ -59,13 +59,13 @@ class Person extends BaseDataObject
 		$this->primaryPosition = new Position($data["primaryPosition"]);
 		$this->useName = $data["useName"];
 		$this->boxscoreName = $data["boxscoreName"];
-		$this->nickName = $data["nickName"];
+		$this->nickName = $data["nickName"] ?? null;
 		$this->gender = $data["gender"];
 		$this->nameMatrilineal = $data["nameMatrilineal"] ?? null;
 		$this->isPlayer = $data["isPlayer"];
 		$this->isVerified = $data["isVerified"];
 		$this->pronunciation = $data["pronunciation"] ?? null;
-		$this->mlbDebutDate = $data["mlbDebutDate"];
+		$this->mlbDebutDate = $data["mlbDebutDate"] ?? null;
 		$this->batSide = new HandPreference($data["batSide"]);
 		$this->pitchHand = new HandPreference($data["pitchHand"]);
 		$this->nameFirstLast = $data["nameFirstLast"];
@@ -160,7 +160,7 @@ class Person extends BaseDataObject
 		return $this->boxscoreName;
 	}
 
-	public function getNickName(): string
+	public function getNickName(): ?string
 	{
 		return $this->nickName;
 	}
@@ -190,7 +190,7 @@ class Person extends BaseDataObject
 		return $this->pronunciation;
 	}
 
-	public function getMlbDebutDate(): bool
+	public function getMlbDebutDate(): ?string
 	{
 		return $this->mlbDebutDate;
 	}

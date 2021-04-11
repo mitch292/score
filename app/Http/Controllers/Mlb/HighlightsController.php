@@ -24,13 +24,13 @@ class HighlightsController extends Controller
 	/**
 	 * Fetch highlights for a given gamePK
 	 * 
-	 * @param String $gamePk - The MLB API's primary key for a given game
+	 * @param string $gamePk - The MLB API's primary key for a given game
 	 * 
 	 * @return Array - An array of Highlights
 	 */	
     public function fetchHighlights($gamePk)
     {
-		return $this->mlbService->fetchHighlights($gamePk);
+		return $this->mlbService->getHighlightsForGame($gamePk);
 		
 	}
 
